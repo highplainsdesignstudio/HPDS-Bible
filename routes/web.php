@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// TODO: REMOVE TEMP ROUTE
+Route::get('/test', function() {
+    $bible = file_get_contents('../json/test.json');
+    $bible = json_decode($bible);
+    return var_dump($bible);
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
