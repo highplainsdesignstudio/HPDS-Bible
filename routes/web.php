@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('welcome');
+});
+
+Route::get('/read', function() {
+    return view('bible.index');
 });
 
 // TODO: REMOVE TEMP ROUTE
@@ -23,10 +27,6 @@ Route::get('/test', function() {
     $bible = json_decode($bible);
     return var_dump($bible);
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

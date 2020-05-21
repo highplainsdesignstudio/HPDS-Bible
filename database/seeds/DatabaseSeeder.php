@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $testament->save();
 
         // Second, read the json file
-        $bible = file_get_contents('json/test.json');
+        $bible = file_get_contents('json/KJV.json');
         $bible = json_decode($bible);
 
         // Third, add the book names the books table.
