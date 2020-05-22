@@ -9,7 +9,7 @@ A KJV Bible application built with Laravel.
 is to be a hamburger menu that opens and closes when clicked and holds links to each 
 bible book.
 * The bible data has been seeded to the database.
-* 
+* A bible icon has been added to toggle open an index listing.
 
 ##v0.0.1 (05/20/20)
 * CHANGELOG.md

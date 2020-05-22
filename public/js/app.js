@@ -1938,6 +1938,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var _this = this;
@@ -1980,6 +1990,23 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return _new;
+    }
+  },
+  methods: {
+    toggleIndex: function toggleIndex(_event) {
+      var _bibleIcon = document.getElementById('bible-icon');
+
+      var _indexCard = document.getElementById('index-card');
+
+      var _src = 'http://' + window.location.hostname + '/img/bibleclosedIcon.png';
+
+      if (_bibleIcon.src === _src) {
+        _bibleIcon.src = 'img/bibleopenIcon.png';
+      } else {
+        _bibleIcon.src = 'img/bibleclosedIcon.png';
+      }
+
+      _indexCard.classList.toggle('d-none');
     }
   },
   mounted: function mounted() {
@@ -37573,42 +37600,70 @@ var render = function() {
             _vm._v("\n                    Index Component\n                ")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 col-md-6" }, [
-                _vm._v(
-                  "\n                            Old Testament\n                            "
-                ),
-                _c(
-                  "ul",
-                  _vm._l(_vm.oldTestament, function(book) {
-                    return _c("li", { key: book.id }, [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v(_vm._s(book.book))
-                      ])
-                    ])
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-12 col-md-6" }, [
-                _vm._v(
-                  "\n                            New Testament\n                            "
-                ),
-                _c(
-                  "ul",
-                  _vm._l(_vm.newTestament, function(book) {
-                    return _c("li", { key: book.id }, [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v(_vm._s(book.book))
-                      ])
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-4",
+                attrs: { id: "index-menu" },
+                on: { click: _vm.toggleIndex }
+              },
+              [
+                _c("img", {
+                  staticStyle: { width: "64px" },
+                  attrs: {
+                    src: "img/bibleclosedIcon.png",
+                    alt: "bible icon0",
+                    id: "bible-icon"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "card-body d-none col-8",
+                attrs: { id: "index-card" }
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-12 col-md-6" }, [
+                    _vm._v(
+                      "\n                                Old Testament\n                                "
+                    ),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.oldTestament, function(book) {
+                        return _c("li", { key: book.id }, [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v(_vm._s(book.book))
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 col-md-6" }, [
+                    _vm._v(
+                      "\n                                New Testament\n                                "
+                    ),
+                    _c(
+                      "ul",
+                      _vm._l(_vm.newTestament, function(book) {
+                        return _c("li", { key: book.id }, [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v(_vm._s(book.book))
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ]
+            )
           ])
         ])
       ])
