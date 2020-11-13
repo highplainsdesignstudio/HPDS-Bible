@@ -1948,15 +1948,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var _this = this;
 
-    fetch('api/bible').then(function (response) {
+    fetch('api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
       _this.books = data;
-      console.log(_this.books);
     });
   },
   data: function data() {
@@ -1993,10 +2015,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    selectBook: function selectBook(_id) {
+      var _chapters = document.getElementById('chapters-' + _id);
+
+      _chapters.classList.toggle('d-none');
+
+      this.selectedBook = _id;
+      this.toggleChapters(_id);
+    },
+    selectPage: function selectPage(_book_name, _book_id, _chapter) {
+      this.toggleIndex();
+      this.$emit("select-page", _book_name, _book_id, _chapter);
+    },
+    toggleChapters: function toggleChapters(_id) {
+      for (var i = 1; i <= 66; i++) {
+        var _element = document.getElementById('chapters-' + i);
+
+        if (i != _id) {
+          _element.classList.add('d-none');
+        }
+      }
+    },
     toggleIndex: function toggleIndex(_event) {
       var _bibleIcon = document.getElementById('bible-icon');
 
       var _indexCard = document.getElementById('index-card');
+
+      var _downCaret = document.getElementById('down-caret');
+
+      var _upCaret = document.getElementById('up-caret');
 
       var _src = 'http://' + window.location.hostname + '/img/bibleclosedIcon.png';
 
@@ -2007,11 +2054,42 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       _indexCard.classList.toggle('d-none');
+
+      _downCaret.classList.toggle('d-none');
+
+      _upCaret.classList.toggle('d-none');
+
+      this.toggleChapters(null);
     }
-  },
-  mounted: function mounted() {
-    console.log('Bible Component mounted.');
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['page', 'chapterText']
 });
 
 /***/ }),
@@ -37594,69 +37672,210 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("\n                    Index Component\n                ")
-          ]),
+          _c(
+            "div",
+            {
+              staticClass: "card-header sticky",
+              staticStyle: {
+                cursor: "pointer",
+                "background-color": "white",
+                "z-index": "10"
+              },
+              on: { click: _vm.toggleIndex }
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("span", { staticClass: "h5" }, [_vm._v("Bible Book List")]),
+              _vm._v(" "),
+              _c("span", { attrs: { id: "down-caret" } }, [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "bi bi-caret-down-fill",
+                    attrs: {
+                      width: "1em",
+                      height: "1em",
+                      viewBox: "0 0 16 16",
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none", attrs: { id: "up-caret" } }, [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "bi bi-caret-up-fill",
+                    attrs: {
+                      width: "1em",
+                      height: "1em",
+                      viewBox: "0 0 16 16",
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+                      }
+                    })
+                  ]
+                )
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c(
               "div",
               {
-                staticClass: "col-4",
-                attrs: { id: "index-menu" },
-                on: { click: _vm.toggleIndex }
-              },
-              [
-                _c("img", {
-                  staticStyle: { width: "64px" },
-                  attrs: {
-                    src: "img/bibleclosedIcon.png",
-                    alt: "bible icon0",
-                    id: "bible-icon"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "card-body d-none col-8",
+                staticClass: "card-body d-none col-12",
                 attrs: { id: "index-card" }
               },
               [
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-12 col-md-6" }, [
-                    _vm._v(
-                      "\n                                Old Testament\n                                "
-                    ),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("span", { staticClass: "h5" }, [
+                      _vm._v("Old Testament")
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "ul",
+                      { staticClass: "list-unstyled list-inline" },
                       _vm._l(_vm.oldTestament, function(book) {
-                        return _c("li", { key: book.id }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(book.book))
-                          ])
-                        ])
+                        return _c(
+                          "li",
+                          { key: book.id, staticClass: "h6 list-inline-item" },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectBook(book.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("u", [_vm._v(_vm._s(book.book))]),
+                                _vm._v(" |")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "chapter-select d-none",
+                                attrs: { id: "chapters-" + book.id }
+                              },
+                              _vm._l(book.chapter_count, function(chapter) {
+                                return _c(
+                                  "span",
+                                  {
+                                    key: chapter,
+                                    staticClass: "chapter-select-number",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selectPage(
+                                          book.book,
+                                          book.id,
+                                          chapter
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("u", [_vm._v(_vm._s(chapter))]),
+                                    _vm._v(" | ")
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                        )
                       }),
                       0
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-12 col-md-6" }, [
-                    _vm._v(
-                      "\n                                New Testament\n                                "
-                    ),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("span", { staticClass: "h5" }, [
+                      _vm._v("New Testament")
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "ul",
+                      { staticClass: "list-unstyled list-inline" },
                       _vm._l(_vm.newTestament, function(book) {
-                        return _c("li", { key: book.id }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(book.book))
-                          ])
-                        ])
+                        return _c(
+                          "li",
+                          { key: book.id, staticClass: "h6 list-inline-item" },
+                          [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectBook(book.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("u", [_vm._v(_vm._s(book.book))]),
+                                _vm._v(" | ")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "chapter-select d-none",
+                                attrs: { id: "chapters-" + book.id }
+                              },
+                              _vm._l(book.chapter_count, function(chapter) {
+                                return _c(
+                                  "span",
+                                  {
+                                    key: chapter,
+                                    staticClass: "chapter-select-number",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selectPage(
+                                          book.book,
+                                          book.id,
+                                          chapter
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("u", [_vm._v(_vm._s(chapter))]),
+                                    _vm._v(" |")
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                        )
                       }),
                       0
                     )
@@ -37669,6 +37888,70 @@ var render = function() {
       ])
     ])
   ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-inline", attrs: { id: "index-menu" } }, [
+      _c("img", {
+        staticStyle: { width: "64px" },
+        attrs: {
+          src: "img/bibleclosedIcon.png",
+          alt: "bible icon",
+          id: "bible-icon"
+        }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm.page.name
+        ? _c("div", [
+            _c("h1", { staticClass: "text-center" }, [
+              _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.chapterText, function(text, index) {
+        return _c("div", { key: text.id, staticClass: "verse" }, [
+          _c("p", [
+            _c("span", { staticClass: "h5" }, [
+              _vm._v(_vm._s(index + 1) + ": ")
+            ]),
+            _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
+          ])
+        ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52860,6 +53143,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('index-component', __webpack_require__(/*! ./components/Bible/IndexComponent.vue */ "./resources/js/components/Bible/IndexComponent.vue")["default"]);
+Vue.component('page-component', __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -52884,6 +53168,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 var app = new Vue({
   el: '#app',
+  data: {
+    chapterText: null,
+    selectedPage: {
+      name: null,
+      chapter: null
+    }
+  },
+  methods: {
+    selectPage: function selectPage(_book_name, _book_id, _chapter) {
+      var _this = this;
+
+      fetch('api/' + _book_id + '/' + _chapter).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this.chapterText = data;
+      });
+      this.selectedPage.name = _book_name;
+      this.selectedPage.chapter = _chapter;
+    }
+  },
   router: router
 }).$mount('#app');
 
@@ -52998,6 +53302,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexComponent_vue_vue_type_template_id_10e40611___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexComponent_vue_vue_type_template_id_10e40611___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/PageComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Bible/PageComponent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PageComponent.vue?vue&type=template&id=368c5858& */ "./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858&");
+/* harmony import */ var _PageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PageComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Bible/PageComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PageComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PageComponent.vue?vue&type=template&id=368c5858& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PageComponent_vue_vue_type_template_id_368c5858___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

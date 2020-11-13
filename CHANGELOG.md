@@ -1,7 +1,7 @@
 #Bible App
 A KJV Bible application built with Laravel.
 
-##v0.0.2 (WIP)
+##v0.0.2 (11/13/2020)
 * Added GetBibleController
 * The main page now shows links to read the Bible
 * There is now a Read page that houses a vue app.
@@ -10,6 +10,8 @@ is to be a hamburger menu that opens and closes when clicked and holds links to 
 bible book.
 * The bible data has been seeded to the database.
 * A bible icon has been added to toggle open an index listing.
+* <page-component> created to house the chapter text.
+* Updated Laravel from v7 to v8.14.0
 
 ##v0.0.1 (05/20/20)
 * CHANGELOG.md
@@ -25,3 +27,4 @@ bible book.
 * Created Book model
 * Created Verse model
 * Created DatabaseSeeder to add bible data to the db tables
+

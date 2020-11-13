@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/bible','Bible\GetBibleController@getBibleBooks');
+Route::get('/books','Bible\GetBibleController@getBibleBooks');
+
+Route::get('/{book_id}/{chapter}', 'Bible\GetBibleController@getBibleChapter');

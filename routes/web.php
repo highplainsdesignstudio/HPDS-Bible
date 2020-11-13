@@ -21,13 +21,6 @@ Route::get('/read', function() {
     return view('bible.index');
 });
 
-// TODO: REMOVE TEMP ROUTE
-Route::get('/test', function() {
-    $bible = file_get_contents('../json/test.json');
-    $bible = json_decode($bible);
-    return var_dump($bible);
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

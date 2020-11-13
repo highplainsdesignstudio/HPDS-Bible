@@ -6,3 +6,39 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// .bible-icon {
+//     display: inline;
+    // position: relative;
+    // right: 75px;
+    // top: 50px;
+// }
+.chapter-select {
+    color: white;
+    position: relative;
+    top: 5px;
+}
+
+.chapter-select-number {
+    background-color: #7e2623;
+}
+
+.chapter-select-number:hover {
+    cursor: pointer;
+    font-size: larger;
+}
+
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+}
+
+.verse:hover {
+    background-color: greenyellow;
+}
+
+// .index {
+//     display: inline;
+//     list-style: none;
+// }

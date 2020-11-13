@@ -6,7 +6,8 @@
             {{-- <router-link to="/read/example">Go to Example</router-link> --}}
 
             {{-- <router-view></router-view> --}}
-            <index-component></index-component>
+            <index-component v-on:select-page="selectPage"></index-component>
+            <page-component :page="selectedPage" :chapter-text="chapterText"></page-component>
         </div>
     </div>
 @endsection
