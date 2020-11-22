@@ -1,6 +1,13 @@
 #Bible App
 A KJV Bible application built with Laravel.
 
+##v0.0.3 (11/22/2020)
+* Updated some node packages.
+* Added routes to handle user registration email verification.
+* Added the KJV.json.
+* Minor changes to frontend components. 
+* Moved to new repository location for future development.
+
 ##v0.0.2 (11/13/2020)
 * Added GetBibleController
 * The main page now shows links to read the Bible

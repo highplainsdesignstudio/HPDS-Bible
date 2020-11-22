@@ -7,7 +7,7 @@
 
             {{-- <router-view></router-view> --}}
             <index-component v-on:select-page="selectPage"></index-component>
-            <page-component :page="selectedPage" :chapter-text="chapterText"></page-component>
+            <page-component :page="selectedPage" :chapter-text="pageText"></page-component>
         </div>
     </div>
 @endsection

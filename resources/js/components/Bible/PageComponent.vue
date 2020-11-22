@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div v-if="page.name">
+    <div class="container" v-if="page.name">
+        <div>
             <h1 class="text-center">{{ page.name + " Chapter " + page.chapter }}</h1>
         </div>
     

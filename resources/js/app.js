@@ -50,7 +50,7 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     data: {
-        chapterText: null,
+        pageText: null,
         selectedPage: {name: null, chapter: null}
     },
     methods: {
@@ -58,7 +58,7 @@ const app = new Vue({
             fetch('api/' + _book_id + '/' + _chapter)
             .then(response => response.json())
             .then(data => {
-                this.chapterText = data;
+                this.pageText = data;
             });
             this.selectedPage.name = _book_name;
             this.selectedPage.chapter = _chapter;
