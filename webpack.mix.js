@@ -12,4 +12,5 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps(false, 'source-map') // This line is for debugging from vscode
     .sass('resources/sass/app.scss', 'public/css');

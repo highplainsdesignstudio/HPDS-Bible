@@ -63,18 +63,21 @@
 
 <script>
     export default {
-        created: function() {
-            fetch('api/books')
-            .then(response => response.json())
-            .then(data => {
-                this.books = data;
-            });
-        },
-        data: function() {
-            return {
-                books: null
-            }
-        },
+        //TODO: Currently, the IndexComponent is responsible for retrieving the list of books from the database.
+        // This should be done within the app component instead of this component. The list of books should then be
+        // passed as a prop to this component.
+        // created: function() {
+        //     fetch('api/books')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.books = data;
+        //     });
+        // },
+        // data: function() {
+        //     return {
+        //         books: null
+        //     }
+        // },
         computed: {
             oldTestament: function() {
                 let _old = [];
@@ -135,6 +138,7 @@
                 _upCaret.classList.toggle('d-none');
                 this.toggleChapters(null);
             }
-        }
+        },
+        props: ["books"]
     }
 </script>

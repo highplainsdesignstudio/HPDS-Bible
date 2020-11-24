@@ -1,7 +1,15 @@
 #Bible App
 A KJV Bible application built with Laravel.
-
+##v0.0.4 (wip)
+###First Commit (11/23/2020)
 ##v0.0.3 (11/22/2020)
+* Added a <leaf-component> that will serve as the component to go to the previous
+or next chapters.
+* Added a Chapter model in order to add every chapter to the database.
+* Updated the database seeder to add the chapters to the database.
+* Added source maps to the webpack.mix.js file to assist with debugging.
+* Moved the fetch api/books processing from the index component to the app component. 
+
 * Updated some node packages.
 * Added routes to handle user registration email verification.
 * Added the KJV.json.

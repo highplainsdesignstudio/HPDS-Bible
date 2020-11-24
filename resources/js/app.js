@@ -24,6 +24,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
 Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,8 +51,16 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     data: {
+        books: null,
         pageText: null,
         selectedPage: {name: null, chapter: null}
+    },
+    created: function() {
+        fetch('api/books')
+        .then(response => response.json())
+        .then(data => {
+            this.books = data;
+        });
     },
     methods: {
         selectPage: function(_book_name, _book_id, _chapter) {
