@@ -1,15 +1,24 @@
 #Bible App
 A KJV Bible application built with Laravel.
 ##v0.0.4 (wip)
+###Second Commit (11/24/2020)
+* Updated the DatabaseSeeder to use the chapter_id to the verses table. This id is the 
+chapter count in which it appears in the whole Bible, and not just the numbered chapter within each book.
+* The create verses migration now creates a column called chapter_id instead of chapter. This id is a foreign 
+key to the chapters table.
+* The GetBibleController now returns the chapter_id properly to the vue frontend.
+* The leaf components have been put into place and the user can now traverse chapters by clicking
+the components. One is for the previous chapter, and the other is for the next chapter. 
+
 ###First Commit (11/23/2020)
-##v0.0.3 (11/22/2020)
 * Added a <leaf-component> that will serve as the component to go to the previous
 or next chapters.
 * Added a Chapter model in order to add every chapter to the database.
 * Updated the database seeder to add the chapters to the database.
 * Added source maps to the webpack.mix.js file to assist with debugging.
-* Moved the fetch api/books processing from the index component to the app component. 
+* Moved the fetch api/books processing from the index component to the app component.
 
+##v0.0.3 (11/22/2020)
 * Updated some node packages.
 * Added routes to handle user registration email verification.
 * Added the KJV.json.

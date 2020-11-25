@@ -18,7 +18,8 @@ class CreateVersesTable extends Migration
             $table->timestamps();
             $table->foreignId('testament_id');
             $table->foreignId('book_id');
-            $table->integer('chapter');
+            // $table->integer('chapter');
+            $table->foreignId('chapter_id');
             $table->string('verse', 650);
         });
     }

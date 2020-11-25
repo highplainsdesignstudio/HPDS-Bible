@@ -1,6 +1,6 @@
 {
     "private": true,
-    "version": "v0.0.3",
+    "version": "v0.0.4",
     "scripts": {
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-icons": "^1.1.0",
         "vue-router": "^3.2.0"
     }
 }

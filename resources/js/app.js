@@ -53,7 +53,7 @@ const app = new Vue({
     data: {
         books: null,
         pageText: null,
-        selectedPage: {name: null, chapter: null}
+        selectedPage: {name: null, chapter: null, chapter_id: null}
     },
     created: function() {
         fetch('api/books')
@@ -63,11 +63,25 @@ const app = new Vue({
         });
     },
     methods: {
+        leafPage: function(_type) {
+            let _newChapterId = parseInt(this.selectedPage.chapter_id) + parseInt(_type);
+            if (_newChapterId < 1) {
+                _newChapterId = 1189;
+            } else if (_newChapterId > 1189) {
+                _newChapterId = 1;
+            }
+            fetch('api/chapter/' + _newChapterId)
+                .then(response => response.json())
+                .then(data => {
+                    this.selectPage(this.books[data[0].book_id - 1].book, data[0].book_id, data[0].book_chapter);
+                });
+        },
         selectPage: function(_book_name, _book_id, _chapter) {
             fetch('api/' + _book_id + '/' + _chapter)
             .then(response => response.json())
             .then(data => {
                 this.pageText = data;
+                this.selectedPage.chapter_id = this.pageText[0].chapter_id;
             });
             this.selectedPage.name = _book_name;
             this.selectedPage.chapter = _chapter;

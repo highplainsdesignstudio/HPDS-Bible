@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
                     $verse = new Verse;
                     $verse->testament_id = $testament_id;
                     $verse->book_id = $index;
-                    $verse->chapter = $chapterIndex;
+                    $verse->chapter_id = $chapter->id;
                     $verse->verse = $verseText;
                     $verse->save();
                 }

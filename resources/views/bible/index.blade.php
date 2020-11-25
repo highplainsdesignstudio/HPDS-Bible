@@ -7,9 +7,7 @@
 
             {{-- <router-view></router-view> --}}
             <index-component :books="books" v-on:select-page="selectPage"></index-component>
-            <page-component :page="selectedPage" :chapter-text="pageText"></page-component>
-            <leaf-component type="previous"></leaf-component>
-            <leaf-component type="next"></leaf-component>
+            <page-component :page="selectedPage" :chapter-text="pageText" v-on:leaf-page="leafPage"></page-component>
         </div>
     </div>
 @endsection

@@ -2093,9 +2093,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  methods: {
+    clickLeaf: function clickLeaf() {
+      this.$emit('leaf-page', this.type);
+    }
   },
   props: ['type']
 });
@@ -2124,7 +2138,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    leafPage: function leafPage(_type) {
+      this.$emit('leaf-page', _type);
+    }
+  },
   props: ['page', 'chapterText']
 });
 
@@ -38015,17 +38038,78 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Leaf Component")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _vm._v(
-              "\n                    I'm a " +
-                _vm._s(_vm.type) +
-                " Leaf Component.\n                "
-            )
-          ])
-        ])
+        _c(
+          "div",
+          {
+            staticClass: "card",
+            on: {
+              click: function($event) {
+                return _vm.clickLeaf()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Leaf Component")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _vm.type == -1
+                ? _c("span", [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "bi bi-arrow-left",
+                        attrs: {
+                          width: "3em",
+                          height: "2em",
+                          viewBox: "0 0 16 16",
+                          fill: "currentColor",
+                          xmlns: "http://www.w3.org/2000/svg"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            d:
+                              "M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.type == 1
+                ? _c("span", [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "bi bi-arrow-right",
+                        attrs: {
+                          width: "3em",
+                          height: "2em",
+                          viewBox: "0 0 16 16",
+                          fill: "currentColor",
+                          xmlns: "http://www.w3.org/2000/svg"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            d:
+                              "M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]
+        )
       ])
     ])
   ])
@@ -38072,6 +38156,16 @@ var render = function() {
                 _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
               ])
             ])
+          }),
+          _vm._v(" "),
+          _c("leaf-component", {
+            attrs: { type: "-1" },
+            on: { "leaf-page": _vm.leafPage }
+          }),
+          _vm._v(" "),
+          _c("leaf-component", {
+            attrs: { type: "1" },
+            on: { "leaf-page": _vm.leafPage }
           })
         ],
         2
@@ -53299,7 +53393,8 @@ var app = new Vue({
     pageText: null,
     selectedPage: {
       name: null,
-      chapter: null
+      chapter: null,
+      chapter_id: null
     }
   },
   created: function created() {
@@ -53312,13 +53407,31 @@ var app = new Vue({
     });
   },
   methods: {
-    selectPage: function selectPage(_book_name, _book_id, _chapter) {
+    leafPage: function leafPage(_type) {
       var _this2 = this;
+
+      var _newChapterId = parseInt(this.selectedPage.chapter_id) + parseInt(_type);
+
+      if (_newChapterId < 1) {
+        _newChapterId = 1189;
+      } else if (_newChapterId > 1189) {
+        _newChapterId = 1;
+      }
+
+      fetch('api/chapter/' + _newChapterId).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this2.selectPage(_this2.books[data[0].book_id - 1].book, data[0].book_id, data[0].book_chapter);
+      });
+    },
+    selectPage: function selectPage(_book_name, _book_id, _chapter) {
+      var _this3 = this;
 
       fetch('api/' + _book_id + '/' + _chapter).then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this2.pageText = data;
+        _this3.pageText = data;
+        _this3.selectedPage.chapter_id = _this3.pageText[0].chapter_id;
       });
       this.selectedPage.name = _book_name;
       this.selectedPage.chapter = _chapter;
