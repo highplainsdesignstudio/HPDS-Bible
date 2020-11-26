@@ -24,7 +24,12 @@
 </template>
 
 <script>
+    import LeafComponent from './LeafComponent.vue';
+
     export default {
+        components: {
+            'leaf-component': LeafComponent
+        },
         methods: {
             leafPage: function (_type){
                 this.$emit('leaf-page', _type);

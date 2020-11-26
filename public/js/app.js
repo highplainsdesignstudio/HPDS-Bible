@@ -2118,6 +2118,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LeafComponent.vue */ "./resources/js/components/Bible/LeafComponent.vue");
 //
 //
 //
@@ -2143,7 +2144,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   methods: {
     leafPage: function leafPage(_type) {
       this.$emit('leaf-page', _type);
@@ -53343,8 +53348,10 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
+/* harmony import */ var _components_Bible_IndexComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Bible/IndexComponent.vue */ "./resources/js/components/Bible/IndexComponent.vue");
+/* harmony import */ var _components_Bible_PageComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -53363,11 +53370,15 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Register global components.
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
+// Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+// Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+// Import local components.
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('index-component', __webpack_require__(/*! ./components/Bible/IndexComponent.vue */ "./resources/js/components/Bible/IndexComponent.vue")["default"]);
-Vue.component('page-component', __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue")["default"]);
-Vue.component('leaf-component', __webpack_require__(/*! ./components/Bible/LeafComponent.vue */ "./resources/js/components/Bible/LeafComponent.vue")["default"]);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53377,14 +53388,14 @@ Vue.component('leaf-component', __webpack_require__(/*! ./components/Bible/LeafC
 
 
 
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var routes = [// { path: '/vue', component: Home, name: 'Home' },
 {
   path: '/read/example',
-  component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: 'ExampleComponent'
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   routes: routes // short for `routes: routes`
 
 }); // import router from './routes.js';
@@ -53392,6 +53403,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 var app = new Vue({
   el: '#app',
+  components: {
+    'index-component': _components_Bible_IndexComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'page-component': _components_Bible_PageComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: {
     books: null,
     pageText: null,

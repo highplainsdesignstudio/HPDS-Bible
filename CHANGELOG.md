@@ -1,6 +1,9 @@
 #Bible App
 A KJV Bible application built with Laravel.
 ##v0.0.4 (wip)
+###Fourth Commit (11/26/2020)
+* All components are now registered locally. 
+
 ###Third Commit (11/26/2020)
 * The leaf components have been stylized into buttons. 
 

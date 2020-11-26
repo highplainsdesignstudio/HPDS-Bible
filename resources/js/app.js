@@ -21,10 +21,15 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
-Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
-Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+// Register global components.
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
+// Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+// Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+
+// Import local components.
+import IndexComponent from './components/Bible/IndexComponent.vue';
+import PageComponent from './components/Bible/PageComponent.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,6 +55,10 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
+    components: {
+        'index-component': IndexComponent,
+        'page-component': PageComponent
+    },
     data: {
         books: null,
         pageText: null,
