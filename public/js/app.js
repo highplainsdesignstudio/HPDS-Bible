@@ -2098,13 +2098,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     clickLeaf: function clickLeaf() {
@@ -2125,6 +2118,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38035,83 +38036,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card",
-            on: {
-              click: function($event) {
-                return _vm.clickLeaf()
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Leaf Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm.type == -1
-                ? _c("span", [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "bi bi-arrow-left",
-                        attrs: {
-                          width: "3em",
-                          height: "2em",
-                          viewBox: "0 0 16 16",
-                          fill: "currentColor",
-                          xmlns: "http://www.w3.org/2000/svg"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            "fill-rule": "evenodd",
-                            d:
-                              "M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-                          }
-                        })
-                      ]
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.type == 1
-                ? _c("span", [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "bi bi-arrow-right",
-                        attrs: {
-                          width: "3em",
-                          height: "2em",
-                          viewBox: "0 0 16 16",
-                          fill: "currentColor",
-                          xmlns: "http://www.w3.org/2000/svg"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            "fill-rule": "evenodd",
-                            d:
-                              "M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                          }
-                        })
-                      ]
-                    )
-                  ])
-                : _vm._e()
+  return _c("div", { staticClass: "leaf" }, [
+    _c(
+      "button",
+      {
+        class: [
+          _vm.type == 1 ? "leaf-next" : "leaf-previous",
+          "btn",
+          "btn-primary"
+        ],
+        on: {
+          click: function($event) {
+            return _vm.clickLeaf()
+          }
+        }
+      },
+      [
+        _vm.type == -1
+          ? _c("span", [
+              _c(
+                "svg",
+                {
+                  staticClass: "bi bi-arrow-left",
+                  attrs: {
+                    width: "3em",
+                    height: "2em",
+                    viewBox: "0 0 16 16",
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    }
+                  })
+                ]
+              )
             ])
-          ]
-        )
-      ])
-    ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.type == 1
+          ? _c("span", [
+              _c(
+                "svg",
+                {
+                  staticClass: "bi bi-arrow-right",
+                  attrs: {
+                    width: "3em",
+                    height: "2em",
+                    viewBox: "0 0 16 16",
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    }
+                  })
+                ]
+              )
+            ])
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -38137,39 +38132,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.page.name
-    ? _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("div", [
-            _c("h1", { staticClass: "text-center" }, [
-              _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.chapterText, function(text, index) {
-            return _c("div", { key: text.id, staticClass: "verse" }, [
-              _c("p", [
-                _c("span", { staticClass: "h5" }, [
-                  _vm._v(_vm._s(index + 1) + ": ")
-                ]),
-                _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
-              ])
-            ])
-          }),
-          _vm._v(" "),
-          _c("leaf-component", {
-            attrs: { type: "-1" },
-            on: { "leaf-page": _vm.leafPage }
-          }),
-          _vm._v(" "),
-          _c("leaf-component", {
-            attrs: { type: "1" },
-            on: { "leaf-page": _vm.leafPage }
-          })
-        ],
-        2
-      )
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("h1", { staticClass: "col-12 text-center" }, [
+            _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _c("leaf-component", {
+              staticClass: "col-1",
+              attrs: { type: "-1" },
+              on: { "leaf-page": _vm.leafPage }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-10" },
+              _vm._l(_vm.chapterText, function(text, index) {
+                return _c("div", { key: text.id, staticClass: "verse" }, [
+                  _c("p", [
+                    _c("span", { staticClass: "h5" }, [
+                      _vm._v(_vm._s(index + 1) + ": ")
+                    ]),
+                    _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
+                  ])
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("leaf-component", {
+              staticClass: "col-1",
+              attrs: { type: "1" },
+              on: { "leaf-page": _vm.leafPage }
+            })
+          ],
+          1
+        )
+      ])
     : _vm._e()
 }
 var staticRenderFns = []

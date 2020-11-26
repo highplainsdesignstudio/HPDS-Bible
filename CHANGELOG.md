@@ -1,6 +1,9 @@
 #Bible App
 A KJV Bible application built with Laravel.
 ##v0.0.4 (wip)
+###Third Commit (11/26/2020)
+* The leaf components have been stylized into buttons. 
+
 ###Second Commit (11/24/2020)
 * Updated the DatabaseSeeder to use the chapter_id to the verses table. This id is the 
 chapter count in which it appears in the whole Bible, and not just the numbered chapter within each book.
