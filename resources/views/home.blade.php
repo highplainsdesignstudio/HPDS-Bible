@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Profile</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,8 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    
+                    <p>Name: {{ $user->name }}</p>
+                    <p>Email: {{ $user->email }}</p>
+                    <a class="btn btn-primary" href="{{ route('bible') }}">
+                        Read Bible
+                    </a>
+                        <?php
+                            //  print_r($user);
+                        ?>
+                    
                 </div>
             </div>
         </div>

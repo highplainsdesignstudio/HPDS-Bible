@@ -33,7 +33,7 @@
                                                 <span v-for="chapter in book.chapter_count"
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter"
-                                                    v-on:click="selectPage(book.book, book.id, chapter)"> <u>{{chapter}}</u> | </span>
+                                                    v-on:click="selectPage(book.id, chapter)"> <u>{{chapter}}</u> | </span>
                                             </div>
                                         </li>
                                     </ul>
@@ -47,7 +47,7 @@
                                                 <span v-for="chapter in book.chapter_count" 
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter"
-                                                    v-on:click="selectPage(book.book, book.id, chapter)"> <u>{{chapter}}</u> |</span>
+                                                    v-on:click="selectPage(book.id, chapter)"> <u>{{chapter}}</u> |</span>
                                             </div>
                                         </li>
                                     </ul>

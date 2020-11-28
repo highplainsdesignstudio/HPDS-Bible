@@ -1,13 +1,19 @@
-#Bible App
+# Bible App
 A KJV Bible application built with Laravel.
-##v0.0.4 (wip)
-###Fourth Commit (11/26/2020)
+## v0.0.4 (11/28/2020)
+## Fifth Commit (11/28/2020)
+* Changes made to the user dashboard.
+* Changes made to the navigation dropdown links.
+* Removed book name from parameters from selectPage method on app object.
+* Cookies are now used to remember the last selectedPage. When a user navigates to the Bible route, 
+the front end checks for cookies to determine the saved book id and chapter.
+### Fourth Commit (11/26/2020)
 * All components are now registered locally. 
 
-###Third Commit (11/26/2020)
+### Third Commit (11/26/2020)
 * The leaf components have been stylized into buttons. 
 
-###Second Commit (11/24/2020)
+### Second Commit (11/24/2020)
 * Updated the DatabaseSeeder to use the chapter_id to the verses table. This id is the 
 chapter count in which it appears in the whole Bible, and not just the numbered chapter within each book.
 * The create verses migration now creates a column called chapter_id instead of chapter. This id is a foreign 
@@ -16,7 +22,7 @@ key to the chapters table.
 * The leaf components have been put into place and the user can now traverse chapters by clicking
 the components. One is for the previous chapter, and the other is for the next chapter. 
 
-###First Commit (11/23/2020)
+### First Commit (11/23/2020)
 * Added a <leaf-component> that will serve as the component to go to the previous
 or next chapters.
 * Added a Chapter model in order to add every chapter to the database.
@@ -24,14 +30,14 @@ or next chapters.
 * Added source maps to the webpack.mix.js file to assist with debugging.
 * Moved the fetch api/books processing from the index component to the app component.
 
-##v0.0.3 (11/22/2020)
+## v0.0.3 (11/22/2020)
 * Updated some node packages.
 * Added routes to handle user registration email verification.
 * Added the KJV.json.
 * Minor changes to frontend components. 
 * Moved to new repository location for future development.
 
-##v0.0.2 (11/13/2020)
+## v0.0.2 (11/13/2020)
 * Added GetBibleController
 * The main page now shows links to read the Bible
 * There is now a Read page that houses a vue app.
@@ -43,7 +49,7 @@ bible book.
 * <page-component> created to house the chapter text.
 * Updated Laravel from v7 to v8.14.0
 
-##v0.0.1 (05/20/20)
+## v0.0.1 (05/20/20)
 * CHANGELOG.md
 * npm install && npm run dev
 * composer require laravel/ui

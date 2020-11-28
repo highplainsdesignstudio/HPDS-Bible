@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Bible;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// use Symfony\Component\HttpFoundation\Cookie;
 use App\Models\Book;
 use App\Models\Chapter;
 use App\Models\Verse;
@@ -27,10 +28,18 @@ class GetBibleController extends Controller
             $chapter_id = $chap->id;
         }
 
-
-        return Verse::where('book_id', $book_id)
+        $verses = Verse::where('book_id', $book_id)
             ->where('chapter_id', $chapter_id)
             ->get();
+
+        return response($verses);
+            // ->cookie('book_id', $book_id)
+            // ->cookie('chapter_id', $chapter);
+        // $cookie = Cookie::make('pizza', 'there is pizza');
+        // return Verse::where('book_id', $book_id)
+        //     ->where('chapter_id', $chapter_id)
+        //     ->get()
+        //     ->cookie($cookie);
     }
 
     public function getChapterId($chapter_id) {
