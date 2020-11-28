@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVersesTable extends Migration
+class CreateChaptersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateVersesTable extends Migration
      */
     public function up()
     {
-        Schema::create('verses', function (Blueprint $table) {
+        Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('testament_id');
             $table->foreignId('book_id');
-            // $table->integer('chapter');
-            $table->foreignId('chapter_id');
-            $table->string('verse', 650);
+            $table->integer('book_chapter');
         });
     }
 
@@ -31,6 +28,6 @@ class CreateVersesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('verses');
+        Schema::dropIfExists('chapters');
     }
 }

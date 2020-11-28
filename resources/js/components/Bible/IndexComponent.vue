@@ -33,7 +33,7 @@
                                                 <span v-for="chapter in book.chapter_count"
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter"
-                                                    v-on:click="selectPage(book.book, book.id, chapter)"> <u>{{chapter}}</u> | </span>
+                                                    v-on:click="selectPage(book.id, chapter)"> <u>{{chapter}}</u> | </span>
                                             </div>
                                         </li>
                                     </ul>
@@ -47,7 +47,7 @@
                                                 <span v-for="chapter in book.chapter_count" 
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter"
-                                                    v-on:click="selectPage(book.book, book.id, chapter)"> <u>{{chapter}}</u> |</span>
+                                                    v-on:click="selectPage(book.id, chapter)"> <u>{{chapter}}</u> |</span>
                                             </div>
                                         </li>
                                     </ul>
@@ -63,18 +63,21 @@
 
 <script>
     export default {
-        created: function() {
-            fetch('api/books')
-            .then(response => response.json())
-            .then(data => {
-                this.books = data;
-            });
-        },
-        data: function() {
-            return {
-                books: null
-            }
-        },
+        //TODO: Currently, the IndexComponent is responsible for retrieving the list of books from the database.
+        // This should be done within the app component instead of this component. The list of books should then be
+        // passed as a prop to this component.
+        // created: function() {
+        //     fetch('api/books')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.books = data;
+        //     });
+        // },
+        // data: function() {
+        //     return {
+        //         books: null
+        //     }
+        // },
         computed: {
             oldTestament: function() {
                 let _old = [];
@@ -135,6 +138,7 @@
                 _upCaret.classList.toggle('d-none');
                 this.toggleChapters(null);
             }
-        }
+        },
+        props: ["books"]
     }
 </script>

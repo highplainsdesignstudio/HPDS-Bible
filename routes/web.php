@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +23,12 @@ Route::get('/', function() {
 });
 
 Route::get('/read', function() {
+    // check for cookies for current book id and chapter id.
+    $bookId = Cookie::get();
+    // $bookId = $request->cookie('book_id');
+
     return view('bible.index');
-});
+}) ->name('bible');
 
 Route::get('/home', 'HomeController@index')->name('home'); 
 

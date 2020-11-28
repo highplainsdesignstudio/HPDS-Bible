@@ -21,9 +21,15 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
-Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+// Register global components.
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
+// Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+// Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+
+// Import local components.
+import IndexComponent from './components/Bible/IndexComponent.vue';
+import PageComponent from './components/Bible/PageComponent.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -49,20 +55,94 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
+    components: {
+        'index-component': IndexComponent,
+        'page-component': PageComponent
+    },
     data: {
+        books: null,
         pageText: null,
-        selectedPage: {name: null, chapter: null}
+        selectedPage: {name: null, chapter: null, chapter_id: null}
+    },
+    created: function() {
+        fetch('api/books')
+        .then(response => response.json())
+        .then(data => {
+            this.books = data;
+
+            // Retrieve cookies if they are set.
+            let _bookCookie = this.getCookie('book_id');
+            let _chapterCookie = this.getCookie('chapter');
+            if (_bookCookie != '' && _bookCookie != null
+            && _chapterCookie != null && _chapterCookie != '') {
+                console.log('cookies are set.');
+                this.selectPage(_bookCookie, _chapterCookie);
+            } else {
+                console.log('cookies are NOT set.');
+            }
+        });    
     },
     methods: {
-        selectPage: function(_book_name, _book_id, _chapter) {
+        getCookie: function(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        },
+        leafPage: function(_type) {
+            let _newChapterId = parseInt(this.selectedPage.chapter_id) + parseInt(_type);
+            if (_newChapterId < 1) {
+                _newChapterId = 1189;
+            } else if (_newChapterId > 1189) {
+                _newChapterId = 1;
+            }
+            fetch('api/chapter/' + _newChapterId)
+                .then(response => response.json())
+                .then(data => {
+                    this.selectPage(data[0].book_id, data[0].book_chapter);
+                });
+        },
+        setCookie: function(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+          },
+        selectPage: function(_book_id, _chapter) {
             fetch('api/' + _book_id + '/' + _chapter)
             .then(response => response.json())
             .then(data => {
                 this.pageText = data;
+                this.selectedPage.chapter_id = this.pageText[0].chapter_id;
             });
-            this.selectedPage.name = _book_name;
+            // this.selectedPage.name = _book_name;
+            this.selectedPage.name = this.books[_book_id - 1].book;
             this.selectedPage.chapter = _chapter;
+
+            this.setCookie('book_id', _book_id, 30);
+            this.setCookie('chapter', _chapter, 30);
         }
     },
+    // mounted: function () {
+    //     let _bookCookie = this.getCookie('book_id');
+    //     let _chapterCookie = this.getCookie('chapter_id');
+    //     console.log(document.cookie)
+    //     console.log(_bookCookie + ' : ' + _chapterCookie);
+    //     if (_bookCookie != '' && _bookCookie != null
+    //         && _chapterCookie != null && _chapterCookie != '') {
+    //             console.log('cookies are set.')
+    //     } else {
+    //         console.log('cookies are NOT set.');
+    //     }
+    // },
     router
 }).$mount('#app');

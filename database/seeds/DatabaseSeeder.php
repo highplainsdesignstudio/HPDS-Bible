@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Testament;
 use App\Models\Book;
+use App\Models\Chapter;
 use App\Models\Verse;
 
 class DatabaseSeeder extends Seeder
@@ -45,13 +46,19 @@ class DatabaseSeeder extends Seeder
 
             // Cycle through the chapters to determine the chapter count.
             $chapterCount = 0;
-            foreach($chapters as $chapter => $verses) {
+            foreach($chapters as $chapterIndex => $verses) {
+                // While cycling through the chapters, insert the chapter into the chapters table.
+                $chapter = new Chapter;
+                $chapter->book_id = $index;
+                $chapter->book_chapter = $chapterIndex;
+                $chapter->save();
+
                 // While cycling through chapters, insert the verses.
                 foreach($verses as $verseText) {
                     $verse = new Verse;
                     $verse->testament_id = $testament_id;
                     $verse->book_id = $index;
-                    $verse->chapter = $chapter;
+                    $verse->chapter_id = $chapter->id;
                     $verse->verse = $verseText;
                     $verse->save();
                 }

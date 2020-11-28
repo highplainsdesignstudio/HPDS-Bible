@@ -10938,6 +10938,14 @@ a.text-dark:focus {
   font-size: larger;
 }
 
+.leaf {
+  text-align: center;
+}
+
+.leaf button {
+  height: 100%;
+}
+
 .sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -10948,3 +10956,5 @@ a.text-dark:focus {
   background-color: greenyellow;
 }
 
+
+/*# sourceMappingURL=app.css.map*/

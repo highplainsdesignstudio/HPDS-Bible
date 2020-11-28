@@ -1972,20 +1972,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    var _this = this;
-
-    fetch('api/books').then(function (response) {
-      return response.json();
-    }).then(function (data) {
-      _this.books = data;
-    });
-  },
-  data: function data() {
-    return {
-      books: null
-    };
-  },
+  //TODO: Currently, the IndexComponent is responsible for retrieving the list of books from the database.
+  // This should be done within the app component instead of this component. The list of books should then be
+  // passed as a prop to this component.
+  // created: function() {
+  //     fetch('api/books')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //         this.books = data;
+  //     });
+  // },
+  // data: function() {
+  //     return {
+  //         books: null
+  //     }
+  // },
   computed: {
     oldTestament: function oldTestament() {
       var _old = [];
@@ -2061,14 +2062,15 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggleChapters(null);
     }
-  }
+  },
+  props: ["books"]
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -2088,7 +2090,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    clickLeaf: function clickLeaf() {
+      this.$emit('leaf-page', this.type);
+    }
+  },
+  props: ['type']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/PageComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LeafComponent.vue */ "./resources/js/components/Bible/LeafComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    leafPage: function leafPage(_type) {
+      this.$emit('leaf-page', _type);
+    }
+  },
   props: ['page', 'chapterText']
 });
 
@@ -37841,11 +37906,7 @@ var render = function() {
                                     staticClass: "chapter-select-number",
                                     on: {
                                       click: function($event) {
-                                        return _vm.selectPage(
-                                          book.book,
-                                          book.id,
-                                          chapter
-                                        )
+                                        return _vm.selectPage(book.id, chapter)
                                       }
                                     }
                                   },
@@ -37907,11 +37968,7 @@ var render = function() {
                                     staticClass: "chapter-select-number",
                                     on: {
                                       click: function($event) {
-                                        return _vm.selectPage(
-                                          book.book,
-                                          book.id,
-                                          chapter
-                                        )
+                                        return _vm.selectPage(book.id, chapter)
                                       }
                                     }
                                   },
@@ -37961,6 +38018,101 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "leaf" }, [
+    _c(
+      "button",
+      {
+        class: [
+          _vm.type == 1 ? "leaf-next" : "leaf-previous",
+          "btn",
+          "btn-primary"
+        ],
+        on: {
+          click: function($event) {
+            return _vm.clickLeaf()
+          }
+        }
+      },
+      [
+        _vm.type == -1
+          ? _c("span", [
+              _c(
+                "svg",
+                {
+                  staticClass: "bi bi-arrow-left",
+                  attrs: {
+                    width: "3em",
+                    height: "2em",
+                    viewBox: "0 0 16 16",
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    }
+                  })
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.type == 1
+          ? _c("span", [
+              _c(
+                "svg",
+                {
+                  staticClass: "bi bi-arrow-right",
+                  attrs: {
+                    width: "3em",
+                    height: "2em",
+                    viewBox: "0 0 16 16",
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "fill-rule": "evenodd",
+                      d:
+                        "M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
+                    }
+                  })
+                ]
+              )
+            ])
+          : _vm._e()
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Bible/PageComponent.vue?vue&type=template&id=368c5858& ***!
@@ -37977,29 +38129,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.page.name
-    ? _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("div", [
-            _c("h1", { staticClass: "text-center" }, [
-              _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.chapterText, function(text, index) {
-            return _c("div", { key: text.id, staticClass: "verse" }, [
-              _c("p", [
-                _c("span", { staticClass: "h5" }, [
-                  _vm._v(_vm._s(index + 1) + ": ")
-                ]),
-                _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
-              ])
-            ])
-          })
-        ],
-        2
-      )
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("h1", { staticClass: "col-12 text-center" }, [
+            _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _c("leaf-component", {
+              staticClass: "col-1",
+              attrs: { type: "-1" },
+              on: { "leaf-page": _vm.leafPage }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-10" },
+              _vm._l(_vm.chapterText, function(text, index) {
+                return _c("div", { key: text.id, staticClass: "verse" }, [
+                  _c("p", [
+                    _c("span", { staticClass: "h5" }, [
+                      _vm._v(_vm._s(index + 1) + ": ")
+                    ]),
+                    _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
+                  ])
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("leaf-component", {
+              staticClass: "col-1",
+              attrs: { type: "1" },
+              on: { "leaf-page": _vm.leafPage }
+            })
+          ],
+          1
+        )
+      ])
     : _vm._e()
 }
 var staticRenderFns = []
@@ -53169,8 +53340,10 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
+/* harmony import */ var _components_Bible_IndexComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Bible/IndexComponent.vue */ "./resources/js/components/Bible/IndexComponent.vue");
+/* harmony import */ var _components_Bible_PageComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -53189,10 +53362,15 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// Register global components.
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
+// Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
+// Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+// Import local components.
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('index-component', __webpack_require__(/*! ./components/Bible/IndexComponent.vue */ "./resources/js/components/Bible/IndexComponent.vue")["default"]);
-Vue.component('page-component', __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue")["default"]);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53202,14 +53380,14 @@ Vue.component('page-component', __webpack_require__(/*! ./components/Bible/PageC
 
 
 
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var routes = [// { path: '/vue', component: Home, name: 'Home' },
 {
   path: '/read/example',
-  component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: 'ExampleComponent'
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   routes: routes // short for `routes: routes`
 
 }); // import router from './routes.js';
@@ -53217,26 +53395,111 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 var app = new Vue({
   el: '#app',
+  components: {
+    'index-component': _components_Bible_IndexComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'page-component': _components_Bible_PageComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: {
-    chapterText: null,
+    books: null,
+    pageText: null,
     selectedPage: {
       name: null,
-      chapter: null
+      chapter: null,
+      chapter_id: null
     }
   },
+  created: function created() {
+    var _this = this;
+
+    fetch('api/books').then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      _this.books = data; // Retrieve cookies if they are set.
+
+      var _bookCookie = _this.getCookie('book_id');
+
+      var _chapterCookie = _this.getCookie('chapter');
+
+      if (_bookCookie != '' && _bookCookie != null && _chapterCookie != null && _chapterCookie != '') {
+        console.log('cookies are set.');
+
+        _this.selectPage(_bookCookie, _chapterCookie);
+      } else {
+        console.log('cookies are NOT set.');
+      }
+    });
+  },
   methods: {
-    selectPage: function selectPage(_book_name, _book_id, _chapter) {
-      var _this = this;
+    getCookie: function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+
+      return "";
+    },
+    leafPage: function leafPage(_type) {
+      var _this2 = this;
+
+      var _newChapterId = parseInt(this.selectedPage.chapter_id) + parseInt(_type);
+
+      if (_newChapterId < 1) {
+        _newChapterId = 1189;
+      } else if (_newChapterId > 1189) {
+        _newChapterId = 1;
+      }
+
+      fetch('api/chapter/' + _newChapterId).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this2.selectPage(data[0].book_id, data[0].book_chapter);
+      });
+    },
+    setCookie: function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    },
+    selectPage: function selectPage(_book_id, _chapter) {
+      var _this3 = this;
 
       fetch('api/' + _book_id + '/' + _chapter).then(function (response) {
         return response.json();
       }).then(function (data) {
-        _this.chapterText = data;
-      });
-      this.selectedPage.name = _book_name;
+        _this3.pageText = data;
+        _this3.selectedPage.chapter_id = _this3.pageText[0].chapter_id;
+      }); // this.selectedPage.name = _book_name;
+
+      this.selectedPage.name = this.books[_book_id - 1].book;
       this.selectedPage.chapter = _chapter;
+      this.setCookie('book_id', _book_id, 30);
+      this.setCookie('chapter', _chapter, 30);
     }
   },
+  // mounted: function () {
+  //     let _bookCookie = this.getCookie('book_id');
+  //     let _chapterCookie = this.getCookie('chapter_id');
+  //     console.log(document.cookie)
+  //     console.log(_bookCookie + ' : ' + _chapterCookie);
+  //     if (_bookCookie != '' && _bookCookie != null
+  //         && _chapterCookie != null && _chapterCookie != '') {
+  //             console.log('cookies are set.')
+  //     } else {
+  //         console.log('cookies are NOT set.');
+  //     }
+  // },
   router: router
 }).$mount('#app');
 
@@ -53351,6 +53614,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexComponent_vue_vue_type_template_id_10e40611___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexComponent_vue_vue_type_template_id_10e40611___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/LeafComponent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Bible/LeafComponent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LeafComponent.vue?vue&type=template&id=40e5a3e9& */ "./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9&");
+/* harmony import */ var _LeafComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LeafComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LeafComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Bible/LeafComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LeafComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./LeafComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/LeafComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LeafComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LeafComponent.vue?vue&type=template&id=40e5a3e9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Bible/LeafComponent.vue?vue&type=template&id=40e5a3e9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LeafComponent_vue_vue_type_template_id_40e5a3e9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -53519,3 +53851,4 @@ module.exports = __webpack_require__(/*! C:\xampp\htdocs\HPDS-Bible\resources\sa
 /***/ })
 
 /******/ });
+//# sourceMappingURL=app.js.map
