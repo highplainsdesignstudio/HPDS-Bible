@@ -1,7 +1,9 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
-
+### First commit (12/11/2020)
+* Installed Laravel Sanctum via composer.
+* Set up the work for a Highlight Component that will serve as the component that will save verses for users that are logged in.
 ## v0.0.4 (11/28/2020)
 ## Fifth Commit (11/28/2020)
 * Changes made to the user dashboard.

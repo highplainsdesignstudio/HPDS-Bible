@@ -49,3 +49,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('status', 'verification-link-sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+// Sanctum test
+Route::middleware('auth:sanctum')->get('/stest', function (Request $request) {
+    return $request->user();
+});

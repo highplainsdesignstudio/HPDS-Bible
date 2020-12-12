@@ -9,32 +9,35 @@
             <div class="col-10">
                 <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
                     <p><span class="h5">{{ index + 1 }}: </span><span v-html="text.verse"></span></p>
+                    <div v-if="loggedIn == 'true'">
+                        <highlight-component></highlight-component>
+                    </div>
                 </div>
             </div>
             
             <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component>
 
         </div>
-
-        
-
-
-
     </div>
 </template>
 
 <script>
     import LeafComponent from './LeafComponent.vue';
+    import HighlightComponent from './HighlightComponent.vue';
 
     export default {
         components: {
-            'leaf-component': LeafComponent
+            'leaf-component': LeafComponent,
+            'highlight-component': HighlightComponent
         },
         methods: {
             leafPage: function (_type){
                 this.$emit('leaf-page', _type);
             }
         },
-        props: ['page', 'chapterText']
+        created: function () {
+            console.log(this.loggedIn);
+        },
+        props: ['page', 'chapterText', 'loggedIn']
     }
 </script>

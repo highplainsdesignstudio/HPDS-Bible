@@ -146,3 +146,13 @@ const app = new Vue({
     // },
     router
 }).$mount('#app');
+
+
+/**
+ * The form components. It was created to facilitate Sanctum testing.
+ * If it is not needed for the front end in the future, it can be deleted.
+ * However, the login.blade.php file must remove the div#login-app. 
+ */
+const loginApp = new Vue ({
+    el: '#login-app'
+});
