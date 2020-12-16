@@ -20,6 +20,7 @@ class CreateVersesTable extends Migration
             $table->foreignId('book_id');
             // $table->integer('chapter');
             $table->foreignId('chapter_id');
+            $table->integer('chapter_verse');
             $table->string('verse', 650);
         });
     }

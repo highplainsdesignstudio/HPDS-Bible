@@ -54,11 +54,12 @@ class DatabaseSeeder extends Seeder
                 $chapter->save();
 
                 // While cycling through chapters, insert the verses.
-                foreach($verses as $verseText) {
+                foreach($verses as $chapterVerse => $verseText) {
                     $verse = new Verse;
                     $verse->testament_id = $testament_id;
                     $verse->book_id = $index;
                     $verse->chapter_id = $chapter->id;
+                    $verse->chapter_verse = $chapterVerse;
                     $verse->verse = $verseText;
                     $verse->save();
                 }

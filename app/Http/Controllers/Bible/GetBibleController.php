@@ -16,7 +16,7 @@ class GetBibleController extends Controller
         return Book::all();
     }
 
-    public function getBibleChapter($book_id, $chapter) {
+    public function getBibleChapterText($book_id, $chapter) {
         //TODO: This query needs to change to look up the chapter_id from the chapters table.
 
         $chapter_row = Chapter::where('book_id', $book_id)
@@ -42,7 +42,7 @@ class GetBibleController extends Controller
         //     ->cookie($cookie);
     }
 
-    public function getChapterId($chapter_id) {
+    public function getChapterById($chapter_id) {
         return Chapter::where('id', $chapter_id)
             ->get();
     }

@@ -22,11 +22,7 @@ Route::get('/', function() {
     return view('welcome');
 });
 
-Route::get('/read', function() {
-    // check for cookies for current book id and chapter id.
-    $bookId = Cookie::get();
-    // $bookId = $request->cookie('book_id');
-
+Route::get('/read', function(Request $request) {
     return view('bible.index');
 }) ->name('bible');
 

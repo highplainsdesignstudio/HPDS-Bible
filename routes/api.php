@@ -19,8 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/books','Bible\GetBibleController@getBibleBooks');
-Route::get('/chapter/{chapter_id}', 'Bible\GetBibleController@getChapterId');
+Route::get('/chapter/{chapter_id}', 'Bible\GetBibleController@getChapterById');
 
 
-Route::get('/{book_id}/{chapter}', 'Bible\GetBibleController@getBibleChapter');
+Route::get('/{book_id}/{chapter}', 'Bible\GetBibleController@getBibleChapterText');
 
+Route::resource('highlights', Bible\HighlightedVerses::class)->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->get('/stest', function (Request $request) {
+    return $request->user();
+});

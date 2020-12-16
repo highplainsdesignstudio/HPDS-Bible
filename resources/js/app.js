@@ -26,6 +26,7 @@ window.Vue = require('vue');
 // Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
 // Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
 // Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+// Vue.component('login-component', require('./components/Form/LoginComponent.vue').default);
 
 // Import local components.
 import IndexComponent from './components/Bible/IndexComponent.vue';
@@ -65,6 +66,7 @@ const app = new Vue({
         selectedPage: {name: null, chapter: null, chapter_id: null}
     },
     created: function() {
+        console.log(this.loggedIn);
         fetch('api/books')
         .then(response => response.json())
         .then(data => {
@@ -74,12 +76,13 @@ const app = new Vue({
             let _bookCookie = this.getCookie('book_id');
             let _chapterCookie = this.getCookie('chapter');
             if (_bookCookie != '' && _bookCookie != null
-            && _chapterCookie != null && _chapterCookie != '') {
-                console.log('cookies are set.');
+                && _chapterCookie != null && _chapterCookie != '') {
+                // console.log('cookies are set.');
                 this.selectPage(_bookCookie, _chapterCookie);
-            } else {
-                console.log('cookies are NOT set.');
-            }
+            } 
+            // else {
+            //     console.log('cookies are NOT set.');
+            // }
         });    
     },
     methods: {
@@ -146,13 +149,3 @@ const app = new Vue({
     // },
     router
 }).$mount('#app');
-
-
-/**
- * The form components. It was created to facilitate Sanctum testing.
- * If it is not needed for the front end in the future, it can be deleted.
- * However, the login.blade.php file must remove the div#login-app. 
- */
-const loginApp = new Vue ({
-    el: '#login-app'
-});

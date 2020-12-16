@@ -1916,15 +1916,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    highlight: function highlight() {
+      console.log("You want to highlight green!");
+    }
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -2176,6 +2173,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2183,15 +2191,59 @@ __webpack_require__.r(__webpack_exports__);
     'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'highlight-component': _HighlightComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  created: function created() {},
+  data: function data() {
+    return {
+      highlightComponentIndex: null
+    };
+  },
   methods: {
+    hideHighlightComponent: function hideHighlightComponent(_index) {
+      this.highlightComponentIndex = null;
+    },
     leafPage: function leafPage(_type) {
       this.$emit('leaf-page', _type);
+    },
+    showHighlightComponent: function showHighlightComponent(_index) {
+      if (this.highlightComponentIndex === null) {
+        this.toggleHighlightComponent(_index);
+        this.highlightComponentIndex = _index;
+      } else if (this.highlightComponentIndex !== _index) {
+        this.toggleHighlightComponent(this.highlightComponentIndex);
+        this.toggleHighlightComponent(_index);
+        this.highlightComponentIndex = _index;
+      } else if (this.highlightComponentIndex === _index) {
+        this.toggleHighlightComponent(_index);
+        this.highlightComponentIndex = null;
+      }
+    },
+    toggleHighlightComponent: function toggleHighlightComponent(_index) {
+      var _verse = document.getElementById('verse-' + _index);
+
+      var _verseClasses = _verse.classList;
+
+      _verseClasses.toggle('col-9');
+
+      _verseClasses.toggle('col-12');
+
+      var _highlightComponent = document.getElementById("highlight-component-" + _index);
+
+      var _componentClasses = _highlightComponent.classList;
+
+      _componentClasses.toggle('d-none');
     }
   },
-  created: function created() {
-    console.log(this.loggedIn);
+  mounted: function mounted() {
+    console.log(this.apiToken);
+    axios.get('api/stest', {
+      headers: {
+        'Authorization': "Bearer ".concat(this.apiToken)
+      }
+    }).then(function (response) {
+      console.log(response);
+    });
   },
-  props: ['page', 'chapterText', 'loggedIn']
+  props: ['page', 'chapterText', 'loggedIn', 'apiToken']
 });
 
 /***/ }),
@@ -2223,7 +2275,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    axios.get('stest').then(function (response) {
+      console.log(response);
+    });
   }
 });
 
@@ -37821,32 +37875,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { on: { click: _vm.highlight } }, [
+    _c(
+      "svg",
+      {
+        staticClass: "bi bi-circle-fill",
+        attrs: {
+          xmlns: "http://www.w3.org/2000/svg",
+          width: "16",
+          height: "16",
+          fill: "green",
+          viewBox: "0 0 16 16"
+        }
+      },
+      [_c("circle", { attrs: { cx: "8", cy: "8", r: "8" } })]
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm a highlight component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38235,16 +38281,54 @@ var render = function() {
               { staticClass: "col-10" },
               _vm._l(_vm.chapterText, function(text, index) {
                 return _c("div", { key: text.id, staticClass: "verse" }, [
-                  _c("p", [
-                    _c("span", { staticClass: "h5" }, [
-                      _vm._v(_vm._s(index + 1) + ": ")
-                    ]),
-                    _c("span", { domProps: { innerHTML: _vm._s(text.verse) } })
-                  ]),
-                  _vm._v(" "),
-                  _vm.loggedIn == "true"
-                    ? _c("div", [_c("highlight-component")], 1)
-                    : _vm._e()
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      on: {
+                        click: function($event) {
+                          return _vm.showHighlightComponent(index)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "col-12",
+                          attrs: { id: "verse-" + index }
+                        },
+                        [
+                          _c("span", { staticClass: "h5" }, [
+                            _vm._v(_vm._s(index + 1) + ": ")
+                          ]),
+                          _c("span", {
+                            domProps: { innerHTML: _vm._s(text.verse) }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-3 d-none",
+                          attrs: { id: "highlight-component-" + index }
+                        },
+                        [
+                          _vm.loggedIn == true
+                            ? _c("div", [_c("highlight-component")], 1)
+                            : _c("div", [
+                                _c("a", { attrs: { href: "/login" } }, [
+                                  _vm._v("Log in")
+                                ]),
+                                _vm._v(
+                                  " to save verses.\n                        "
+                                )
+                              ])
+                        ]
+                      )
+                    ]
+                  )
                 ])
               }),
               0
@@ -53455,6 +53539,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // Vue.component('index-component', require('./components/Bible/IndexComponent.vue').default);
 // Vue.component('page-component', require('./components/Bible/PageComponent.vue').default);
 // Vue.component('leaf-component', require('./components/Bible/LeafComponent.vue').default);
+// Vue.component('login-component', require('./components/Form/LoginComponent.vue').default);
 // Import local components.
 
 
@@ -53499,6 +53584,7 @@ var app = new Vue({
   created: function created() {
     var _this = this;
 
+    console.log(this.loggedIn);
     fetch('api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
@@ -53509,12 +53595,12 @@ var app = new Vue({
       var _chapterCookie = _this.getCookie('chapter');
 
       if (_bookCookie != '' && _bookCookie != null && _chapterCookie != null && _chapterCookie != '') {
-        console.log('cookies are set.');
-
+        // console.log('cookies are set.');
         _this.selectPage(_bookCookie, _chapterCookie);
-      } else {
-        console.log('cookies are NOT set.');
-      }
+      } // else {
+      //     console.log('cookies are NOT set.');
+      // }
+
     });
   },
   methods: {
@@ -53590,15 +53676,6 @@ var app = new Vue({
   // },
   router: router
 }).$mount('#app');
-/**
- * The form components. It was created to facilitate Sanctum testing.
- * If it is not needed for the front end in the future, it can be deleted.
- * However, the login.blade.php file must remove the div#login-app. 
- */
-
-var loginApp = new Vue({
-  el: '#login-app'
-});
 
 /***/ }),
 

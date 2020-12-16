@@ -1,9 +1,21 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
+### Second commit (12/15/2020)
+* Removed the Vue form app instance. It was unecessary.
+* <strike>HighlightComponent now shows up when the user mouseover's the verse and disappears on mouseout. If the user is not logged in,
+the user gets a message to log in to save verses.</strike>
+* The HighlightComponent now appears when the user clicks on the verse. It disappears if the user clicks a different verse or the same verse twice.
+* The 'verses' database table has been updated to include a 'chapter_verse' column. The migration and databaseseeder have been updated.
+* Added the HighlightedVerses controller resource.
+* Updated the Login and Logout control methods in order to create/delete Sanctum api key after logging in and logging out.
+The backend is now complete for the API key generation. The front end now has a temporary call to a backend api test route. 
+Additional API routes can now be added using the Sanctum middleware.
+
 ### First commit (12/11/2020)
 * Installed Laravel Sanctum via composer.
 * Set up the work for a Highlight Component that will serve as the component that will save verses for users that are logged in.
+
 ## v0.0.4 (11/28/2020)
 ## Fifth Commit (11/28/2020)
 * Changes made to the user dashboard.
