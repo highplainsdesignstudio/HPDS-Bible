@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Bible;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Highlight;
 
-class HighlightedVerses extends Controller
+class HighlightController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +15,11 @@ class HighlightedVerses extends Controller
      */
     public function index(Request $request)
     {
-        //
-        return response()->json([
-            'name' => 'Abigail',
-            'state' => 'CA',
-        ]);
+        return $request;
+        // return response()->json([
+        //     'name' => 'Abigail',
+        //     'state' => 'CA',
+        // ]);
     }
 
     /**
@@ -40,6 +41,30 @@ class HighlightedVerses extends Controller
     public function store(Request $request)
     {
         //
+        $userId = $request->input('userId');
+        $verseId = $request->input('verseId');
+
+        $existingHighlight = Highlight::where('user_id', $userId)
+            ->where('verse_id', $verseId)
+            ->first();
+
+        if ($existingHighlight != null) {
+            //Remove highlight if highlight is already in the database.
+            $existingHighlight->delete();
+            $action = "deleted";
+        } else {
+            $highlight = new Highlight;
+            $highlight->user_id =  (int)$userId;
+            $highlight->verse_id = (int)$verseId;
+            $highlight->color = 1;
+            $highlight->save();
+            $action = "created";
+        }
+
+        return response()->json([
+                'action' => $action,
+                'verse' => $verseId,
+            ]);
     }
 
     /**

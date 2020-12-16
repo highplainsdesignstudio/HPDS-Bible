@@ -14,7 +14,7 @@
                         
                         <div :id="'highlight-component-' + index" class="col-3 d-none">
                             <div v-if="loggedIn == true">
-                                <highlight-component></highlight-component>
+                                <highlight-component :verse-id="text.id" :user-id="userId"></highlight-component>
                             </div>
                             <div v-else>
                                 <a href="/login">Log in</a> to save verses.
@@ -42,7 +42,7 @@
             'highlight-component': HighlightComponent
         },
         created: function () {
-            
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
         data: function () {
             return {
@@ -82,15 +82,11 @@
         },
         mounted: function () {
             console.log(this.apiToken);
-            axios.get('api/stest', {
-                headers: {
-                    'Authorization': `Bearer ${this.apiToken}`
-                }
-            })
+            axios.get('api/highlights')
             .then(response => {
                 console.log(response);
             });
         },
-        props: ['page', 'chapterText', 'loggedIn', 'apiToken']
+        props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
     }
 </script>

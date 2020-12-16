@@ -1,6 +1,12 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
+### Third commit (12/16/2020)
+* Added a Highlight model and migration.
+* The HighlightedVerses controller has been renamed to HighlightController.
+* Minor code cleanup.
+* The HighlightComponent now saves or deletes a highlighted verse in the database.
+
 ### Second commit (12/15/2020)
 * Removed the Vue form app instance. It was unecessary.
 * <strike>HighlightComponent now shows up when the user mouseover's the verse and disappears on mouseout. If the user is not logged in,

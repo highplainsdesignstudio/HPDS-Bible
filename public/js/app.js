@@ -1919,12 +1919,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight() {
-      console.log("You want to highlight green!");
+      console.log(this.userId);
+      axios.post('api/highlights', {
+        userId: this.userId,
+        verseId: this.verseId
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
     console.log('Component mounted.');
-  }
+  },
+  props: ['userId', 'verseId']
 });
 
 /***/ }),
@@ -2191,7 +2200,9 @@ __webpack_require__.r(__webpack_exports__);
     'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'highlight-component': _HighlightComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  created: function created() {},
+  created: function created() {
+    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
+  },
   data: function data() {
     return {
       highlightComponentIndex: null
@@ -2235,15 +2246,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log(this.apiToken);
-    axios.get('api/stest', {
-      headers: {
-        'Authorization': "Bearer ".concat(this.apiToken)
-      }
-    }).then(function (response) {
+    axios.get('api/highlights').then(function (response) {
       console.log(response);
     });
   },
-  props: ['page', 'chapterText', 'loggedIn', 'apiToken']
+  props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
 });
 
 /***/ }),
@@ -2275,9 +2282,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    axios.get('stest').then(function (response) {
-      console.log(response);
-    });
+    console.log('Component mounted.');
   }
 });
 
@@ -38316,7 +38321,18 @@ var render = function() {
                         },
                         [
                           _vm.loggedIn == true
-                            ? _c("div", [_c("highlight-component")], 1)
+                            ? _c(
+                                "div",
+                                [
+                                  _c("highlight-component", {
+                                    attrs: {
+                                      "verse-id": text.id,
+                                      "user-id": _vm.userId
+                                    }
+                                  })
+                                ],
+                                1
+                              )
                             : _c("div", [
                                 _c("a", { attrs: { href: "/login" } }, [
                                   _vm._v("Log in")
@@ -53584,7 +53600,6 @@ var app = new Vue({
   created: function created() {
     var _this = this;
 
-    console.log(this.loggedIn);
     fetch('api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
@@ -53595,12 +53610,8 @@ var app = new Vue({
       var _chapterCookie = _this.getCookie('chapter');
 
       if (_bookCookie != '' && _bookCookie != null && _chapterCookie != null && _chapterCookie != '') {
-        // console.log('cookies are set.');
         _this.selectPage(_bookCookie, _chapterCookie);
-      } // else {
-      //     console.log('cookies are NOT set.');
-      // }
-
+      }
     });
   },
   methods: {
@@ -53653,6 +53664,7 @@ var app = new Vue({
         return response.json();
       }).then(function (data) {
         _this3.pageText = data;
+        console.log(_this3.pageText);
         _this3.selectedPage.chapter_id = _this3.pageText[0].chapter_id;
       }); // this.selectedPage.name = _book_name;
 
@@ -53662,18 +53674,6 @@ var app = new Vue({
       this.setCookie('chapter', _chapter, 30);
     }
   },
-  // mounted: function () {
-  //     let _bookCookie = this.getCookie('book_id');
-  //     let _chapterCookie = this.getCookie('chapter_id');
-  //     console.log(document.cookie)
-  //     console.log(_bookCookie + ' : ' + _chapterCookie);
-  //     if (_bookCookie != '' && _bookCookie != null
-  //         && _chapterCookie != null && _chapterCookie != '') {
-  //             console.log('cookies are set.')
-  //     } else {
-  //         console.log('cookies are NOT set.');
-  //     }
-  // },
   router: router
 }).$mount('#app');
 

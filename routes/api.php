@@ -24,7 +24,7 @@ Route::get('/chapter/{chapter_id}', 'Bible\GetBibleController@getChapterById');
 
 Route::get('/{book_id}/{chapter}', 'Bible\GetBibleController@getBibleChapterText');
 
-Route::resource('highlights', Bible\HighlightedVerses::class)->middleware('auth:sanctum');
+Route::resource('highlights', Bible\HighlightController::class)->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->get('/stest', function (Request $request) {
     return $request->user();

@@ -66,7 +66,6 @@ const app = new Vue({
         selectedPage: {name: null, chapter: null, chapter_id: null}
     },
     created: function() {
-        console.log(this.loggedIn);
         fetch('api/books')
         .then(response => response.json())
         .then(data => {
@@ -77,12 +76,8 @@ const app = new Vue({
             let _chapterCookie = this.getCookie('chapter');
             if (_bookCookie != '' && _bookCookie != null
                 && _chapterCookie != null && _chapterCookie != '') {
-                // console.log('cookies are set.');
                 this.selectPage(_bookCookie, _chapterCookie);
             } 
-            // else {
-            //     console.log('cookies are NOT set.');
-            // }
         });    
     },
     methods: {
@@ -125,6 +120,7 @@ const app = new Vue({
             .then(response => response.json())
             .then(data => {
                 this.pageText = data;
+                console.log(this.pageText);
                 this.selectedPage.chapter_id = this.pageText[0].chapter_id;
             });
             // this.selectedPage.name = _book_name;
@@ -135,17 +131,5 @@ const app = new Vue({
             this.setCookie('chapter', _chapter, 30);
         }
     },
-    // mounted: function () {
-    //     let _bookCookie = this.getCookie('book_id');
-    //     let _chapterCookie = this.getCookie('chapter_id');
-    //     console.log(document.cookie)
-    //     console.log(_bookCookie + ' : ' + _chapterCookie);
-    //     if (_bookCookie != '' && _bookCookie != null
-    //         && _chapterCookie != null && _chapterCookie != '') {
-    //             console.log('cookies are set.')
-    //     } else {
-    //         console.log('cookies are NOT set.');
-    //     }
-    // },
     router
 }).$mount('#app');

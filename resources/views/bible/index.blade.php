@@ -6,10 +6,14 @@
         $loggedIn = Auth::check();
         // var_dump($loggedIn);
         $apiToken = '';
+        $userId = 0;
+
         if ($loggedIn) {
             if (session()->has('api-token')) {
                 $apiToken = session('api-token');
             }
+        $userId = auth()->user()->id;
+        // dd($user);
         }
     ?>
     <div class="container">
@@ -23,7 +27,8 @@
                 :chapter-text="pageText"
                 logged-in="{{ $loggedIn }}"
                 v-on:leaf-page="leafPage"
-                api-token="{{ $apiToken }}"></page-component>
+                api-token="{{ $apiToken }}"
+                :user-id="{{ $userId }}"></page-component>
         </div>
     </div>
 @endsection

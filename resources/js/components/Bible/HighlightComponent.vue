@@ -10,11 +10,22 @@
     export default {
         methods: {
             highlight: function () {
-                console.log("You want to highlight green!");
+                console.log(this.userId);
+                axios.post('api/highlights', {
+                    userId: this.userId,
+                    verseId: this.verseId
+                })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             }
         },
         mounted() {
             console.log('Component mounted.')
-        }
+        },
+        props: ['userId', 'verseId']
     }
 </script>
