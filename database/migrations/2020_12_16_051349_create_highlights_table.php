@@ -16,6 +16,7 @@ class CreateHighlightsTable extends Migration
         Schema::create('highlights', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignId('user_id');
             $table->foreignId('verse_id');
             $table->integer('color');

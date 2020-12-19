@@ -10938,6 +10938,10 @@ a.text-dark:focus {
   font-size: larger;
 }
 
+.highlight {
+  background-color: green;
+}
+
 .leaf {
   text-align: center;
 }
@@ -10952,8 +10956,23 @@ a.text-dark:focus {
   top: 0px;
 }
 
+.underlined {
+  text-decoration: underline;
+}
+
 .verse:hover {
   background-color: greenyellow;
+}
+
+#chapter-text {
+  padding-bottom: 50px;
+}
+
+#highlight-component {
+  position: fixed;
+  bottom: 0;
+  background-color: yellow;
+  padding: 10px;
 }
 
 

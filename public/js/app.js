@@ -1916,24 +1916,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight() {
-      console.log(this.userId);
-      axios.post('api/highlights', {
+      var _post = {
         userId: this.userId,
-        verseId: this.verseId
-      }).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        count: this.verses.length
+      };
+
+      for (var i = 0; i < this.verses.length; i++) {
+        var _x = i + 1;
+
+        var _name = "verse_" + _x;
+
+        _post[_name] = this.verses[i];
+      }
+
+      if (this.userId > 0) {
+        // console.log(this.userId);
+        axios.post('api/highlights', _post).then(function (response) {
+          console.log(response);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+
+      this.$emit('highlight', this.chapterId, this.verses);
     }
   },
   mounted: function mounted() {
     console.log('Component mounted.');
   },
-  props: ['userId', 'verseId']
+  props: ['chapterId', 'userId', 'verses']
 });
 
 /***/ }),
@@ -2009,23 +2026,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  //TODO: Currently, the IndexComponent is responsible for retrieving the list of books from the database.
-  // This should be done within the app component instead of this component. The list of books should then be
-  // passed as a prop to this component.
-  // created: function() {
-  //     fetch('api/books')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //         this.books = data;
-  //     });
-  // },
-  // data: function() {
-  //     return {
-  //         books: null
-  //     }
-  // },
   computed: {
     oldTestament: function oldTestament() {
       var _old = [];
@@ -2193,6 +2194,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2200,19 +2203,72 @@ __webpack_require__.r(__webpack_exports__);
     'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'highlight-component': _HighlightComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  computed: {
+    getHighlights: function getHighlights() {
+      var _this = this;
+
+      axios.get('api/highlights', {
+        params: {
+          userId: this.userId,
+          chapterId: this.page.chapter_id
+        }
+      }).then(function (response) {
+        var _highlights = response.data; // console.log(response);
+
+        _this.originalHighlights = [];
+
+        for (var i = 0; i < _highlights.length; i++) {
+          if (_highlights[i].color === 1) {
+            _this.originalHighlights.push(_highlights[i].verse_id);
+          }
+        }
+
+        console.log('Original highlights: ', _this.originalHighlights);
+      })["catch"](function (exception) {
+        console.log(exception);
+      });
+      return true;
+    }
+  },
   created: function created() {
-    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
+    console.log(this.chapterText);
   },
   data: function data() {
     return {
-      highlightComponentIndex: null
+      originalHighlights: [],
+      highlights1: [],
+      underlines: []
     };
   },
   methods: {
+    clearUnderlines: function clearUnderlines() {
+      this.underlines = [];
+    },
+    updateHighlights: function updateHighlights() {},
+    highlight: function highlight(_chapterId, _verses) {
+      var _this2 = this;
+
+      // console.log(_verses);
+      _verses.forEach(function (element) {
+        if (_this2.originalHighlights.includes(element)) {
+          _this2.originalHighlights.splice(_this2.originalHighlights.indexOf(element), 1);
+        } else if (_this2.highlights1.includes(element)) {
+          _this2.highlights1.splice(_this2.highlights1.indexOf(element), 1);
+        } else {
+          _this2.highlights1.push(element);
+        }
+      });
+
+      this.clearUnderlines(); // this.updateHighlights();
+      // this.highlights1 = [];
+      // console.log(this.highlights);
+      // console.log(this.highlights);
+    },
     hideHighlightComponent: function hideHighlightComponent(_index) {
       this.highlightComponentIndex = null;
     },
     leafPage: function leafPage(_type) {
+      this.clearUnderlines();
       this.$emit('leaf-page', _type);
     },
     showHighlightComponent: function showHighlightComponent(_index) {
@@ -2242,13 +2298,29 @@ __webpack_require__.r(__webpack_exports__);
       var _componentClasses = _highlightComponent.classList;
 
       _componentClasses.toggle('d-none');
+    },
+    toggleUnderline: function toggleUnderline(_index) {
+      // if (typeof this.chapterText[_index].underlined === 'undefined') {
+      //     this.chapterText[_index].underlined = true;
+      // } else {
+      //     this.chapterText[_index].underlined = this.chapterText[_index].underlined ? false : true;
+      // }
+      // console.log(this.chapterText[_index].underlined);
+      // console.log(this.chapterText);
+      if (this.underlines.includes(_index)) {
+        this.underlines.splice(this.underlines.indexOf(_index), 1);
+      } else {
+        this.underlines.push(_index);
+      }
     }
   },
   mounted: function mounted() {
-    console.log(this.apiToken);
-    axios.get('api/highlights').then(function (response) {
-      console.log(response);
-    });
+    // console.log(this.apiToken);
+    // axios.get('api/highlights')
+    // .then(response => {
+    //     console.log(response);
+    // });
+    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken); // this.getHighlights();
   },
   props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
 });
@@ -37880,22 +37952,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { on: { click: _vm.highlight } }, [
-    _c(
-      "svg",
-      {
-        staticClass: "bi bi-circle-fill",
-        attrs: {
-          xmlns: "http://www.w3.org/2000/svg",
-          width: "16",
-          height: "16",
-          fill: "green",
-          viewBox: "0 0 16 16"
-        }
-      },
-      [_c("circle", { attrs: { cx: "8", cy: "8", r: "8" } })]
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "col-12", attrs: { id: "highlight-component" } },
+    [
+      _c("div", { on: { click: _vm.highlight } }, [
+        _c(
+          "svg",
+          {
+            staticClass: "bi bi-circle-fill",
+            attrs: {
+              xmlns: "http://www.w3.org/2000/svg",
+              width: "16",
+              height: "16",
+              fill: "green",
+              viewBox: "0 0 16 16"
+            }
+          },
+          [_c("circle", { attrs: { cx: "8", cy: "8", r: "8" } })]
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38273,7 +38351,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "row" },
+          { staticClass: "row", attrs: { id: "chapter-text" } },
           [
             _c("leaf-component", {
               staticClass: "col-1",
@@ -38286,65 +38364,36 @@ var render = function() {
               { staticClass: "col-10" },
               _vm._l(_vm.chapterText, function(text, index) {
                 return _c("div", { key: text.id, staticClass: "verse" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "row",
-                      on: {
-                        click: function($event) {
-                          return _vm.showHighlightComponent(index)
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "p",
+                      {
+                        staticClass: "col-12",
+                        class: {
+                          highlight:
+                            _vm.originalHighlights.includes(text.id) ||
+                            _vm.highlights1.includes(text.id)
+                        },
+                        attrs: { id: "verse-" + index },
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleUnderline(text.id)
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c(
-                        "p",
-                        {
-                          staticClass: "col-12",
-                          attrs: { id: "verse-" + index }
-                        },
-                        [
-                          _c("span", { staticClass: "h5" }, [
-                            _vm._v(_vm._s(index + 1) + ": ")
-                          ]),
-                          _c("span", {
-                            domProps: { innerHTML: _vm._s(text.verse) }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "col-3 d-none",
-                          attrs: { id: "highlight-component-" + index }
-                        },
-                        [
-                          _vm.loggedIn == true
-                            ? _c(
-                                "div",
-                                [
-                                  _c("highlight-component", {
-                                    attrs: {
-                                      "verse-id": text.id,
-                                      "user-id": _vm.userId
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            : _c("div", [
-                                _c("a", { attrs: { href: "/login" } }, [
-                                  _vm._v("Log in")
-                                ]),
-                                _vm._v(
-                                  " to save verses.\n                        "
-                                )
-                              ])
-                        ]
-                      )
-                    ]
-                  )
+                      },
+                      [
+                        _c("span", { staticClass: "h5" }, [
+                          _vm._v(_vm._s(index + 1) + ": ")
+                        ]),
+                        _c("span", {
+                          class: {
+                            underlined: _vm.underlines.includes(text.id)
+                          },
+                          domProps: { innerHTML: _vm._s(text.verse) }
+                        })
+                      ]
+                    )
+                  ])
                 ])
               }),
               0
@@ -38355,6 +38404,26 @@ var render = function() {
               attrs: { type: "1" },
               on: { "leaf-page": _vm.leafPage }
             })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _vm.underlines.length > 0
+              ? _c("highlight-component", {
+                  attrs: {
+                    "chapter-id": _vm.page.chapter_id,
+                    "user-id": _vm.userId,
+                    verses: _vm.underlines
+                  },
+                  on: { highlight: _vm.highlight }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.getHighlights === true ? _c("div") : _vm._e()
           ],
           1
         )
@@ -53532,6 +53601,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Bible_PageComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Bible/PageComponent.vue */ "./resources/js/components/Bible/PageComponent.vue");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -53569,6 +53640,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var routes = [// { path: '/vue', component: Home, name: 'Home' },
 {
@@ -53600,6 +53672,7 @@ var app = new Vue({
   created: function created() {
     var _this = this;
 
+    // TODO: Change the fetch call to an axios call.
     fetch('api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
@@ -53660,11 +53733,12 @@ var app = new Vue({
     selectPage: function selectPage(_book_id, _chapter) {
       var _this3 = this;
 
+      // TODO: Change the fetch calls to axios calls. 
+      // TODO: Add a call to get the highlights if the user is logged in.
       fetch('api/' + _book_id + '/' + _chapter).then(function (response) {
         return response.json();
       }).then(function (data) {
         _this3.pageText = data;
-        console.log(_this3.pageText);
         _this3.selectedPage.chapter_id = _this3.pageText[0].chapter_id;
       }); // this.selectedPage.name = _book_name;
 

@@ -4,30 +4,32 @@
             <h1 class="col-12 text-center">{{ page.name + " Chapter " + page.chapter }}</h1>
         </div>
     
-        <div class="row">
+        <div id="chapter-text" class="row">
             <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage"></leaf-component>
             <div class="col-10">
                 <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
-                    <!-- <div class="row" v-on:mouseover="toggleHighlightComponent(index)" v-on:mouseout="toggleHighlightComponent(index)"> -->
-                    <div class="row" v-on:click="showHighlightComponent(index)">
-                        <p :id=" 'verse-' + index" class="col-12"><span class="h5">{{ index + 1 }}: </span><span v-html="text.verse"></span></p>
-                        
-                        <div :id="'highlight-component-' + index" class="col-3 d-none">
-                            <div v-if="loggedIn == true">
-                                <highlight-component :verse-id="text.id" :user-id="userId"></highlight-component>
-                            </div>
-                            <div v-else>
-                                <a href="/login">Log in</a> to save verses.
-                            </div>
-                        </div>
-
-                    </div>
-                    
+                    <div class="row">
+                        <p :id=" 'verse-' + index" class="col-12" 
+                            v-bind:class="{highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id)}" 
+                            v-on:click="toggleUnderline(text.id)">
+                            <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id) }"></span>
+                        </p>
+                    </div>    
                 </div>
             </div>
             
             <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component>
+        </div>
 
+        <div class="row">
+            <highlight-component
+                :chapter-id="page.chapter_id"
+                :user-id="userId" 
+                :verses="underlines"
+                v-if="underlines.length > 0"
+                v-on:highlight="highlight"></highlight-component>
+            
+            <div v-if="getHighlights === true"></div>
         </div>
     </div>
 </template>
@@ -41,19 +43,64 @@
             'leaf-component': LeafComponent,
             'highlight-component': HighlightComponent
         },
+        computed: {
+            getHighlights: function () {
+                axios.get('api/highlights', {
+                    params: {
+                        userId: this.userId,
+                        chapterId: this.page.chapter_id
+                    }
+                })
+                .then(response => {
+                    let _highlights = response.data;
+                    this.originalHighlights = [];
+                    for (let i = 0; i < _highlights.length; i++) {
+                        if (_highlights[i].color === 1) {
+                            this.originalHighlights.push(_highlights[i].verse_id);
+                        }
+                    }
+                    console.log('Original highlights: ', this.originalHighlights);
+                })
+                .catch(exception => {
+                    console.log(exception);
+                });
+                return true;
+            }                
+        },
         created: function () {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
+            console.log(this.chapterText);
         },
         data: function () {
             return {
-                highlightComponentIndex: null
+                originalHighlights: [],
+                highlights1: [],
+                underlines: []
             };
         },
         methods: {
+            clearUnderlines: function () {
+                this.underlines = [];
+            },
+            updateHighlights: function() {
+
+            },
+            highlight: function (_chapterId, _verses) {
+                _verses.forEach(element => {
+                    if (this.originalHighlights.includes(element)){
+                        this.originalHighlights.splice(this.originalHighlights.indexOf(element), 1);
+                    } else if (this.highlights1.includes(element)) {
+                        this.highlights1.splice(this.highlights1.indexOf(element), 1);
+                    } else {
+                        this.highlights1.push(element);
+                    }
+                });
+                this.clearUnderlines();
+            },
             hideHighlightComponent: function (_index) {
                 this.highlightComponentIndex = null;
             },
             leafPage: function (_type){
+                this.clearUnderlines();
                 this.$emit('leaf-page', _type);
             },
             showHighlightComponent: function (_index) {
@@ -78,14 +125,17 @@
                 let _highlightComponent = document.getElementById("highlight-component-" + _index);
                 let _componentClasses = _highlightComponent.classList;
                 _componentClasses.toggle('d-none');
+            },
+            toggleUnderline: function (_index) {
+                if (this.underlines.includes(_index)) {
+                    this.underlines.splice(this.underlines.indexOf(_index), 1);
+                } else {
+                    this.underlines.push(_index);
+                }
             }
         },
         mounted: function () {
-            console.log(this.apiToken);
-            axios.get('api/highlights')
-            .then(response => {
-                console.log(response);
-            });
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
         props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
     }

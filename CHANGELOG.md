@@ -1,6 +1,13 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
+### Fourth commit (12/19/2020)
+* Implemented soft deletes to the Highlight model.
+* Made changes to the HighlightComponent. Now, there is only one HighlightComponent that manages the function
+of saving highlights. 
+* The user can now click verses to underline and to remove underlines. 
+* Decided to go a different route on the design of the site. Committing before major changes.
+
 ### Third commit (12/16/2020)
 * Added a Highlight model and migration.
 * The HighlightedVerses controller has been renamed to HighlightController.

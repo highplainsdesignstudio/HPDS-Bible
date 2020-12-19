@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bible;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Highlight;
+use Illuminate\Support\Facades\DB;
 
 class HighlightController extends Controller
 {
@@ -15,11 +16,28 @@ class HighlightController extends Controller
      */
     public function index(Request $request)
     {
-        return $request;
-        // return response()->json([
-        //     'name' => 'Abigail',
-        //     'state' => 'CA',
-        // ]);
+        // $input = $request->all();
+        $userId = $request->input('userId');
+        $chapterId = $request->input('chapterId');
+        // $highlights = Highlight::where('user_id', $userId)
+        //     ->get();
+
+        // return $highlights->toJson();
+            $highlights = DB::table('highlights')
+            ->select('verse_id', 'color', 'verses.chapter_id')
+            ->join('verses', 'verse_id', '=', 'verses.id')
+            ->where('user_id', '=', $userId)
+            ->where('verses.chapter_id', '=', $chapterId)
+            // ->where('highlights.deleted_at', '=', 'null')
+            ->get();
+ 
+        if ($highlights != null) {
+            return $highlights->tojson();
+        } else {
+            return response()->json([
+                'action' => 'completed'
+            ]);
+        }
     }
 
     /**
@@ -42,28 +60,38 @@ class HighlightController extends Controller
     {
         //
         $userId = $request->input('userId');
-        $verseId = $request->input('verseId');
+        $verseCount = $request->input('count');
+        for ($i = 1; $i <= $verseCount; $i++) {
+            $_name = 'verse_' . $i;
+            $verseId = $request->input($_name);
 
-        $existingHighlight = Highlight::where('user_id', $userId)
+            $existingHighlight = Highlight::withTrashed()
+            ->where('user_id', $userId)
             ->where('verse_id', $verseId)
             ->first();
 
-        if ($existingHighlight != null) {
-            //Remove highlight if highlight is already in the database.
-            $existingHighlight->delete();
-            $action = "deleted";
-        } else {
-            $highlight = new Highlight;
-            $highlight->user_id =  (int)$userId;
-            $highlight->verse_id = (int)$verseId;
-            $highlight->color = 1;
-            $highlight->save();
-            $action = "created";
+            if ($existingHighlight != null) {
+                // if the highlight is soft deleted, restore it.
+                if ($existingHighlight->trashed()) {
+                    $existingHighlight->restore();
+                } else {
+                    //Remove highlight if highlight is already in the database.
+                    $existingHighlight->delete();
+                    // $action = "deleted";
+                }
+
+            } else {
+                $highlight = new Highlight;
+                $highlight->user_id =  (int)$userId;
+                $highlight->verse_id = (int)$verseId;
+                $highlight->color = 1;
+                $highlight->save();
+                // $action = "created";
+            }
         }
 
         return response()->json([
-                'action' => $action,
-                'verse' => $verseId,
+                'action' => 'completed'
             ]);
     }
 

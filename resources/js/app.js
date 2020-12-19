@@ -41,6 +41,7 @@ import PageComponent from './components/Bible/PageComponent.vue';
 // Vue Router Routes
 import VueRouter from 'vue-router';
 import ExampleComponent from './components/ExampleComponent.vue';
+import Axios from 'axios';
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,6 +67,7 @@ const app = new Vue({
         selectedPage: {name: null, chapter: null, chapter_id: null}
     },
     created: function() {
+        // TODO: Change the fetch call to an axios call.
         fetch('api/books')
         .then(response => response.json())
         .then(data => {
@@ -116,13 +118,15 @@ const app = new Vue({
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
           },
         selectPage: function(_book_id, _chapter) {
+            // TODO: Change the fetch calls to axios calls. 
+            // TODO: Add a call to get the highlights if the user is logged in.
             fetch('api/' + _book_id + '/' + _chapter)
             .then(response => response.json())
             .then(data => {
                 this.pageText = data;
-                console.log(this.pageText);
                 this.selectedPage.chapter_id = this.pageText[0].chapter_id;
             });
+
             // this.selectedPage.name = _book_name;
             this.selectedPage.name = this.books[_book_id - 1].book;
             this.selectedPage.chapter = _chapter;

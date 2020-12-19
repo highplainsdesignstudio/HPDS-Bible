@@ -24,7 +24,6 @@
                         <div class="card-body d-none col-12" id="index-card">
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- TODO: Fix up the index to use 1 component instead of duplicating the code. -->
                                     <span class="h5">Old Testament</span>
                                     <ul class="list-unstyled list-inline">
                                         <li v-for="book in oldTestament" v-bind:key="book.id" class="h6 list-inline-item">
@@ -63,21 +62,6 @@
 
 <script>
     export default {
-        //TODO: Currently, the IndexComponent is responsible for retrieving the list of books from the database.
-        // This should be done within the app component instead of this component. The list of books should then be
-        // passed as a prop to this component.
-        // created: function() {
-        //     fetch('api/books')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         this.books = data;
-        //     });
-        // },
-        // data: function() {
-        //     return {
-        //         books: null
-        //     }
-        // },
         computed: {
             oldTestament: function() {
                 let _old = [];
