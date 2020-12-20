@@ -22,6 +22,8 @@ Route::get('/', function() {
     return view('welcome');
 });
 
+Route::get('/{book}/{chapter}', 'Bible\GetBibleController@getBibleChapterText');
+
 Route::get('/read', function(Request $request) {
     return view('bible.index');
 }) ->name('bible');

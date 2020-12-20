@@ -1936,7 +1936,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.userId > 0) {
-        // console.log(this.userId);
         axios.post('api/highlights', _post).then(function (response) {
           console.log(response);
         })["catch"](function (error) {
@@ -2055,13 +2054,19 @@ __webpack_require__.r(__webpack_exports__);
       return _new;
     }
   },
+  data: function data() {
+    return {
+      publicUrl: 'http://bible.local/'
+    };
+  },
   methods: {
     selectBook: function selectBook(_id) {
       var _chapters = document.getElementById('chapters-' + _id);
 
       _chapters.classList.toggle('d-none');
 
-      this.selectedBook = _id;
+      this.selectedBook = _id; // TODO: is this even a thing? Maybe delete?
+
       this.toggleChapters(_id);
     },
     selectPage: function selectPage(_book_name, _book_id, _chapter) {
@@ -2086,12 +2091,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var _upCaret = document.getElementById('up-caret');
 
-      var _src = 'http://' + window.location.hostname + '/img/bibleclosedIcon.png';
+      var _src = this.publicUrl + 'img/bibleclosedIcon.png';
 
       if (_bibleIcon.src === _src) {
-        _bibleIcon.src = 'img/bibleopenIcon.png';
+        _bibleIcon.src = this.publicUrl + 'img/bibleopenIcon.png';
       } else {
-        _bibleIcon.src = 'img/bibleclosedIcon.png';
+        _bibleIcon.src = this.publicUrl + 'img/bibleclosedIcon.png';
       }
 
       _indexCard.classList.toggle('d-none');
@@ -2103,7 +2108,7 @@ __webpack_require__.r(__webpack_exports__);
       this.toggleChapters(null);
     }
   },
-  props: ["books"]
+  props: ['books', 'getBooksUrl']
 });
 
 /***/ }),
@@ -2203,33 +2208,30 @@ __webpack_require__.r(__webpack_exports__);
     'leaf-component': _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'highlight-component': _HighlightComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: {
-    getHighlights: function getHighlights() {
-      var _this = this;
-
-      axios.get('api/highlights', {
-        params: {
-          userId: this.userId,
-          chapterId: this.page.chapter_id
-        }
-      }).then(function (response) {
-        var _highlights = response.data; // console.log(response);
-
-        _this.originalHighlights = [];
-
-        for (var i = 0; i < _highlights.length; i++) {
-          if (_highlights[i].color === 1) {
-            _this.originalHighlights.push(_highlights[i].verse_id);
-          }
-        }
-
-        console.log('Original highlights: ', _this.originalHighlights);
-      })["catch"](function (exception) {
-        console.log(exception);
-      });
-      return true;
-    }
-  },
+  // computed: {
+  //     getHighlights: function () {
+  //         axios.get('api/highlights', {
+  //             params: {
+  //                 userId: this.userId,
+  //                 chapterId: this.page.chapter_id
+  //             }
+  //         })
+  //         .then(response => {
+  //             let _highlights = response.data;
+  //             this.originalHighlights = [];
+  //             for (let i = 0; i < _highlights.length; i++) {
+  //                 if (_highlights[i].color === 1) {
+  //                     this.originalHighlights.push(_highlights[i].verse_id);
+  //                 }
+  //             }
+  //             console.log('Original highlights: ', this.originalHighlights);
+  //         })
+  //         .catch(exception => {
+  //             console.log(exception);
+  //         });
+  //         return true;
+  //     }                
+  // },
   created: function created() {
     console.log(this.chapterText);
   },
@@ -2246,23 +2248,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateHighlights: function updateHighlights() {},
     highlight: function highlight(_chapterId, _verses) {
-      var _this2 = this;
+      var _this = this;
 
-      // console.log(_verses);
       _verses.forEach(function (element) {
-        if (_this2.originalHighlights.includes(element)) {
-          _this2.originalHighlights.splice(_this2.originalHighlights.indexOf(element), 1);
-        } else if (_this2.highlights1.includes(element)) {
-          _this2.highlights1.splice(_this2.highlights1.indexOf(element), 1);
+        if (_this.originalHighlights.includes(element)) {
+          _this.originalHighlights.splice(_this.originalHighlights.indexOf(element), 1);
+        } else if (_this.highlights1.includes(element)) {
+          _this.highlights1.splice(_this.highlights1.indexOf(element), 1);
         } else {
-          _this2.highlights1.push(element);
+          _this.highlights1.push(element);
         }
       });
 
-      this.clearUnderlines(); // this.updateHighlights();
-      // this.highlights1 = [];
-      // console.log(this.highlights);
-      // console.log(this.highlights);
+      this.clearUnderlines();
     },
     hideHighlightComponent: function hideHighlightComponent(_index) {
       this.highlightComponentIndex = null;
@@ -2300,13 +2298,6 @@ __webpack_require__.r(__webpack_exports__);
       _componentClasses.toggle('d-none');
     },
     toggleUnderline: function toggleUnderline(_index) {
-      // if (typeof this.chapterText[_index].underlined === 'undefined') {
-      //     this.chapterText[_index].underlined = true;
-      // } else {
-      //     this.chapterText[_index].underlined = this.chapterText[_index].underlined ? false : true;
-      // }
-      // console.log(this.chapterText[_index].underlined);
-      // console.log(this.chapterText);
       if (this.underlines.includes(_index)) {
         this.underlines.splice(this.underlines.indexOf(_index), 1);
       } else {
@@ -2315,14 +2306,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    // console.log(this.apiToken);
-    // axios.get('api/highlights')
-    // .then(response => {
-    //     console.log(response);
-    // });
-    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken); // this.getHighlights();
+    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
   },
-  props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
+  // props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
+  props: ['chapterText', 'book', 'chapter']
 });
 
 /***/ }),
@@ -38013,7 +38000,20 @@ var render = function() {
               on: { click: _vm.toggleIndex }
             },
             [
-              _vm._m(0),
+              _c(
+                "div",
+                { staticClass: "d-inline", attrs: { id: "index-menu" } },
+                [
+                  _c("img", {
+                    staticStyle: { width: "64px" },
+                    attrs: {
+                      src: _vm.publicUrl + "img/bibleclosedIcon.png",
+                      alt: "bible icon",
+                      id: "bible-icon"
+                    }
+                  })
+                ]
+              ),
               _vm._v(" "),
               _c("span", { staticClass: "h5" }, [_vm._v("Bible Book List")]),
               _vm._v(" "),
@@ -38116,15 +38116,22 @@ var render = function() {
                                   "span",
                                   {
                                     key: chapter,
-                                    staticClass: "chapter-select-number",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.selectPage(book.id, chapter)
-                                      }
-                                    }
+                                    staticClass: "chapter-select-number"
                                   },
                                   [
-                                    _c("u", [_vm._v(_vm._s(chapter))]),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://bible.local/" +
+                                            book.book +
+                                            "/" +
+                                            chapter
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(chapter))]
+                                    ),
                                     _vm._v(" | ")
                                   ]
                                 )
@@ -38178,15 +38185,22 @@ var render = function() {
                                   "span",
                                   {
                                     key: chapter,
-                                    staticClass: "chapter-select-number",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.selectPage(book.id, chapter)
-                                      }
-                                    }
+                                    staticClass: "chapter-select-number"
                                   },
                                   [
-                                    _c("u", [_vm._v(_vm._s(chapter))]),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "http://bible.local/" +
+                                            book.book +
+                                            "/" +
+                                            chapter
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(chapter))]
+                                    ),
                                     _vm._v(" |")
                                   ]
                                 )
@@ -38208,23 +38222,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-inline", attrs: { id: "index-menu" } }, [
-      _c("img", {
-        staticStyle: { width: "64px" },
-        attrs: {
-          src: "img/bibleclosedIcon.png",
-          alt: "bible icon",
-          id: "bible-icon"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38341,92 +38339,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.page.name
+  return _vm.book
     ? _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row" }, [
           _c("h1", { staticClass: "col-12 text-center" }, [
-            _vm._v(_vm._s(_vm.page.name + " Chapter " + _vm.page.chapter))
+            _vm._v(_vm._s(_vm.book + " Chapter " + _vm.chapter))
           ])
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row", attrs: { id: "chapter-text" } },
-          [
-            _c("leaf-component", {
-              staticClass: "col-1",
-              attrs: { type: "-1" },
-              on: { "leaf-page": _vm.leafPage }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-10" },
-              _vm._l(_vm.chapterText, function(text, index) {
-                return _c("div", { key: text.id, staticClass: "verse" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c(
-                      "p",
-                      {
-                        staticClass: "col-12",
-                        class: {
-                          highlight:
-                            _vm.originalHighlights.includes(text.id) ||
-                            _vm.highlights1.includes(text.id)
-                        },
-                        attrs: { id: "verse-" + index },
-                        on: {
-                          click: function($event) {
-                            return _vm.toggleUnderline(text.id)
-                          }
-                        }
+        _c("div", { staticClass: "row", attrs: { id: "chapter-text" } }, [
+          _c(
+            "div",
+            { staticClass: "col-10" },
+            _vm._l(_vm.chapterText, function(text, index) {
+              return _c("div", { key: text.id, staticClass: "verse" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass: "col-12",
+                      class: {
+                        highlight:
+                          _vm.originalHighlights.includes(text.id) ||
+                          _vm.highlights1.includes(text.id)
                       },
-                      [
-                        _c("span", { staticClass: "h5" }, [
-                          _vm._v(_vm._s(index + 1) + ": ")
-                        ]),
-                        _c("span", {
-                          class: {
-                            underlined: _vm.underlines.includes(text.id)
-                          },
-                          domProps: { innerHTML: _vm._s(text.verse) }
-                        })
-                      ]
-                    )
-                  ])
+                      attrs: { id: "verse-" + index },
+                      on: {
+                        click: function($event) {
+                          return _vm.toggleUnderline(text.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "h5" }, [
+                        _vm._v(_vm._s(index + 1) + ": ")
+                      ]),
+                      _c("span", {
+                        class: { underlined: _vm.underlines.includes(text.id) },
+                        domProps: { innerHTML: _vm._s(text.verse) }
+                      })
+                    ]
+                  )
                 ])
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c("leaf-component", {
-              staticClass: "col-1",
-              attrs: { type: "1" },
-              on: { "leaf-page": _vm.leafPage }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          [
-            _vm.underlines.length > 0
-              ? _c("highlight-component", {
-                  attrs: {
-                    "chapter-id": _vm.page.chapter_id,
-                    "user-id": _vm.userId,
-                    verses: _vm.underlines
-                  },
-                  on: { highlight: _vm.highlight }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.getHighlights === true ? _c("div") : _vm._e()
-          ],
-          1
-        )
+              ])
+            }),
+            0
+          )
+        ])
       ])
     : _vm._e()
 }
@@ -53673,18 +53632,17 @@ var app = new Vue({
     var _this = this;
 
     // TODO: Change the fetch call to an axios call.
-    fetch('api/books').then(function (response) {
+    fetch('http://bible.local/api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
-      _this.books = data; // Retrieve cookies if they are set.
-
-      var _bookCookie = _this.getCookie('book_id');
-
-      var _chapterCookie = _this.getCookie('chapter');
-
-      if (_bookCookie != '' && _bookCookie != null && _chapterCookie != null && _chapterCookie != '') {
-        _this.selectPage(_bookCookie, _chapterCookie);
-      }
+      _this.books = data;
+      console.log(data); // Retrieve cookies if they are set.
+      // let _bookCookie = this.getCookie('book_id');
+      // let _chapterCookie = this.getCookie('chapter');
+      // if (_bookCookie != '' && _bookCookie != null
+      //     && _chapterCookie != null && _chapterCookie != '') {
+      //     this.selectPage(_bookCookie, _chapterCookie);
+      // } 
     });
   },
   methods: {
@@ -53733,15 +53691,12 @@ var app = new Vue({
     selectPage: function selectPage(_book_id, _chapter) {
       var _this3 = this;
 
-      // TODO: Change the fetch calls to axios calls. 
-      // TODO: Add a call to get the highlights if the user is logged in.
       fetch('api/' + _book_id + '/' + _chapter).then(function (response) {
         return response.json();
       }).then(function (data) {
         _this3.pageText = data;
         _this3.selectedPage.chapter_id = _this3.pageText[0].chapter_id;
-      }); // this.selectedPage.name = _book_name;
-
+      });
       this.selectedPage.name = this.books[_book_id - 1].book;
       this.selectedPage.chapter = _chapter;
       this.setCookie('book_id', _book_id, 30);

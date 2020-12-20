@@ -1,6 +1,14 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
+
+### Fifth commit (12/19/2020)
+* Major structural redesign for both back and front ends.
+* The frontend Bible is now mostly PHP orientated.
+* Web routes added to accomadate new design.
+* The app now refreshes for every chapter. This is a major redesign.
+* Changes to the Vue components.
+
 ### Fourth commit (12/19/2020)
 * Implemented soft deletes to the Highlight model.
 * Made changes to the HighlightComponent. Now, there is only one HighlightComponent that manages the function

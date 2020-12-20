@@ -68,19 +68,19 @@ const app = new Vue({
     },
     created: function() {
         // TODO: Change the fetch call to an axios call.
-        fetch('http://bible.local/api/books')
+        fetch('api/books')
         .then(response => response.json())
         .then(data => {
             this.books = data;
-            console.log(data);
+
             // Retrieve cookies if they are set.
-            // let _bookCookie = this.getCookie('book_id');
-            // let _chapterCookie = this.getCookie('chapter');
-            // if (_bookCookie != '' && _bookCookie != null
-            //     && _chapterCookie != null && _chapterCookie != '') {
-            //     this.selectPage(_bookCookie, _chapterCookie);
-            // } 
-        });  
+            let _bookCookie = this.getCookie('book_id');
+            let _chapterCookie = this.getCookie('chapter');
+            if (_bookCookie != '' && _bookCookie != null
+                && _chapterCookie != null && _chapterCookie != '') {
+                this.selectPage(_bookCookie, _chapterCookie);
+            } 
+        });    
     },
     methods: {
         getCookie: function(cname) {
@@ -118,6 +118,8 @@ const app = new Vue({
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
           },
         selectPage: function(_book_id, _chapter) {
+            // TODO: Change the fetch calls to axios calls. 
+            // TODO: Add a call to get the highlights if the user is logged in.
             fetch('api/' + _book_id + '/' + _chapter)
             .then(response => response.json())
             .then(data => {
@@ -125,6 +127,7 @@ const app = new Vue({
                 this.selectedPage.chapter_id = this.pageText[0].chapter_id;
             });
 
+            // this.selectedPage.name = _book_name;
             this.selectedPage.name = this.books[_book_id - 1].book;
             this.selectedPage.chapter = _chapter;
 

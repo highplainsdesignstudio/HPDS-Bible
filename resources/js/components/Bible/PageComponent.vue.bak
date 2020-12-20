@@ -1,11 +1,11 @@
 <template>
-    <div class="container" v-if="book">
+    <div class="container" v-if="page.name">
         <div class="row">
-            <h1 class="col-12 text-center">{{ book + " Chapter " + chapter }}</h1>
+            <h1 class="col-12 text-center">{{ page.name + " Chapter " + page.chapter }}</h1>
         </div>
     
         <div id="chapter-text" class="row">
-            <!-- <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage"></leaf-component> -->
+            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage"></leaf-component>
             <div class="col-10">
                 <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
                     <div class="row">
@@ -18,10 +18,10 @@
                 </div>
             </div>
             
-            <!-- <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component> -->
+            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component>
         </div>
 
-        <!-- <div class="row">
+        <div class="row">
             <highlight-component
                 :chapter-id="page.chapter_id"
                 :user-id="userId" 
@@ -30,7 +30,7 @@
                 v-on:highlight="highlight"></highlight-component>
             
             <div v-if="getHighlights === true"></div>
-        </div> -->
+        </div>
     </div>
 </template>
 
@@ -43,30 +43,30 @@
             'leaf-component': LeafComponent,
             'highlight-component': HighlightComponent
         },
-        // computed: {
-        //     getHighlights: function () {
-        //         axios.get('api/highlights', {
-        //             params: {
-        //                 userId: this.userId,
-        //                 chapterId: this.page.chapter_id
-        //             }
-        //         })
-        //         .then(response => {
-        //             let _highlights = response.data;
-        //             this.originalHighlights = [];
-        //             for (let i = 0; i < _highlights.length; i++) {
-        //                 if (_highlights[i].color === 1) {
-        //                     this.originalHighlights.push(_highlights[i].verse_id);
-        //                 }
-        //             }
-        //             console.log('Original highlights: ', this.originalHighlights);
-        //         })
-        //         .catch(exception => {
-        //             console.log(exception);
-        //         });
-        //         return true;
-        //     }                
-        // },
+        computed: {
+            getHighlights: function () {
+                axios.get('api/highlights', {
+                    params: {
+                        userId: this.userId,
+                        chapterId: this.page.chapter_id
+                    }
+                })
+                .then(response => {
+                    let _highlights = response.data;
+                    this.originalHighlights = [];
+                    for (let i = 0; i < _highlights.length; i++) {
+                        if (_highlights[i].color === 1) {
+                            this.originalHighlights.push(_highlights[i].verse_id);
+                        }
+                    }
+                    console.log('Original highlights: ', this.originalHighlights);
+                })
+                .catch(exception => {
+                    console.log(exception);
+                });
+                return true;
+            }                
+        },
         created: function () {
             console.log(this.chapterText);
         },
@@ -137,7 +137,6 @@
         mounted: function () {
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
-        // props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
-        props: ['chapterText', 'book', 'chapter']
+        props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
     }
 </script>

@@ -13,34 +13,20 @@
             }
         $userId = auth()->user()->id;
         }
-
     ?>
     <div class="container">
         <div class="app">
             {{-- <router-link to="/read/example">Go to Example</router-link>
 
             <router-view></router-view> --}}
-            <index-component 
-            :books="books"
-            {{-- get-books-url="{{ $getBooksUrl }}" --}}
-            {{-- public-url="{{ $publicUrl }}"  --}}
-            v-on:select-page="selectPage"></index-component>
-            {{-- <page-component 
+            <index-component :books="books" v-on:select-page="selectPage"></index-component>
+            <page-component 
                 :page="selectedPage" 
                 :chapter-text="pageText"
                 logged-in="{{ $loggedIn }}"
                 v-on:leaf-page="leafPage"
                 api-token="{{ $apiToken }}"
-                :user-id="{{ $userId }}"></page-component> --}}
-
-            {{-- <p>{{ $verses ?? '' }}</p> --}}
-            <page-component
-                book="{{ $book }}"
-                chapter="{{ $chapter }}"
-                :chapter-text="{{ $verses }}"></page-component>
-
-            {{-- <p>{{ $verses }}</p> --}}
-
+                :user-id="{{ $userId }}"></page-component>
         </div>
     </div>
 @endsection

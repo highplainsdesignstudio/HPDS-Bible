@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/books','Bible\GetBibleController@getBibleBooks');
+Route::get('/books','Bible\GetBibleController@getBibleBooks')->name('getBibleBooks');
 Route::get('/chapter/{chapter_id}', 'Bible\GetBibleController@getChapterById');
 
 
