@@ -5,7 +5,7 @@
         </div>
     
         <div id="chapter-text" class="row">
-            <!-- <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage"></leaf-component> -->
+            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage" :link="previous"></leaf-component>
             <div class="col-10">
                 <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
                     <div class="row">
@@ -18,7 +18,7 @@
                 </div>
             </div>
             
-            <!-- <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component> -->
+            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
         </div>
 
         <!-- <div class="row">
@@ -68,7 +68,8 @@
         //     }                
         // },
         created: function () {
-            console.log(this.chapterText);
+            console.log(this.previous);
+            console.log(this.next);
         },
         data: function () {
             return {
@@ -138,6 +139,6 @@
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
         // props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
-        props: ['chapterText', 'book', 'chapter']
+        props: ['chapterText', 'book', 'chapter', 'previous', 'next']
     }
 </script>

@@ -33,11 +33,12 @@
                 api-token="{{ $apiToken }}"
                 :user-id="{{ $userId }}"></page-component> --}}
 
-            {{-- <p>{{ $verses ?? '' }}</p> --}}
             <page-component
                 book="{{ $book }}"
                 chapter="{{ $chapter }}"
-                :chapter-text="{{ $verses }}"></page-component>
+                :chapter-text="{{ $verses }}"
+                :previous="{{ $previous }}"
+                :next="{{ $next }}"></page-component>
 
             {{-- <p>{{ $verses }}</p> --}}
 

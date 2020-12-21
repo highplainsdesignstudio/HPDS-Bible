@@ -2,6 +2,10 @@
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
 
+### Sixth commit (12/20/2020)
+* GetBibleController changed to added to return previous and next chapters when the bible text is retrieved.
+* LeafComponent added.
+
 ### Fifth commit (12/19/2020)
 * Major structural redesign for both back and front ends.
 * The frontend Bible is now mostly PHP orientated.
