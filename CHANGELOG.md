@@ -2,6 +2,10 @@
 A KJV Bible application built with Laravel.
 ## v0.0.5 (wip)
 
+### Seventh commit (wip)
+* Small style changes and other code clean up.
+* New Bible.page view created to accommodate the chapter text.
+* The Bible.index view now only shows a Vue Index Component that allows the user to navigate to a chapter.
 ### Sixth commit (12/20/2020)
 * GetBibleController changed to added to return previous and next chapters when the bible text is retrieved.
 * LeafComponent added.
