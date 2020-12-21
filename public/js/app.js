@@ -38345,7 +38345,7 @@ var render = function() {
   return _vm.book
     ? _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row" }, [
-          _c("h1", { staticClass: "col-12 text-center" }, [
+          _c("h1", { staticClass: "col-12 text-center text-capitalize" }, [
             _vm._v(_vm._s(_vm.book + " Chapter " + _vm.chapter))
           ])
         ]),

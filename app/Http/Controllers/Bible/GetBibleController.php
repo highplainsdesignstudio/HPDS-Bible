@@ -44,7 +44,7 @@ class GetBibleController extends Controller
             ->where('chapter_id', $chapterId->id)
             ->get();
 
-        return view('bible.index', ['verses' => $verses, 'book' => $book, 'chapter' => $chapter,
+        return view('bible.page', ['verses' => $verses, 'book' => $book, 'chapter' => $chapter,
             'previous' => json_encode($previousChapter), 'next' => json_encode($nextChapter)]);
     }   
 

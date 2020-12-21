@@ -1,5 +1,7 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 // Variables
 @import 'variables';
@@ -13,6 +15,12 @@
     // right: 75px;
     // top: 50px;
 // }
+body {
+    // font-family: 'Volkhov', serif;
+    font-family: 'Caudex', serif;
+    font-size: 1.2rem;
+}
+
 .chapter-select {
     color: white;
     position: relative;

@@ -1,7 +1,7 @@
 <template>
     <div class="container" v-if="book">
         <div class="row">
-            <h1 class="col-12 text-center">{{ book + " Chapter " + chapter }}</h1>
+            <h1 class="col-12 text-center text-capitalize">{{ book + " Chapter " + chapter }}</h1>
         </div>
     
         <div id="chapter-text" class="row">
