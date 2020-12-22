@@ -21,16 +21,15 @@
             <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
         </div>
 
-        <!-- <div class="row">
+       <div class="row">
             <highlight-component
-                :chapter-id="page.chapter_id"
-                :user-id="userId" 
+                :chapter-id="this.chapterText[0].chapter_id"
+                :user-id="userId"
                 :verses="underlines"
                 v-if="underlines.length > 0"
                 v-on:highlight="highlight"></highlight-component>
-            
-            <div v-if="getHighlights === true"></div>
-        </div> -->
+        </div>
+
     </div>
 </template>
 
@@ -43,33 +42,35 @@
             'leaf-component': LeafComponent,
             'highlight-component': HighlightComponent
         },
-        // computed: {
-        //     getHighlights: function () {
-        //         axios.get('api/highlights', {
-        //             params: {
-        //                 userId: this.userId,
-        //                 chapterId: this.page.chapter_id
-        //             }
-        //         })
-        //         .then(response => {
-        //             let _highlights = response.data;
-        //             this.originalHighlights = [];
-        //             for (let i = 0; i < _highlights.length; i++) {
-        //                 if (_highlights[i].color === 1) {
-        //                     this.originalHighlights.push(_highlights[i].verse_id);
-        //                 }
-        //             }
-        //             console.log('Original highlights: ', this.originalHighlights);
-        //         })
-        //         .catch(exception => {
-        //             console.log(exception);
-        //         });
-        //         return true;
-        //     }                
-        // },
         created: function () {
-            console.log(this.previous);
-            console.log(this.next);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
+                axios.get('http://bible.local/api/highlights', {
+                    params: {
+                        userId: this.userId,
+                        chapterId: this.chapterText[0].chapter_id
+                    }
+                })
+                .then(response => {
+                    let _highlights = response.data;
+                    console.log(_highlights);
+
+                    _highlights.forEach(element => {
+                        this.originalHighlights.push(element.verse_id);
+
+                        switch(element.color) {
+                            case 1: 
+                                this.highlights1.push(element.verse_id);
+                                break;
+                            default:
+                                this.highlights1.push(element.verse_id);
+                        }
+                    });
+                })
+                .catch(exception => {
+                    console.log(exception);
+                });
+
+
         },
         data: function () {
             return {
@@ -85,14 +86,21 @@
             updateHighlights: function() {
 
             },
-            highlight: function (_chapterId, _verses) {
+            highlight: function (_chapterId, _verses, _color) {
                 _verses.forEach(element => {
                     if (this.originalHighlights.includes(element)){
                         this.originalHighlights.splice(this.originalHighlights.indexOf(element), 1);
-                    } else if (this.highlights1.includes(element)) {
+                    }
+                    if (this.highlights1.includes(element)) {
                         this.highlights1.splice(this.highlights1.indexOf(element), 1);
                     } else {
-                        this.highlights1.push(element);
+                        switch(_color) {
+                            case 1: 
+                                this.highlights1.push(element);
+                                break;
+                            default:
+                                this.highlights1.push(element);
+                        }
                     }
                 });
                 this.clearUnderlines();
@@ -136,9 +144,8 @@
             }
         },
         mounted: function () {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
         // props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
-        props: ['chapterText', 'book', 'chapter', 'previous', 'next']
+        props: ['apiToken', 'chapterText', 'book', 'chapter', 'previous', 'next', 'userId']
     }
 </script>

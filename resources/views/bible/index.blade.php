@@ -17,7 +17,7 @@
     <div class="container">
         <div class="app">
 
-            <index-component :books="books" v-on:select-page="selectPage"></index-component>
+            <index-component :books="books"></index-component>
 
         </div>
     </div>

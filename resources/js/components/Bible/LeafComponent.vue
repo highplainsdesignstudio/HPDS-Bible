@@ -23,8 +23,6 @@
     export default {
         methods: {
             clickLeaf: function() {
-                // this.$emit('leaf-page', this.type);
-                console.log(this.link);
                 location.replace('http://bible.local/' + this.link.book + '/' + this.link.chapter);
             }
         },

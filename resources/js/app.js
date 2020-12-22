@@ -31,6 +31,7 @@ window.Vue = require('vue');
 // Import local components.
 import IndexComponent from './components/Bible/IndexComponent.vue';
 import PageComponent from './components/Bible/PageComponent.vue';
+import SavedHighlightsComponent from './components/Bible/SavedHighlightsComponent.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -59,7 +60,8 @@ const app = new Vue({
     el: '#app',
     components: {
         'index-component': IndexComponent,
-        'page-component': PageComponent
+        'page-component': PageComponent,
+        'saved-highlights-component': SavedHighlightsComponent
     },
     data: {
         books: null,
@@ -72,14 +74,6 @@ const app = new Vue({
         .then(response => response.json())
         .then(data => {
             this.books = data;
-            console.log(data);
-            // Retrieve cookies if they are set.
-            // let _bookCookie = this.getCookie('book_id');
-            // let _chapterCookie = this.getCookie('chapter');
-            // if (_bookCookie != '' && _bookCookie != null
-            //     && _chapterCookie != null && _chapterCookie != '') {
-            //     this.selectPage(_bookCookie, _chapterCookie);
-            // } 
         });  
     },
     methods: {
@@ -98,39 +92,12 @@ const app = new Vue({
             }
             return "";
         },
-        leafPage: function(_type) {
-            let _newChapterId = parseInt(this.selectedPage.chapter_id) + parseInt(_type);
-            if (_newChapterId < 1) {
-                _newChapterId = 1189;
-            } else if (_newChapterId > 1189) {
-                _newChapterId = 1;
-            }
-            fetch('api/chapter/' + _newChapterId)
-                .then(response => response.json())
-                .then(data => {
-                    this.selectPage(data[0].book_id, data[0].book_chapter);
-                });
-        },
         setCookie: function(cname, cvalue, exdays) {
             var d = new Date();
             d.setTime(d.getTime() + (exdays*24*60*60*1000));
             var expires = "expires="+ d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
           },
-        selectPage: function(_book_id, _chapter) {
-            fetch('api/' + _book_id + '/' + _chapter)
-            .then(response => response.json())
-            .then(data => {
-                this.pageText = data;
-                this.selectedPage.chapter_id = this.pageText[0].chapter_id;
-            });
-
-            this.selectedPage.name = this.books[_book_id - 1].book;
-            this.selectedPage.chapter = _chapter;
-
-            this.setCookie('book_id', _book_id, 30);
-            this.setCookie('chapter', _chapter, 30);
-        }
     },
     router
 }).$mount('#app');

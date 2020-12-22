@@ -19,16 +19,17 @@
         <div class="app">
 
             <index-component 
-            :books="books"
-            v-on:select-page="selectPage"></index-component>
+            :books="books"></index-component>
 
             <page-component
+                api-token="{{ $apiToken }}"
                 book="{{ $book }}"
                 chapter="{{ $chapter }}"
                 :chapter-text="{{ $verses }}"
                 :previous="{{ $previous }}"
-                :next="{{ $next }}"></page-component>
-                
+                :next="{{ $next }}"
+                user-id="{{ $userId }}"></page-component>
+
         </div>
     </div>
 @endsection

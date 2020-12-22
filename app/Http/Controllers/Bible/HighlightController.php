@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Bible;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Highlight;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class HighlightController extends Controller
 {
@@ -16,27 +16,19 @@ class HighlightController extends Controller
      */
     public function index(Request $request)
     {
-        // $input = $request->all();
         $userId = $request->input('userId');
         $chapterId = $request->input('chapterId');
-        // $highlights = Highlight::where('user_id', $userId)
-        //     ->get();
 
-        // return $highlights->toJson();
-            $highlights = DB::table('highlights')
-            ->select('verse_id', 'color', 'verses.chapter_id')
-            ->join('verses', 'verse_id', '=', 'verses.id')
-            ->where('user_id', '=', $userId)
-            ->where('verses.chapter_id', '=', $chapterId)
-            // ->where('highlights.deleted_at', '=', 'null')
-            ->get();
+        $highlights = Highlight::select('verse_id', 'color', 'verses.chapter_id')
+        ->join('verses', 'verse_id', '=', 'verses.id')
+        ->where('user_id', '=', $userId)
+        ->where('verses.chapter_id', '=', $chapterId)
+        ->get();
  
         if ($highlights != null) {
             return $highlights->tojson();
         } else {
-            return response()->json([
-                'action' => 'completed'
-            ]);
+            return null;
         }
     }
 
@@ -86,7 +78,6 @@ class HighlightController extends Controller
                 $highlight->verse_id = (int)$verseId;
                 $highlight->color = 1;
                 $highlight->save();
-                // $action = "created";
             }
         }
 

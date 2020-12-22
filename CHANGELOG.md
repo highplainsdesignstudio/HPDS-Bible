@@ -1,8 +1,14 @@
 # Bible App
 A KJV Bible application built with Laravel.
-## v0.0.5 (wip)
+## v0.0.5 (12/21/2020)
+### Eigth commit (12/21/2020)
+* The Highlights Component was added to show highlights on each chapter.
+* The Highlights Controller has been updated to send proper information to the front end. 
+* The Home page now shows all of the user's highlights.
+* Requests to books/chapters that don't exist now abort with a 404 error.
+* Some code clean up.
 
-### Seventh commit (wip)
+### Seventh commit (12/21/2020)
 * Small style changes and other code clean up.
 * New Bible.page view created to accommodate the chapter text.
 * The Bible.index view now only shows a Vue Index Component that allows the user to navigate to a chapter.

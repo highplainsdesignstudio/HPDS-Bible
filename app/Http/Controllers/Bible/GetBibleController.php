@@ -26,6 +26,8 @@ class GetBibleController extends Controller
             ->where('book_chapter', $chapter)
             ->first();
         
+        if ($bookId == null || $chapterId == null) { abort(404); }
+
         $_previous = $chapterId->id == 1 ? 1189 : $chapterId->id - 1;
         $_next = $chapterId->id == 1189 ? 1 : $chapterId->id + 1;
 
@@ -43,7 +45,7 @@ class GetBibleController extends Controller
         $verses = Verse::where('book_id', $bookId->id)
             ->where('chapter_id', $chapterId->id)
             ->get();
-
+       
         return view('bible.page', ['verses' => $verses, 'book' => $book, 'chapter' => $chapter,
             'previous' => json_encode($previousChapter), 'next' => json_encode($nextChapter)]);
     }   

@@ -1,6 +1,6 @@
 <template>
     <div id="highlight-component" class="col-12">
-        <div  v-on:click="highlight">
+        <div  v-on:click="highlight(1)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
                 <circle cx="8" cy="8" r="8"/>
             </svg>
@@ -12,7 +12,7 @@
 <script>
     export default {
         methods: {
-            highlight: function () {
+            highlight: function (color) {
                 let _post = {
                     userId: this.userId,
                     count: this.verses.length
@@ -25,20 +25,16 @@
                 }
 
                 if (this.userId > 0) {
-                    axios.post('api/highlights', _post)
+                    axios.post('http://bible.local/api/highlights', _post)
                     .then(response => {
-                        console.log(response);
                     })
                     .catch(error => {
                         console.log(error);
                     });
                 }
 
-                this.$emit('highlight', this.chapterId, this.verses);
+                this.$emit('highlight', this.chapterId, this.verses, color);
             }
-        },
-        mounted() {
-            console.log('Component mounted.')
         },
         props: ['chapterId', 'userId', 'verses']
     }
