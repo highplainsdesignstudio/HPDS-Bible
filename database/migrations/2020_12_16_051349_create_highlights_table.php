@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVersesTable extends Migration
+class CreateHighlightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateVersesTable extends Migration
      */
     public function up()
     {
-        Schema::create('verses', function (Blueprint $table) {
+        Schema::create('highlights', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('testament_id');
-            $table->foreignId('book_id');
-            // $table->integer('chapter');
-            $table->foreignId('chapter_id');
-            $table->integer('chapter_verse');
-            $table->string('verse', 650);
+            $table->softDeletes();
+            $table->foreignId('user_id');
+            $table->foreignId('verse_id');
+            $table->integer('color');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateVersesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('verses');
+        Schema::dropIfExists('highlights');
     }
 }

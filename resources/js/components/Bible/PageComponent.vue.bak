@@ -1,11 +1,11 @@
 <template>
-    <div class="container" v-if="book">
+    <div class="container" v-if="page.name">
         <div class="row">
-            <h1 class="col-12 text-center text-capitalize">{{ book + " Chapter " + chapter }}</h1>
+            <h1 class="col-12 text-center">{{ page.name + " Chapter " + page.chapter }}</h1>
         </div>
     
         <div id="chapter-text" class="row">
-            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage" :link="previous"></leaf-component>
+            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage"></leaf-component>
             <div class="col-10">
                 <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
                     <div class="row">
@@ -18,18 +18,19 @@
                 </div>
             </div>
             
-            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
+            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage"></leaf-component>
         </div>
 
-       <div class="row">
+        <div class="row">
             <highlight-component
-                :chapter-id="this.chapterText[0].chapter_id"
-                :user-id="userId"
+                :chapter-id="page.chapter_id"
+                :user-id="userId" 
                 :verses="underlines"
                 v-if="underlines.length > 0"
                 v-on:highlight="highlight"></highlight-component>
+            
+            <div v-if="getHighlights === true"></div>
         </div>
-
     </div>
 </template>
 
@@ -42,35 +43,32 @@
             'leaf-component': LeafComponent,
             'highlight-component': HighlightComponent
         },
-        created: function () {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
-                axios.get('http://bible.local/api/highlights', {
+        computed: {
+            getHighlights: function () {
+                axios.get('api/highlights', {
                     params: {
                         userId: this.userId,
-                        chapterId: this.chapterText[0].chapter_id
+                        chapterId: this.page.chapter_id
                     }
                 })
                 .then(response => {
                     let _highlights = response.data;
-                    console.log(_highlights);
-
-                    _highlights.forEach(element => {
-                        this.originalHighlights.push(element.verse_id);
-
-                        switch(element.color) {
-                            case 1: 
-                                this.highlights1.push(element.verse_id);
-                                break;
-                            default:
-                                this.highlights1.push(element.verse_id);
+                    this.originalHighlights = [];
+                    for (let i = 0; i < _highlights.length; i++) {
+                        if (_highlights[i].color === 1) {
+                            this.originalHighlights.push(_highlights[i].verse_id);
                         }
-                    });
+                    }
+                    console.log('Original highlights: ', this.originalHighlights);
                 })
                 .catch(exception => {
                     console.log(exception);
                 });
-
-
+                return true;
+            }                
+        },
+        created: function () {
+            console.log(this.chapterText);
         },
         data: function () {
             return {
@@ -86,21 +84,14 @@
             updateHighlights: function() {
 
             },
-            highlight: function (_chapterId, _verses, _color) {
+            highlight: function (_chapterId, _verses) {
                 _verses.forEach(element => {
                     if (this.originalHighlights.includes(element)){
                         this.originalHighlights.splice(this.originalHighlights.indexOf(element), 1);
-                    }
-                    if (this.highlights1.includes(element)) {
+                    } else if (this.highlights1.includes(element)) {
                         this.highlights1.splice(this.highlights1.indexOf(element), 1);
                     } else {
-                        switch(_color) {
-                            case 1: 
-                                this.highlights1.push(element);
-                                break;
-                            default:
-                                this.highlights1.push(element);
-                        }
+                        this.highlights1.push(element);
                     }
                 });
                 this.clearUnderlines();
@@ -144,8 +135,8 @@
             }
         },
         mounted: function () {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
         },
-        // props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
-        props: ['apiToken', 'chapterText', 'book', 'chapter', 'previous', 'next', 'userId']
+        props: ['page', 'chapterText', 'loggedIn', 'apiToken', 'userId']
     }
 </script>

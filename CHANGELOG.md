@@ -1,5 +1,56 @@
 # Bible App
 A KJV Bible application built with Laravel.
+## v0.0.5 (12/21/2020)
+### Eigth commit (12/21/2020)
+* The Highlights Component was added to show highlights on each chapter.
+* The Highlights Controller has been updated to send proper information to the front end. 
+* The Home page now shows all of the user's highlights.
+* Requests to books/chapters that don't exist now abort with a 404 error.
+* Some code clean up.
+
+### Seventh commit (12/21/2020)
+* Small style changes and other code clean up.
+* New Bible.page view created to accommodate the chapter text.
+* The Bible.index view now only shows a Vue Index Component that allows the user to navigate to a chapter.
+### Sixth commit (12/20/2020)
+* GetBibleController changed to added to return previous and next chapters when the bible text is retrieved.
+* LeafComponent added.
+
+### Fifth commit (12/19/2020)
+* Major structural redesign for both back and front ends.
+* The frontend Bible is now mostly PHP orientated.
+* Web routes added to accomadate new design.
+* The app now refreshes for every chapter. This is a major redesign.
+* Changes to the Vue components.
+
+### Fourth commit (12/19/2020)
+* Implemented soft deletes to the Highlight model.
+* Made changes to the HighlightComponent. Now, there is only one HighlightComponent that manages the function
+of saving highlights. 
+* The user can now click verses to underline and to remove underlines. 
+* Decided to go a different route on the design of the site. Committing before major changes.
+
+### Third commit (12/16/2020)
+* Added a Highlight model and migration.
+* The HighlightedVerses controller has been renamed to HighlightController.
+* Minor code cleanup.
+* The HighlightComponent now saves or deletes a highlighted verse in the database.
+
+### Second commit (12/15/2020)
+* Removed the Vue form app instance. It was unecessary.
+* <strike>HighlightComponent now shows up when the user mouseover's the verse and disappears on mouseout. If the user is not logged in,
+the user gets a message to log in to save verses.</strike>
+* The HighlightComponent now appears when the user clicks on the verse. It disappears if the user clicks a different verse or the same verse twice.
+* The 'verses' database table has been updated to include a 'chapter_verse' column. The migration and databaseseeder have been updated.
+* Added the HighlightedVerses controller resource.
+* Updated the Login and Logout control methods in order to create/delete Sanctum api key after logging in and logging out.
+The backend is now complete for the API key generation. The front end now has a temporary call to a backend api test route. 
+Additional API routes can now be added using the Sanctum middleware.
+
+### First commit (12/11/2020)
+* Installed Laravel Sanctum via composer.
+* Set up the work for a Highlight Component that will serve as the component that will save verses for users that are logged in.
+
 ## v0.0.4 (11/28/2020)
 ## Fifth Commit (11/28/2020)
 * Changes made to the user dashboard.

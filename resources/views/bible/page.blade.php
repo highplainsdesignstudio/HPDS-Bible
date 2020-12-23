@@ -13,11 +13,22 @@
             }
         $userId = auth()->user()->id;
         }
+
     ?>
     <div class="container">
         <div class="app">
 
-            <index-component :books="books"></index-component>
+            <index-component 
+            :books="books"></index-component>
+
+            <page-component
+                api-token="{{ $apiToken }}"
+                book="{{ $book }}"
+                chapter="{{ $chapter }}"
+                :chapter-text="{{ $verses }}"
+                :previous="{{ $previous }}"
+                :next="{{ $next }}"
+                user-id="{{ $userId }}"></page-component>
 
         </div>
     </div>
