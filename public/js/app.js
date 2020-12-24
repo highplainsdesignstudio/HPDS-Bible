@@ -2138,6 +2138,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     clickLeaf: function clickLeaf() {
@@ -2160,6 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LeafComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LeafComponent.vue */ "./resources/js/components/Bible/LeafComponent.vue");
 /* harmony import */ var _HighlightComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HighlightComponent.vue */ "./resources/js/components/Bible/HighlightComponent.vue");
+//
 //
 //
 //
@@ -38301,15 +38303,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "leaf" }, [
+  return _c("div", { staticClass: "leaf row" }, [
     _c(
       "button",
       {
-        class: [
-          _vm.type == 1 ? "leaf-next" : "leaf-previous",
-          "btn",
-          "btn-primary"
-        ],
+        staticClass: "btn btn-primary col-12 leaf-btn",
         on: {
           click: function($event) {
             return _vm.clickLeaf()
@@ -38324,7 +38322,7 @@ var render = function() {
                 {
                   staticClass: "bi bi-arrow-left",
                   attrs: {
-                    width: "3em",
+                    width: "2em",
                     height: "2em",
                     viewBox: "0 0 16 16",
                     fill: "currentColor",
@@ -38351,7 +38349,7 @@ var render = function() {
                 {
                   staticClass: "bi bi-arrow-right",
                   attrs: {
-                    width: "3em",
+                    width: "2em",
                     height: "2em",
                     viewBox: "0 0 16 16",
                     fill: "currentColor",
@@ -38406,56 +38404,55 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "row", attrs: { id: "chapter-text" } },
+          { staticClass: "row" },
           [
             _c("leaf-component", {
-              staticClass: "col-1",
+              staticClass: "col-12 col-md-2 col-lg-1",
               attrs: { type: "-1", link: _vm.previous },
               on: { "leaf-page": _vm.leafPage }
             }),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              {
+                staticClass: "col-12 col-md-8 col-lg-10",
+                attrs: { id: "chapter-text" }
+              },
               _vm._l(_vm.chapterText, function(text, index) {
-                return _c("div", { key: text.id, staticClass: "verse" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c(
-                      "p",
-                      {
-                        staticClass: "col-12",
+                return _c("div", { key: text.id, staticClass: "v-contain" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass: "verse",
+                      attrs: { id: "verse-" + index },
+                      on: {
+                        click: function($event) {
+                          return _vm.toggleUnderline(text.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "h5" }, [
+                        _vm._v(_vm._s(index + 1) + ": ")
+                      ]),
+                      _c("span", {
                         class: {
+                          underlined: _vm.underlines.includes(text.id),
                           highlight:
                             _vm.originalHighlights.includes(text.id) ||
                             _vm.highlights1.includes(text.id)
                         },
-                        attrs: { id: "verse-" + index },
-                        on: {
-                          click: function($event) {
-                            return _vm.toggleUnderline(text.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("span", { staticClass: "h5" }, [
-                          _vm._v(_vm._s(index + 1) + ": ")
-                        ]),
-                        _c("span", {
-                          class: {
-                            underlined: _vm.underlines.includes(text.id)
-                          },
-                          domProps: { innerHTML: _vm._s(text.verse) }
-                        })
-                      ]
-                    )
-                  ])
+                        domProps: { innerHTML: _vm._s(text.verse) }
+                      })
+                    ]
+                  )
                 ])
               }),
               0
             ),
             _vm._v(" "),
             _c("leaf-component", {
-              staticClass: "col-1",
+              staticClass: "col-12 col-md-2 col-lg-1",
               attrs: { type: "1", link: _vm.next },
               on: { "leaf-page": _vm.leafPage }
             })

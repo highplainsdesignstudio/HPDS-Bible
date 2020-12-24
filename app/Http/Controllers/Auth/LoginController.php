@@ -51,8 +51,7 @@ class LoginController extends Controller
         //
         $token = $request->user()->createToken('HPDS_main')->plainTextToken;
         session(['api-token' => $token]);
-        // return ['token' => $token->plainTextToken];
-        return view('home', ['user'=>$user]);
+        return redirect('home');
     }
 
     /**

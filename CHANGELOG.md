@@ -1,5 +1,10 @@
 # Bible App
 A KJV Bible application built with Laravel.
+## v0.0.6 (wip)
+### First commit
+* Style changes for responsive design.
+* Code cleanup.
+
 ## v0.0.5 (12/21/2020)
 ### Eigth commit (12/21/2020)
 * The Highlights Component was added to show highlights on each chapter.

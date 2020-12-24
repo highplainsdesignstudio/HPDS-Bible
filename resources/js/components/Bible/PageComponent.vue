@@ -4,21 +4,22 @@
             <h1 class="col-12 text-center text-capitalize">{{ book + " Chapter " + chapter }}</h1>
         </div>
     
-        <div id="chapter-text" class="row">
-            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage" :link="previous"></leaf-component>
-            <div class="col-10">
-                <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
-                    <div class="row">
-                        <p :id=" 'verse-' + index" class="col-12" 
-                            v-bind:class="{highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id)}" 
-                            v-on:click="toggleUnderline(text.id)">
-                            <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id) }"></span>
-                        </p>
-                    </div>    
+        <div class="row">
+            <leaf-component class="col-12 col-md-2 col-lg-1" type=-1 v-on:leaf-page="leafPage" :link="previous"></leaf-component>
+            <div class="col-12 col-md-8 col-lg-10" id="chapter-text">
+                <div v-for="(text, index) in chapterText" :key="text.id" class="v-contain">
+                    <!-- <div class="row"> -->
+                        <!-- <p :id=" 'verse-' + index" class="col-12 verse"  -->
+                    <p :id=" 'verse-' + index" class="verse"
+                        
+                        v-on:click="toggleUnderline(text.id)">
+                    <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id), highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id) }"></span>
+                    </p>
+                    <!-- </div>     -->
                 </div>
             </div>
             
-            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
+            <leaf-component class="col-12 col-md-2 col-lg-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
         </div>
 
        <div class="row">
