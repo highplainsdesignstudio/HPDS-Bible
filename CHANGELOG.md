@@ -1,9 +1,11 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v0.0.6 (wip)
-### First commit
+### First commit (12/28/2020)
 * Style changes for responsive design.
 * Code cleanup.
+* The Welcome view now conforms with the rest of the site.
+* Several images were (temporarily) added for the Welcome view.
 
 ## v0.0.5 (12/21/2020)
 ### Eigth commit (12/21/2020)
