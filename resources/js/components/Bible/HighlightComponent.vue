@@ -1,11 +1,10 @@
 <template>
-    <div id="highlight-component" class="col-12">
-        <div  v-on:click="highlight(1)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-circle-fill" viewBox="0 0 16 16">
-                <circle cx="8" cy="8" r="8"/>
-            </svg>
-        </div>
-        
+    <div id="highlight-component" >
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="green" class="bi bi-circle-fill" viewBox="0 0 32 32" v-on:click="highlight(1)">
+                <circle cx="16" cy="16" r="16"/>
+            </svg> -->
+            <img src="http://bible.local/img/green-circle.png"  v-on:click="highlight(1)" title="Highlight Green.">
+            <img src="http://bible.local/img/x.png" v-on:click="highlight(0)" title="Clear Selected.">
     </div>
 </template>
 
@@ -32,7 +31,6 @@
                         console.log(error);
                     });
                 }
-
                 this.$emit('highlight', this.chapterId, this.verses, color);
             }
         },

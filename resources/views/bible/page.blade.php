@@ -15,7 +15,7 @@
         }
 
     ?>
-    <div class="container">
+    <div class="container-fluid">
         <div class="app">
 
             <index-component 

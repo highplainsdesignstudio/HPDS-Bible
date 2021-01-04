@@ -77,6 +77,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="text-center">&copy;	2021 <a href="http://www.highplainsdesignstudio.com">HPDS</a><footer>
     </div>
 </body>
 </html>
