@@ -1,5 +1,24 @@
 # Bible App
 A KJV Bible application built with Laravel.
+## v0.0.6 (wip)
+### Fourth commit (wip) 
+* removed hard coded hostname from the javascript front end. Replaced with location.hostname or php equivilant
+
+
+### Third commit (01/03/2021)
+* Code cleanup.
+* Style changes.
+* Added an "x" to the Highlight component in order to clear all the underlines.
+* Footer added.
+
+### Second commit (12/28/2020)
+* The Welcome view now conforms with the rest of the site.
+* Several images were (temporarily) added for the Welcome view.
+
+### First commit (12/23/2020)
+* Style changes for responsive design.
+* Code cleanup.
+
 ## v0.0.5 (12/21/2020)
 ### Eigth commit (12/21/2020)
 * The Highlights Component was added to show highlights on each chapter.

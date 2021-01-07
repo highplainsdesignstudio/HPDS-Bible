@@ -20,7 +20,7 @@
                         Read Bible
                     </a>
  
-                    <saved-highlights-component :highlights="{{ $highlights }}"></saved-highlights-component>
+                    <saved-highlights-component :highlights="{{ $highlights ?? '' }}"></saved-highlights-component>
                    
                 </div>
             </div>

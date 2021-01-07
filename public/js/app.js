@@ -1936,7 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.userId > 0) {
-        axios.post('http://bible.local/api/highlights', _post).then(function (response) {})["catch"](function (error) {
+        axios.post('http://' + location.hostname + '/api/highlights', _post).then(function (response) {})["catch"](function (error) {
           console.log(error);
         });
       }
@@ -2022,6 +2022,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
+    hostname: function hostname() {
+      return 'http://' + location.hostname + '/';
+    },
     oldTestament: function oldTestament() {
       var _old = [];
 
@@ -2049,11 +2052,11 @@ __webpack_require__.r(__webpack_exports__);
       return _new;
     }
   },
-  data: function data() {
-    return {
-      publicUrl: 'http://bible.local/'
-    };
-  },
+  // data: function () {
+  //     return {
+  //        
+  //     }
+  // },
   methods: {
     selectBook: function selectBook(_id) {
       var _chapters = document.getElementById('chapters-' + _id);
@@ -2086,12 +2089,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var _upCaret = document.getElementById('up-caret');
 
-      var _src = this.publicUrl + 'img/bibleclosedIcon.png';
+      var _src = this.hostname + 'img/bibleclosedIcon.png';
 
       if (_bibleIcon.src === _src) {
-        _bibleIcon.src = this.publicUrl + 'img/bibleopenIcon.png';
+        _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
       } else {
-        _bibleIcon.src = this.publicUrl + 'img/bibleclosedIcon.png';
+        _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
       }
 
       _indexCard.classList.toggle('d-none');
@@ -2138,10 +2141,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     clickLeaf: function clickLeaf() {
-      location.replace('http://bible.local/' + this.link.book + '/' + this.link.chapter);
+      location.replace('http://' + location.hostname + '/' + this.link.book + '/' + this.link.chapter);
     }
   },
   props: ['type', 'link']
@@ -2195,6 +2199,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2205,33 +2211,34 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
-    axios.get('http://bible.local/api/highlights', {
-      params: {
-        userId: this.userId,
-        chapterId: this.chapterText[0].chapter_id
-      }
-    }).then(function (response) {
-      var _highlights = response.data;
-      console.log(_highlights);
-
-      _highlights.forEach(function (element) {
-        _this.originalHighlights.push(element.verse_id);
-
-        switch (element.color) {
-          case 1:
-            _this.highlights1.push(element.verse_id);
-
-            break;
-
-          default:
-            _this.highlights1.push(element.verse_id);
-
+    if (this.apiToken != '') {
+      axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
+      axios.get('http://' + location.hostname + '/api/highlights', {
+        params: {
+          userId: this.userId,
+          chapterId: this.chapterText[0].chapter_id
         }
+      }).then(function (response) {
+        var _highlights = response.data;
+
+        _highlights.forEach(function (element) {
+          _this.originalHighlights.push(element.verse_id);
+
+          switch (element.color) {
+            case 1:
+              _this.highlights1.push(element.verse_id);
+
+              break;
+
+            default:
+              _this.highlights1.push(element.verse_id);
+
+          }
+        });
+      })["catch"](function (exception) {
+        console.log(exception);
       });
-    })["catch"](function (exception) {
-      console.log(exception);
-    });
+    }
   },
   data: function data() {
     return {
@@ -2248,26 +2255,28 @@ __webpack_require__.r(__webpack_exports__);
     highlight: function highlight(_chapterId, _verses, _color) {
       var _this2 = this;
 
-      _verses.forEach(function (element) {
-        if (_this2.originalHighlights.includes(element)) {
-          _this2.originalHighlights.splice(_this2.originalHighlights.indexOf(element), 1);
-        }
-
-        if (_this2.highlights1.includes(element)) {
-          _this2.highlights1.splice(_this2.highlights1.indexOf(element), 1);
-        } else {
-          switch (_color) {
-            case 1:
-              _this2.highlights1.push(element);
-
-              break;
-
-            default:
-              _this2.highlights1.push(element);
-
+      if (_color != '0') {
+        _verses.forEach(function (element) {
+          if (_this2.originalHighlights.includes(element)) {
+            _this2.originalHighlights.splice(_this2.originalHighlights.indexOf(element), 1);
           }
-        }
-      });
+
+          if (_this2.highlights1.includes(element)) {
+            _this2.highlights1.splice(_this2.highlights1.indexOf(element), 1);
+          } else {
+            switch (_color) {
+              case 1:
+                _this2.highlights1.push(element);
+
+                break;
+
+              default:
+                _this2.highlights1.push(element);
+
+            }
+          }
+        });
+      }
 
       this.clearUnderlines();
     },
@@ -2347,15 +2356,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    console.log(this.highlights);
-  },
   props: ['highlights']
 });
 
@@ -37986,38 +37987,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-12", attrs: { id: "highlight-component" } },
-    [
-      _c(
-        "div",
-        {
-          on: {
-            click: function($event) {
-              return _vm.highlight(1)
-            }
-          }
-        },
-        [
-          _c(
-            "svg",
-            {
-              staticClass: "bi bi-circle-fill",
-              attrs: {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: "16",
-                height: "16",
-                fill: "green",
-                viewBox: "0 0 16 16"
-              }
-            },
-            [_c("circle", { attrs: { cx: "8", cy: "8", r: "8" } })]
-          )
-        ]
-      )
-    ]
-  )
+  return _c("div", { attrs: { id: "highlight-component" } }, [
+    _c("img", {
+      attrs: {
+        src: "http://" + _vm.location.hostname + "/img/green-circle.png",
+        title: "Highlight Green."
+      },
+      on: {
+        click: function($event) {
+          return _vm.highlight(1)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("img", {
+      attrs: {
+        src: "http://" + _vm.location.hostname + "/img/x.png",
+        title: "Clear Selected."
+      },
+      on: {
+        click: function($event) {
+          return _vm.highlight(0)
+        }
+      }
+    })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38064,7 +38058,7 @@ var render = function() {
                   _c("img", {
                     staticStyle: { width: "64px" },
                     attrs: {
-                      src: _vm.publicUrl + "img/bibleclosedIcon.png",
+                      src: _vm.hostname + "img/bibleclosedIcon.png",
                       alt: "bible icon",
                       id: "bible-icon"
                     }
@@ -38181,7 +38175,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           href:
-                                            "http://bible.local/" +
+                                            _vm.hostname +
                                             book.book +
                                             "/" +
                                             chapter
@@ -38250,7 +38244,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           href:
-                                            "http://bible.local/" +
+                                            _vm.hostname +
                                             book.book +
                                             "/" +
                                             chapter
@@ -38301,15 +38295,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "leaf" }, [
+  return _c("div", { staticClass: "leaf row" }, [
     _c(
       "button",
       {
-        class: [
-          _vm.type == 1 ? "leaf-next" : "leaf-previous",
-          "btn",
-          "btn-primary"
-        ],
+        staticClass: "btn btn-primary col-12 leaf-btn",
         on: {
           click: function($event) {
             return _vm.clickLeaf()
@@ -38324,7 +38314,7 @@ var render = function() {
                 {
                   staticClass: "bi bi-arrow-left",
                   attrs: {
-                    width: "3em",
+                    width: "2em",
                     height: "2em",
                     viewBox: "0 0 16 16",
                     fill: "currentColor",
@@ -38351,7 +38341,7 @@ var render = function() {
                 {
                   staticClass: "bi bi-arrow-right",
                   attrs: {
-                    width: "3em",
+                    width: "2em",
                     height: "2em",
                     viewBox: "0 0 16 16",
                     fill: "currentColor",
@@ -38397,7 +38387,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.book
-    ? _c("div", { staticClass: "container" }, [
+    ? _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "row" }, [
           _c("h1", { staticClass: "col-12 text-center text-capitalize" }, [
             _vm._v(_vm._s(_vm.book + " Chapter " + _vm.chapter))
@@ -38409,54 +38399,54 @@ var render = function() {
           { staticClass: "row", attrs: { id: "chapter-text" } },
           [
             _c("leaf-component", {
-              staticClass: "col-1",
-              attrs: { type: "-1", link: _vm.previous },
+              staticClass: "col-12 col-md-2 col-lg-1",
+              attrs: {
+                type: "-1",
+                link: _vm.previous,
+                title: "Previous Chapter."
+              },
               on: { "leaf-page": _vm.leafPage }
             }),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-10" },
+              { staticClass: "col-12 col-md-8 col-lg-10" },
               _vm._l(_vm.chapterText, function(text, index) {
-                return _c("div", { key: text.id, staticClass: "verse" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c(
-                      "p",
-                      {
-                        staticClass: "col-12",
+                return _c("div", { key: text.id, staticClass: "v-contain" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass: "verse",
+                      attrs: { id: "verse-" + index },
+                      on: {
+                        click: function($event) {
+                          return _vm.toggleUnderline(text.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "h5" }, [
+                        _vm._v(_vm._s(index + 1) + ": ")
+                      ]),
+                      _c("span", {
                         class: {
+                          underlined: _vm.underlines.includes(text.id),
                           highlight:
                             _vm.originalHighlights.includes(text.id) ||
                             _vm.highlights1.includes(text.id)
                         },
-                        attrs: { id: "verse-" + index },
-                        on: {
-                          click: function($event) {
-                            return _vm.toggleUnderline(text.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("span", { staticClass: "h5" }, [
-                          _vm._v(_vm._s(index + 1) + ": ")
-                        ]),
-                        _c("span", {
-                          class: {
-                            underlined: _vm.underlines.includes(text.id)
-                          },
-                          domProps: { innerHTML: _vm._s(text.verse) }
-                        })
-                      ]
-                    )
-                  ])
+                        domProps: { innerHTML: _vm._s(text.verse) }
+                      })
+                    ]
+                  )
                 ])
               }),
               0
             ),
             _vm._v(" "),
             _c("leaf-component", {
-              staticClass: "col-1",
-              attrs: { type: "1", link: _vm.next },
+              staticClass: "col-12 col-md-2 col-lg-1",
+              attrs: { type: "1", link: _vm.next, title: "Next Chapter." },
               on: { "leaf-page": _vm.leafPage }
             })
           ],
@@ -38469,6 +38459,7 @@ var render = function() {
           [
             _vm.underlines.length > 0
               ? _c("highlight-component", {
+                  staticClass: "offset-1 offset-md-2",
                   attrs: {
                     "chapter-id": this.chapterText[0].chapter_id,
                     "user-id": _vm.userId,
@@ -38508,11 +38499,9 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-12" }, [
-        _c("h2", [_vm._v("Saved Highlights")]),
-        _vm._v(" "),
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
+            _vm._v("Saved Highlights")
           ]),
           _vm._v(" "),
           _c(
@@ -53786,7 +53775,7 @@ var app = new Vue({
     var _this = this;
 
     // TODO: Change the fetch call to an axios call.
-    fetch('http://bible.local/api/books').then(function (response) {
+    fetch('http://' + location.hostname + '/api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
       _this.books = data;

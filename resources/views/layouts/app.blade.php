@@ -19,7 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="container-fluid">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -77,6 +77,8 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="text-center">&copy;	2021 <a href="http://www.highplainsdesignstudio.com">HPDS</a><footer>
     </div>
 </body>
 </html>

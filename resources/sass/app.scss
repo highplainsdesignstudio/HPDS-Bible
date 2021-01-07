@@ -37,14 +37,18 @@ body {
 }
 
 .highlight {
-    background-color: green;
+    background-color: #00ff00;
+    border-radius: 15px;
+    color:black;
 }
 
 .leaf {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.leaf button {
+.leaf-btn {
     height: 100%;
 }
 
@@ -55,15 +59,36 @@ body {
 }
 
 .underlined {
-    text-decoration: underline;
+    // text-decoration: underline;
+    border-bottom:#7e2623 dotted 3px;
+}
+
+.v-contain{
+    margin-bottom: -.8rem;
+}
+
+.verse {
+    // background-color: #ecececbd;
+    // border-radius: 15px;
+    // box-shadow: 5px 5px #7e2623;
+    // margin: .5em 0px;
+    padding-bottom: .2rem;
+    padding-left: .6rem;
+    padding-top: .1rem;
 }
 
 .verse:hover {
-    background-color: greenyellow;
+    background-color: #ecececbd;
+    border-radius: 15px;
+    box-shadow: 5px 5px #6e6f54;
+    margin: .5em 0px;
+    cursor: pointer;
 }
 
 #chapter-text {
+    // background-color: wheat;
     padding-bottom: 50px;
+    padding-top: 1em
 }
 
 #highlight-component {

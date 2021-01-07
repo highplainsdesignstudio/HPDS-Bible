@@ -1,28 +1,30 @@
 <template>
-    <div class="container" v-if="book">
+    <div class="container-fluid" v-if="book">
         <div class="row">
             <h1 class="col-12 text-center text-capitalize">{{ book + " Chapter " + chapter }}</h1>
         </div>
     
-        <div id="chapter-text" class="row">
-            <leaf-component class="col-1" type=-1 v-on:leaf-page="leafPage" :link="previous"></leaf-component>
-            <div class="col-10">
-                <div class="verse" v-for="(text, index) in chapterText" :key="text.id">
-                    <div class="row">
-                        <p :id=" 'verse-' + index" class="col-12" 
-                            v-bind:class="{highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id)}" 
-                            v-on:click="toggleUnderline(text.id)">
-                            <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id) }"></span>
-                        </p>
-                    </div>    
+        <div class="row"  id="chapter-text">
+            <leaf-component class="col-12 col-md-2 col-lg-1" type=-1 v-on:leaf-page="leafPage" :link="previous" title="Previous Chapter."></leaf-component>
+            <div class="col-12 col-md-8 col-lg-10">
+                <div v-for="(text, index) in chapterText" :key="text.id" class="v-contain">
+                    <!-- <div class="row"> -->
+                        <!-- <p :id=" 'verse-' + index" class="col-12 verse"  -->
+                    <p :id=" 'verse-' + index" class="verse"
+                        
+                        v-on:click="toggleUnderline(text.id)">
+                    <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id), highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id) }"></span>
+                    </p>
+                    <!-- </div>     -->
                 </div>
             </div>
             
-            <leaf-component class="col-1" type=1 v-on:leaf-page="leafPage" :link="next"></leaf-component>
+            <leaf-component class="col-12 col-md-2 col-lg-1" type=1 v-on:leaf-page="leafPage" :link="next" title="Next Chapter."></leaf-component>
         </div>
 
        <div class="row">
             <highlight-component
+                class="offset-1 offset-md-2"
                 :chapter-id="this.chapterText[0].chapter_id"
                 :user-id="userId"
                 :verses="underlines"
@@ -43,8 +45,9 @@
             'highlight-component': HighlightComponent
         },
         created: function () {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
-                axios.get('http://bible.local/api/highlights', {
+            if (this.apiToken != '') {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
+                axios.get('http://' + location.hostname + '/api/highlights', {
                     params: {
                         userId: this.userId,
                         chapterId: this.chapterText[0].chapter_id
@@ -52,8 +55,6 @@
                 })
                 .then(response => {
                     let _highlights = response.data;
-                    console.log(_highlights);
-
                     _highlights.forEach(element => {
                         this.originalHighlights.push(element.verse_id);
 
@@ -69,8 +70,7 @@
                 .catch(exception => {
                     console.log(exception);
                 });
-
-
+            }
         },
         data: function () {
             return {
@@ -87,22 +87,27 @@
 
             },
             highlight: function (_chapterId, _verses, _color) {
-                _verses.forEach(element => {
-                    if (this.originalHighlights.includes(element)){
-                        this.originalHighlights.splice(this.originalHighlights.indexOf(element), 1);
-                    }
-                    if (this.highlights1.includes(element)) {
-                        this.highlights1.splice(this.highlights1.indexOf(element), 1);
-                    } else {
-                        switch(_color) {
-                            case 1: 
-                                this.highlights1.push(element);
-                                break;
-                            default:
-                                this.highlights1.push(element);
+                if (_color != '0')
+                {
+                    _verses.forEach(element => {
+                        if (this.originalHighlights.includes(element)){
+                            this.originalHighlights.splice(this.originalHighlights.indexOf(element), 1);
                         }
-                    }
-                });
+                        if (this.highlights1.includes(element)) {
+                            this.highlights1.splice(this.highlights1.indexOf(element), 1);
+                        } else {
+                            switch(_color) {
+                                case 1: 
+                                    this.highlights1.push(element);
+                                    break;
+                                default:
+                                    this.highlights1.push(element);
+                            }
+                        }
+                    });
+                }
+                
+
                 this.clearUnderlines();
             },
             hideHighlightComponent: function (_index) {
