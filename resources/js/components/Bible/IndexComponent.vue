@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header sticky" v-on:click="toggleIndex" style="cursor:pointer; background-color:white; z-index:10;">
                         <div class="d-inline" id="index-menu" >
-                            <img :src="publicUrl + 'img/bibleclosedIcon.png'" alt="bible icon" id="bible-icon" style="width:64px">
+                            <img :src="hostname + 'img/bibleclosedIcon.png'" alt="bible icon" id="bible-icon" style="width:64px">
                         </div>
                         <span class="h5">Bible Book List</span>
                         <span id="down-caret">
@@ -32,7 +32,7 @@
                                                     <span v-for="chapter in book.chapter_count"
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter">
-                                                    <a :href="'http://bible.local/' + book.book + '/' + chapter">{{chapter}}</a> | </span>
+                                                    <a :href="hostname + book.book + '/' + chapter">{{chapter}}</a> | </span>
                                             </div>
                                         </li>
                                     </ul>
@@ -46,7 +46,7 @@
                                                     <span v-for="chapter in book.chapter_count" 
                                                     class="chapter-select-number"
                                                     v-bind:key="chapter">
-                                                    <a :href="'http://bible.local/' + book.book + '/' + chapter">{{chapter}}</a> |</span>
+                                                    <a :href="hostname + book.book + '/' + chapter">{{chapter}}</a> |</span>
                                             </div>
                                         </li>
                                     </ul>
@@ -63,6 +63,9 @@
 <script>
     export default {
         computed: {
+            hostname: function() {
+                return 'http://' + location.hostname + '/';
+            },
             oldTestament: function() {
                 let _old = [];
                 if(this.books) {
@@ -87,11 +90,11 @@
             }
         },
 
-        data: function () {
-            return {
-                publicUrl: 'http://bible.local/'
-            }
-        },
+        // data: function () {
+        //     return {
+        //        
+        //     }
+        // },
         methods: {
             selectBook: function(_id) {           
                 let _chapters = document.getElementById('chapters-' + _id);
@@ -117,11 +120,11 @@
                 let _downCaret = document.getElementById('down-caret');
                 let _upCaret = document.getElementById('up-caret');
 
-                let _src = this.publicUrl + 'img/bibleclosedIcon.png';
+                let _src = this.hostname + 'img/bibleclosedIcon.png';
                 if (_bibleIcon.src === _src) {
-                    _bibleIcon.src = this.publicUrl + 'img/bibleopenIcon.png';
+                    _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
                 } else {
-                    _bibleIcon.src = this.publicUrl + 'img/bibleclosedIcon.png';
+                    _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
                 }
                 _indexCard.classList.toggle('d-none');
                 _downCaret.classList.toggle('d-none');

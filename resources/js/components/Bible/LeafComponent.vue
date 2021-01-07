@@ -24,7 +24,7 @@
     export default {
         methods: {
             clickLeaf: function() {
-                location.replace('http://bible.local/' + this.link.book + '/' + this.link.chapter);
+                location.replace('http://' + location.hostname + '/' + this.link.book + '/' + this.link.chapter);
             }
         },
         props:['type', 'link']

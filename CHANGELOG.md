@@ -1,6 +1,10 @@
 # Bible App
 A KJV Bible application built with Laravel.
-## v0.0.6 (01/03/2021)
+## v0.0.6 (wip)
+### Fourth commit (wip) 
+* removed hard coded hostname from the javascript front end. Replaced with location.hostname or php equivilant
+
+
 ### Third commit (01/03/2021)
 * Code cleanup.
 * Style changes.

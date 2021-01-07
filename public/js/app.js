@@ -1918,6 +1918,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight(color) {
@@ -1935,7 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.userId > 0) {
-        axios.post('http://bible.local/api/highlights', _post).then(function (response) {})["catch"](function (error) {
+        axios.post('http://' + location.hostname + '/api/highlights', _post).then(function (response) {})["catch"](function (error) {
           console.log(error);
         });
       }
@@ -2021,6 +2022,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
+    hostname: function hostname() {
+      return 'http://' + location.hostname + '/';
+    },
     oldTestament: function oldTestament() {
       var _old = [];
 
@@ -2048,11 +2052,11 @@ __webpack_require__.r(__webpack_exports__);
       return _new;
     }
   },
-  data: function data() {
-    return {
-      publicUrl: 'http://bible.local/'
-    };
-  },
+  // data: function () {
+  //     return {
+  //        
+  //     }
+  // },
   methods: {
     selectBook: function selectBook(_id) {
       var _chapters = document.getElementById('chapters-' + _id);
@@ -2085,12 +2089,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var _upCaret = document.getElementById('up-caret');
 
-      var _src = this.publicUrl + 'img/bibleclosedIcon.png';
+      var _src = this.hostname + 'img/bibleclosedIcon.png';
 
       if (_bibleIcon.src === _src) {
-        _bibleIcon.src = this.publicUrl + 'img/bibleopenIcon.png';
+        _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
       } else {
-        _bibleIcon.src = this.publicUrl + 'img/bibleclosedIcon.png';
+        _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
       }
 
       _indexCard.classList.toggle('d-none');
@@ -2141,7 +2145,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     clickLeaf: function clickLeaf() {
-      location.replace('http://bible.local/' + this.link.book + '/' + this.link.chapter);
+      location.replace('http://' + location.hostname + '/' + this.link.book + '/' + this.link.chapter);
     }
   },
   props: ['type', 'link']
@@ -2209,7 +2213,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.apiToken != '') {
       axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
-      axios.get('http://bible.local/api/highlights', {
+      axios.get('http://' + location.hostname + '/api/highlights', {
         params: {
           userId: this.userId,
           chapterId: this.chapterText[0].chapter_id
@@ -37986,7 +37990,7 @@ var render = function() {
   return _c("div", { attrs: { id: "highlight-component" } }, [
     _c("img", {
       attrs: {
-        src: "http://bible.local/img/green-circle.png",
+        src: "http://" + _vm.location.hostname + "/img/green-circle.png",
         title: "Highlight Green."
       },
       on: {
@@ -37997,7 +38001,10 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("img", {
-      attrs: { src: "http://bible.local/img/x.png", title: "Clear Selected." },
+      attrs: {
+        src: "http://" + _vm.location.hostname + "/img/x.png",
+        title: "Clear Selected."
+      },
       on: {
         click: function($event) {
           return _vm.highlight(0)
@@ -38051,7 +38058,7 @@ var render = function() {
                   _c("img", {
                     staticStyle: { width: "64px" },
                     attrs: {
-                      src: _vm.publicUrl + "img/bibleclosedIcon.png",
+                      src: _vm.hostname + "img/bibleclosedIcon.png",
                       alt: "bible icon",
                       id: "bible-icon"
                     }
@@ -38168,7 +38175,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           href:
-                                            "http://bible.local/" +
+                                            _vm.hostname +
                                             book.book +
                                             "/" +
                                             chapter
@@ -38237,7 +38244,7 @@ var render = function() {
                                       {
                                         attrs: {
                                           href:
-                                            "http://bible.local/" +
+                                            _vm.hostname +
                                             book.book +
                                             "/" +
                                             chapter
@@ -53768,7 +53775,7 @@ var app = new Vue({
     var _this = this;
 
     // TODO: Change the fetch call to an axios call.
-    fetch('http://bible.local/api/books').then(function (response) {
+    fetch('http://' + location.hostname + '/api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
       _this.books = data;
