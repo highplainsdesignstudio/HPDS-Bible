@@ -1920,6 +1920,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    hostname: function hostname() {
+      return 'http://' + location.hostname + '/';
+    }
+  },
   methods: {
     highlight: function highlight(color) {
       var _post = {
@@ -37990,7 +37995,7 @@ var render = function() {
   return _c("div", { attrs: { id: "highlight-component" } }, [
     _c("img", {
       attrs: {
-        src: "http://" + _vm.location.hostname + "/img/green-circle.png",
+        src: _vm.hostname + "img/green-circle.png",
         title: "Highlight Green."
       },
       on: {
@@ -38001,10 +38006,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("img", {
-      attrs: {
-        src: "http://" + _vm.location.hostname + "/img/x.png",
-        title: "Clear Selected."
-      },
+      attrs: { src: _vm.hostname + "img/x.png", title: "Clear Selected." },
       on: {
         click: function($event) {
           return _vm.highlight(0)
