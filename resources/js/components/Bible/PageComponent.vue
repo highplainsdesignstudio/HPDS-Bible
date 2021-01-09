@@ -47,7 +47,8 @@
         created: function () {
             if (this.apiToken != '') {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
-                axios.get('http://' + location.hostname + '/api/highlights', {
+                // axios.get('http://' + location.hostname + '/api/highlights', {
+                axios.get('/api/highlights', {
                     params: {
                         userId: this.userId,
                         chapterId: this.chapterText[0].chapter_id

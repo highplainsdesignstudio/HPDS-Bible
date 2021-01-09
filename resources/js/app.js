@@ -70,7 +70,7 @@ const app = new Vue({
     },
     created: function() {
         // TODO: Change the fetch call to an axios call.
-        fetch('http://' + location.hostname + '/api/books')
+        fetch('/api/books')
         .then(response => response.json())
         .then(data => {
             this.books = data;

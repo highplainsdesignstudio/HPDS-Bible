@@ -20,7 +20,7 @@
 
         <div class="col-12 order-1 col-md-8 order-md-2">
             <div class="jumbotron">
-                <img src="img/bible.jpg" alt="HPDS Life logo" class="img-fluid col-12">
+                <img src="/img/bible.jpg" alt="HPDS Life logo" class="img-fluid col-12">
                 <a href="/read"><button class="btn btn-light col-6 col-md-4 offset-3 offset-md-4 mt-4">Read!</button></a>
             </div>
 

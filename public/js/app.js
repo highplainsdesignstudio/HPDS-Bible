@@ -1941,7 +1941,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.userId > 0) {
-        axios.post('http://' + location.hostname + '/api/highlights', _post).then(function (response) {})["catch"](function (error) {
+        axios.post('/api/highlights', _post).then(function (response) {})["catch"](function (error) {
           console.log(error);
         });
       }
@@ -2092,14 +2092,17 @@ __webpack_require__.r(__webpack_exports__);
 
       var _downCaret = document.getElementById('down-caret');
 
-      var _upCaret = document.getElementById('up-caret');
+      var _upCaret = document.getElementById('up-caret'); // let _src = this.hostname + 'img/bibleclosedIcon.png';
 
-      var _src = this.hostname + 'img/bibleclosedIcon.png';
+
+      var _src = '/img/bibleclosedIcon.png';
 
       if (_bibleIcon.src === _src) {
-        _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
+        // _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
+        _bibleIcon.src = '/img/bibleopenIcon.png';
       } else {
-        _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
+        // _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
+        _bibleIcon.src = '/img/bibleclosedIcon.png';
       }
 
       _indexCard.classList.toggle('d-none');
@@ -2217,8 +2220,9 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     if (this.apiToken != '') {
-      axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
-      axios.get('http://' + location.hostname + '/api/highlights', {
+      axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken); // axios.get('http://' + location.hostname + '/api/highlights', {
+
+      axios.get('/api/highlights', {
         params: {
           userId: this.userId,
           chapterId: this.chapterText[0].chapter_id
@@ -37994,10 +37998,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "highlight-component" } }, [
     _c("img", {
-      attrs: {
-        src: _vm.hostname + "img/green-circle.png",
-        title: "Highlight Green."
-      },
+      attrs: { src: "/img/green-circle.png", title: "Highlight Green." },
       on: {
         click: function($event) {
           return _vm.highlight(1)
@@ -38006,7 +38007,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("img", {
-      attrs: { src: _vm.hostname + "img/x.png", title: "Clear Selected." },
+      attrs: { src: "/img/x.png", title: "Clear Selected." },
       on: {
         click: function($event) {
           return _vm.highlight(0)
@@ -38060,7 +38061,7 @@ var render = function() {
                   _c("img", {
                     staticStyle: { width: "64px" },
                     attrs: {
-                      src: _vm.hostname + "img/bibleclosedIcon.png",
+                      src: "/img/bibleclosedIcon.png",
                       alt: "bible icon",
                       id: "bible-icon"
                     }
@@ -53777,7 +53778,7 @@ var app = new Vue({
     var _this = this;
 
     // TODO: Change the fetch call to an axios call.
-    fetch('http://' + location.hostname + '/api/books').then(function (response) {
+    fetch('/api/books').then(function (response) {
       return response.json();
     }).then(function (data) {
       _this.books = data;

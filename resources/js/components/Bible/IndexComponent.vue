@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header sticky" v-on:click="toggleIndex" style="cursor:pointer; background-color:white; z-index:10;">
                         <div class="d-inline" id="index-menu" >
-                            <img :src="hostname + 'img/bibleclosedIcon.png'" alt="bible icon" id="bible-icon" style="width:64px">
+                            <img :src="'/img/bibleclosedIcon.png'" alt="bible icon" id="bible-icon" style="width:64px">
                         </div>
                         <span class="h5">Bible Book List</span>
                         <span id="down-caret">
@@ -120,11 +120,14 @@
                 let _downCaret = document.getElementById('down-caret');
                 let _upCaret = document.getElementById('up-caret');
 
-                let _src = this.hostname + 'img/bibleclosedIcon.png';
+                // let _src = this.hostname + 'img/bibleclosedIcon.png';
+                let _src = '/img/bibleclosedIcon.png';
                 if (_bibleIcon.src === _src) {
-                    _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
+                    // _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
+                    _bibleIcon.src = '/img/bibleopenIcon.png';
                 } else {
-                    _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
+                    // _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
+                    _bibleIcon.src = '/img/bibleclosedIcon.png';
                 }
                 _indexCard.classList.toggle('d-none');
                 _downCaret.classList.toggle('d-none');
