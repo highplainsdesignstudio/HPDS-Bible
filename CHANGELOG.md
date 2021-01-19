@@ -1,6 +1,12 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v1.0.0 (wip)
+
+### Third commit (1/18/2021)
+* Fixed bug that didn't show bible open icon in the index component.
+* Index Component changed to use Bootstraps dropdown menus. This fixes the problem of rendering the chapters when the book was selected.
+* Index component also styled different and splits the old and new testaments into columns instead of rows. 
+
 ### Second commit (01/08/2021)
 * More changes to facilitate a secure public installation.
 

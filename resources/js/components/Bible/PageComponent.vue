@@ -5,7 +5,7 @@
         </div>
     
         <div class="row"  id="chapter-text">
-            <leaf-component class="col-12 col-md-2 col-lg-1" type=-1 v-on:leaf-page="leafPage" :link="previous" title="Previous Chapter."></leaf-component>
+            <leaf-component class="col-12 col-md-2 col-lg-1 sticky-top" type=-1 v-on:leaf-page="leafPage" :link="previous" title="Previous Chapter."></leaf-component>
             <div class="col-12 col-md-8 col-lg-10">
                 <div v-for="(text, index) in chapterText" :key="text.id" class="v-contain">
                     <!-- <div class="row"> -->
@@ -19,7 +19,7 @@
                 </div>
             </div>
             
-            <leaf-component class="col-12 col-md-2 col-lg-1" type=1 v-on:leaf-page="leafPage" :link="next" title="Next Chapter."></leaf-component>
+            <leaf-component class="col-12 col-md-2 col-lg-1 sticky" type=1 v-on:leaf-page="leafPage" :link="next" title="Next Chapter."></leaf-component>
         </div>
 
        <div class="row">

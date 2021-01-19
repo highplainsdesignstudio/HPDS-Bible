@@ -2025,6 +2025,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     hostname: function hostname() {
@@ -2093,11 +2116,10 @@ __webpack_require__.r(__webpack_exports__);
       var _downCaret = document.getElementById('down-caret');
 
       var _upCaret = document.getElementById('up-caret'); // let _src = this.hostname + 'img/bibleclosedIcon.png';
+      // let _src = '/img/bibleclosedIcon.png';
 
 
-      var _src = '/img/bibleclosedIcon.png';
-
-      if (_bibleIcon.src === _src) {
+      if (_bibleIcon.src === 'http://' + location.hostname + '/img/bibleclosedIcon.png' || _bibleIcon.src === 'https://' + location.hostname + '/img/bibleclosedIcon.png') {
         // _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
         _bibleIcon.src = '/img/bibleopenIcon.png';
       } else {
@@ -2109,9 +2131,8 @@ __webpack_require__.r(__webpack_exports__);
 
       _downCaret.classList.toggle('d-none');
 
-      _upCaret.classList.toggle('d-none');
+      _upCaret.classList.toggle('d-none'); // this.toggleChapters(null);
 
-      this.toggleChapters(null);
     }
   },
   props: ['books', 'getBooksUrl']
@@ -38038,86 +38059,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
           _c(
             "div",
             {
-              staticClass: "card-header sticky",
-              staticStyle: {
-                cursor: "pointer",
-                "background-color": "white",
-                "z-index": "10"
-              },
-              on: { click: _vm.toggleIndex }
+              staticClass: "card-header sticky-top",
+              staticStyle: { "background-color": "white", "z-index": "1001" }
             },
             [
               _c(
-                "div",
-                { staticClass: "d-inline", attrs: { id: "index-menu" } },
+                "button",
+                {
+                  staticClass: "h5 btn btn-primary",
+                  staticStyle: { cursor: "pointer" },
+                  on: { click: _vm.toggleIndex }
+                },
                 [
-                  _c("img", {
-                    staticStyle: { width: "64px" },
-                    attrs: {
-                      src: "/img/bibleclosedIcon.png",
-                      alt: "bible icon",
-                      id: "bible-icon"
-                    }
-                  })
+                  _vm._m(0),
+                  _vm._v(
+                    "\n                        Bible Book List \n                        "
+                  ),
+                  _c("span", { attrs: { id: "down-caret" } }, [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "bi bi-caret-down-fill",
+                        attrs: {
+                          width: "1em",
+                          height: "1em",
+                          viewBox: "0 0 16 16",
+                          fill: "currentColor",
+                          xmlns: "http://www.w3.org/2000/svg"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { staticClass: "d-none", attrs: { id: "up-caret" } },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "bi bi-caret-up-fill",
+                          attrs: {
+                            width: "1em",
+                            height: "1em",
+                            viewBox: "0 0 16 16",
+                            fill: "currentColor",
+                            xmlns: "http://www.w3.org/2000/svg"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
                 ]
-              ),
-              _vm._v(" "),
-              _c("span", { staticClass: "h5" }, [_vm._v("Bible Book List")]),
-              _vm._v(" "),
-              _c("span", { attrs: { id: "down-caret" } }, [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "bi bi-caret-down-fill",
-                    attrs: {
-                      width: "1em",
-                      height: "1em",
-                      viewBox: "0 0 16 16",
-                      fill: "currentColor",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"
-                      }
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "d-none", attrs: { id: "up-caret" } }, [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "bi bi-caret-up-fill",
-                    attrs: {
-                      width: "1em",
-                      height: "1em",
-                      viewBox: "0 0 16 16",
-                      fill: "currentColor",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
-                      }
-                    })
-                  ]
-                )
-              ])
+              )
             ]
           ),
           _vm._v(" "),
@@ -38130,40 +38147,46 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "col-6" }, [
                     _c("span", { staticClass: "h5" }, [
                       _vm._v("Old Testament")
                     ]),
                     _vm._v(" "),
                     _c(
                       "ul",
-                      { staticClass: "list-unstyled list-inline" },
+                      { staticClass: "list-unstyled" },
                       _vm._l(_vm.oldTestament, function(book) {
-                        return _c(
-                          "li",
-                          { key: book.id, staticClass: "h6 list-inline-item" },
-                          [
+                        return _c("li", { key: book.id }, [
+                          _c("div", { staticClass: "dropdown" }, [
                             _c(
-                              "a",
+                              "button",
                               {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectBook(book.id)
-                                  }
+                                staticClass: "btn btn-info dropdown-toggle",
+                                staticStyle: { width: "100%" },
+                                attrs: {
+                                  type: "button",
+                                  id: "dropdownMenuButton",
+                                  "data-toggle": "dropdown",
+                                  "aria-haspopup": "true",
+                                  "aria-expanded": "false"
                                 }
                               },
                               [
-                                _c("u", [_vm._v(_vm._s(book.book))]),
-                                _vm._v(" |")
+                                _vm._v(
+                                  "\n                                                " +
+                                    _vm._s(book.book) +
+                                    "\n                                            "
+                                )
                               ]
                             ),
                             _vm._v(" "),
                             _c(
                               "div",
                               {
-                                staticClass: "chapter-select d-none",
-                                attrs: { id: "chapters-" + book.id }
+                                staticClass: "dropdown-menu",
+                                attrs: {
+                                  "aria-labelledby": "dropdownMenuButton"
+                                }
                               },
                               _vm._l(book.chapter_count, function(chapter) {
                                 return _c(
@@ -38186,53 +38209,61 @@ var render = function() {
                                       },
                                       [_vm._v(_vm._s(chapter))]
                                     ),
-                                    _vm._v(" | ")
+                                    _vm._v(
+                                      " | \n                                                "
+                                    )
                                   ]
                                 )
                               }),
                               0
                             )
-                          ]
-                        )
+                          ])
+                        ])
                       }),
                       0
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
+                  _c("div", { staticClass: "col-6" }, [
                     _c("span", { staticClass: "h5" }, [
                       _vm._v("New Testament")
                     ]),
                     _vm._v(" "),
                     _c(
                       "ul",
-                      { staticClass: "list-unstyled list-inline" },
+                      { staticClass: "list-unstyled" },
                       _vm._l(_vm.newTestament, function(book) {
-                        return _c(
-                          "li",
-                          { key: book.id, staticClass: "h6 list-inline-item" },
-                          [
+                        return _c("li", { key: book.id }, [
+                          _c("div", { staticClass: "dropdown" }, [
                             _c(
-                              "a",
+                              "button",
                               {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.selectBook(book.id)
-                                  }
+                                staticClass: "btn btn-info dropdown-toggle",
+                                staticStyle: { width: "100%" },
+                                attrs: {
+                                  type: "button",
+                                  id: "dropdownMenuButton",
+                                  "data-toggle": "dropdown",
+                                  "aria-haspopup": "true",
+                                  "aria-expanded": "false"
                                 }
                               },
                               [
-                                _c("u", [_vm._v(_vm._s(book.book))]),
-                                _vm._v(" | ")
+                                _vm._v(
+                                  "\n                                                " +
+                                    _vm._s(book.book) +
+                                    "\n                                            "
+                                )
                               ]
                             ),
                             _vm._v(" "),
                             _c(
                               "div",
                               {
-                                staticClass: "chapter-select d-none",
-                                attrs: { id: "chapters-" + book.id }
+                                staticClass: "dropdown-menu",
+                                attrs: {
+                                  "aria-labelledby": "dropdownMenuButton"
+                                }
                               },
                               _vm._l(book.chapter_count, function(chapter) {
                                 return _c(
@@ -38255,14 +38286,16 @@ var render = function() {
                                       },
                                       [_vm._v(_vm._s(chapter))]
                                     ),
-                                    _vm._v(" |")
+                                    _vm._v(
+                                      " | \n                                                "
+                                    )
                                   ]
                                 )
                               }),
                               0
                             )
-                          ]
-                        )
+                          ])
+                        ])
                       }),
                       0
                     )
@@ -38276,7 +38309,27 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "d-inline", attrs: { id: "index-menu" } },
+      [
+        _c("img", {
+          staticStyle: { width: "64px" },
+          attrs: {
+            src: "/img/bibleclosedIcon.png",
+            alt: "bible icon",
+            id: "bible-icon"
+          }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -38402,7 +38455,7 @@ var render = function() {
           { staticClass: "row", attrs: { id: "chapter-text" } },
           [
             _c("leaf-component", {
-              staticClass: "col-12 col-md-2 col-lg-1",
+              staticClass: "col-12 col-md-2 col-lg-1 sticky-top",
               attrs: {
                 type: "-1",
                 link: _vm.previous,
@@ -38448,7 +38501,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("leaf-component", {
-              staticClass: "col-12 col-md-2 col-lg-1",
+              staticClass: "col-12 col-md-2 col-lg-1 sticky",
               attrs: { type: "1", link: _vm.next, title: "Next Chapter." },
               on: { "leaf-page": _vm.leafPage }
             })

@@ -21,19 +21,50 @@ body {
     font-size: 1.4rem;
 }
 
-.chapter-select {
-    color: white;
-    position: relative;
-    top: 5px;
+div#index-card {
+    height: 500px;
+    overflow: scroll;
 }
 
+@media only screen and (max-width: 1050px) {
+    div#index-card {
+        height: 100%;
+    }
+}
+
+button#dropdownMenuButton {
+    color: white;
+}
+
+@media only screen and (max-width: 575px) {
+    button#dropdownMenuButton {
+        font-size: .7rem;
+        font-weight: bold;
+    }
+}
+
+// .chapter-select {
+//     color: white;
+//     position: relative;
+//     top: 5px;
+// }
+
 .chapter-select-number {
-    background-color: #7e2623;
+    background-color: #ffffff;
+    padding: 3px;
 }
 
 .chapter-select-number:hover {
     cursor: pointer;
     font-size: larger;
+}
+
+.dropdown-menu.show {
+    background-color: rgba(0,0,0,0);
+    width: 75vw;
+    border: none;
+    margin-left: 12vw;
+    text-align: center;
 }
 
 .highlight {
@@ -55,7 +86,7 @@ body {
 .sticky {
     position: -webkit-sticky;
     position: sticky;
-    top: 0px;
+    bottom: 0px;
 }
 
 .underlined {
