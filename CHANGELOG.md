@@ -1,6 +1,10 @@
 # Bible App
 A KJV Bible application built with Laravel.
-## v1.0.0 (wip)
+## v1.0.0 (01/19/2021)
+### Fourth commit (01/19/2021)
+* npm run prod
+* v1.0.0 ready for deployment.
+* HPDS Bible licensed under MIT License.
 
 ### Third commit (1/18/2021)
 * Fixed bug that didn't show bible open icon in the index component.
