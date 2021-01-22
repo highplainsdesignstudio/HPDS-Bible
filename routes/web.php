@@ -30,6 +30,18 @@ Route::get('/read', function(Request $request) {
 
 Route::get('/home', 'HomeController@index')->name('home'); 
 
+Route::get('/dashboard', function(Request $request) {
+    // $usr = Auth::user();
+
+    // if(!$request->user()->cannot('admin')){
+        return view('auth.dashboard');
+    // } else {
+    //     return redirect('home');
+    // }
+    
+}) -> name('dashboard') -> middleware('can:admin');
+
+
 Auth::routes();
 
 Route::get('/email/verify', function () {

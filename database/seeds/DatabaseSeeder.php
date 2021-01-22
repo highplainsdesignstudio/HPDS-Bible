@@ -5,6 +5,8 @@ use App\Models\Testament;
 use App\Models\Book;
 use App\Models\Chapter;
 use App\Models\Verse;
+use App\Models\Role;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -70,5 +72,15 @@ class DatabaseSeeder extends Seeder
             $book->save();
             $index++;
         }
+
+        // Fourth, add the predefined user roles.
+        $role1 = new Role;
+        $role1->role = 'admin';
+        $role1->save();
+
+        $role2 = new Role;
+        $role2->role = 'subscriber';
+        $role2->save();
+
     }
 }

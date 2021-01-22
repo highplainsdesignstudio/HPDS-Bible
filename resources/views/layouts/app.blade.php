@@ -54,7 +54,10 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="z-index: 2000; background-color: powderblue;">
+                                    @can('admin')
+                                        <a href="{{ route('dashboard') }}" class="dropdown-item">Admin Dashboard</a>
+                                    @endcan
                                     <a href="{{ route('home') }}" class="dropdown-item">Home</a>
                                     <a href="{{ route('bible') }}" class="dropdown-item">Bible</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
