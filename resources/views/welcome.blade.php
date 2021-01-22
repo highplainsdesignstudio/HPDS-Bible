@@ -29,6 +29,9 @@
                 <p>Welcome to the HPDS Bible. Here you will find the word of the Lord brought to you in the English, King James Version. Along with full
                     text of the Bible, you will find additional Bible study materials to better understand the most important historical document in existence.
                 </p>
+               @can ('admin')
+                echo "you're admin";
+               @endcan
             </section>
 
         </div>

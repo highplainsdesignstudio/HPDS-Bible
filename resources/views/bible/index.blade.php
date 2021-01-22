@@ -14,7 +14,7 @@
         $userId = auth()->user()->id;
         }
     ?>
-    <div class="container">
+    <div class="container-fluid">
         <div class="app">
 
             <index-component :books="books"></index-component>

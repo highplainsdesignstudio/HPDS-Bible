@@ -1,5 +1,17 @@
 # Bible App
 A KJV Bible application built with Laravel.
+## v1.0.1 (wip)
+### First commit (01/21/2021) 
+#### Hotfix for production
+* npm run dev = this puts the app back into development mode.
+* Placed the app div in the index view inside of a container-fluid instead of container. This fixes the size of the index component.
+* Created the Role model and seeded the database with an admin and a subscriber role.
+* Created the /dashboard route and guarded to only admin users.
+* Register Controller updated to set the role id of each new registered user to 2, which is subscriber. Currently, an admin user must be made via an sql statement to the database.
+* A Dashboard view has been created to be displayed at the /dashboard route.
+* added z-index and background color to the navigation dropdown menu when logged in.
+* npm run prod for hotfix. Hotfix is due to the dropdown styles in the app.blade file.
+
 ## v1.0.0 (01/19/2021)
 ### Fourth commit (01/19/2021)
 * npm run prod
