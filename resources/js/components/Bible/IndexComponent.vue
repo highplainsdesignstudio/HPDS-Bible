@@ -119,43 +119,20 @@
         //     }
         // },
         methods: {
-            selectBook: function(_id) {           
-                let _chapters = document.getElementById('chapters-' + _id);
-                _chapters.classList.toggle('d-none');
-                this.selectedBook = _id; // TODO: is this even a thing? Maybe delete?
-                this.toggleChapters(_id);            
-            },
-            selectPage: function(_book_name, _book_id, _chapter) {
-                this.toggleIndex();
-                this.$emit("select-page", _book_name, _book_id, _chapter);
-            },
-            toggleChapters: function(_id) {
-                for(var i = 1; i <= 66; i++) {
-                    let _element = document.getElementById('chapters-' + i);
-                    if(i != _id) {
-                        _element.classList.add('d-none');
-                    }
-                } 
-            },
             toggleIndex: function(_event) {
                 let _bibleIcon = document.getElementById('bible-icon');
                 let _indexCard = document.getElementById('index-card');
                 let _downCaret = document.getElementById('down-caret');
                 let _upCaret = document.getElementById('up-caret');
 
-                // let _src = this.hostname + 'img/bibleclosedIcon.png';
-                // let _src = '/img/bibleclosedIcon.png';
                 if (_bibleIcon.src === 'http://' + location.hostname + '/img/bibleclosedIcon.png' || _bibleIcon.src === 'https://' + location.hostname + '/img/bibleclosedIcon.png') {
-                    // _bibleIcon.src = this.hostname + 'img/bibleopenIcon.png';
                     _bibleIcon.src = '/img/bibleopenIcon.png';
                 } else {
-                    // _bibleIcon.src = this.hostname + 'img/bibleclosedIcon.png';
                     _bibleIcon.src = '/img/bibleclosedIcon.png';
                 }
                 _indexCard.classList.toggle('d-none');
                 _downCaret.classList.toggle('d-none');
                 _upCaret.classList.toggle('d-none');
-                // this.toggleChapters(null);
             }
         },
         props: ['books', 'getBooksUrl']

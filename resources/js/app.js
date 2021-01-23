@@ -40,19 +40,19 @@ import SavedHighlightsComponent from './components/Bible/SavedHighlightsComponen
  */
 
 // Vue Router Routes
-import VueRouter from 'vue-router';
-import ExampleComponent from './components/ExampleComponent.vue';
-import Axios from 'axios';
-Vue.use(VueRouter);
+// import VueRouter from 'vue-router';
+// import ExampleComponent from './components/ExampleComponent.vue';
+// import Axios from 'axios';
+// Vue.use(VueRouter);
 
-const routes = [
-    // { path: '/vue', component: Home, name: 'Home' },
-    { path: '/read/example', component: ExampleComponent, name: 'ExampleComponent' }
-];
+// const routes = [
+//     // { path: '/vue', component: Home, name: 'Home' },
+//     { path: '/read/example', component: ExampleComponent, name: 'ExampleComponent' }
+// ];
 
-const router = new VueRouter({
-    routes // short for `routes: routes`
-  });
+// const router = new VueRouter({
+//     routes // short for `routes: routes`
+//   });
 // import router from './routes.js';
 // End Vue Router Routes.
 
@@ -69,7 +69,6 @@ const app = new Vue({
         selectedPage: {name: null, chapter: null, chapter_id: null}
     },
     created: function() {
-        // TODO: Change the fetch call to an axios call.
         fetch('/api/books')
         .then(response => response.json())
         .then(data => {
@@ -77,27 +76,28 @@ const app = new Vue({
         });  
     },
     methods: {
-        getCookie: function(cname) {
-            let name = cname + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-            for(let i = 0; i <ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        },
-        setCookie: function(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays*24*60*60*1000));
-            var expires = "expires="+ d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-          },
+        // getCookie: function(cname) {
+        //     let name = cname + "=";
+        //     let decodedCookie = decodeURIComponent(document.cookie);
+        //     let ca = decodedCookie.split(';');
+        //     for(let i = 0; i <ca.length; i++) {
+        //         let c = ca[i];
+        //         while (c.charAt(0) == ' ') {
+        //             c = c.substring(1);
+        //         }
+        //         if (c.indexOf(name) == 0) {
+        //             return c.substring(name.length, c.length);
+        //         }
+        //     }
+        //     return "";
+        // },
+        // setCookie: function(cname, cvalue, exdays) {
+        //     var d = new Date();
+        //     d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        //     var expires = "expires="+ d.toUTCString();
+        //     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        //   },
     },
     router
-}).$mount('#app');
+});
+// .$mount('#app');

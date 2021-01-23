@@ -8,14 +8,13 @@
             <leaf-component class="col-12 col-md-2 col-lg-1 sticky-top" type=-1 v-on:leaf-page="leafPage" :link="previous" title="Previous Chapter."></leaf-component>
             <div class="col-12 col-md-8 col-lg-10">
                 <div v-for="(text, index) in chapterText" :key="text.id" class="v-contain">
-                    <!-- <div class="row"> -->
-                        <!-- <p :id=" 'verse-' + index" class="col-12 verse"  -->
                     <p :id=" 'verse-' + index" class="verse"
-                        
                         v-on:click="toggleUnderline(text.id)">
-                    <span class="h5">{{ index + 1 }}: </span><span v-html="text.verse" v-bind:class="{ underlined: underlines.includes(text.id), highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id) }"></span>
+                        <span class="h5">{{ index + 1 }}: </span>
+                        <span v-html="text.verse" 
+                            :class="{ underlined: underlines.includes(text.id), highlight: originalHighlights.includes(text.id) || highlights1.includes(text.id) }">
+                        </span>
                     </p>
-                    <!-- </div>     -->
                 </div>
             </div>
             

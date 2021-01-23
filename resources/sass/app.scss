@@ -9,14 +9,7 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-// .bible-icon {
-//     display: inline;
-    // position: relative;
-    // right: 75px;
-    // top: 50px;
-// }
 body {
-    // font-family: 'Volkhov', serif;
     font-family: 'Caudex', serif;
     font-size: 1.4rem;
 }
@@ -42,12 +35,6 @@ button#dropdownMenuButton {
         font-weight: bold;
     }
 }
-
-// .chapter-select {
-//     color: white;
-//     position: relative;
-//     top: 5px;
-// }
 
 .chapter-select-number {
     background-color: #ffffff;
@@ -90,7 +77,6 @@ button#dropdownMenuButton {
 }
 
 .underlined {
-    // text-decoration: underline;
     border-bottom:#7e2623 dotted 3px;
 }
 
@@ -99,10 +85,6 @@ button#dropdownMenuButton {
 }
 
 .verse {
-    // background-color: #ecececbd;
-    // border-radius: 15px;
-    // box-shadow: 5px 5px #7e2623;
-    // margin: .5em 0px;
     padding-bottom: .2rem;
     padding-left: .6rem;
     padding-top: .1rem;
@@ -117,7 +99,6 @@ button#dropdownMenuButton {
 }
 
 #chapter-text {
-    // background-color: wheat;
     padding-bottom: 50px;
     padding-top: 1em
 }
@@ -128,8 +109,3 @@ button#dropdownMenuButton {
     background-color: yellow;
     padding: 10px;
 }
-
-// .index {
-//     display: inline;
-//     list-style: none;
-// }

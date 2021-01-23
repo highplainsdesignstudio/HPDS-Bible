@@ -1,6 +1,11 @@
 # Bible App
 A KJV Bible application built with Laravel.
-## v1.0.1 (wip)
+## v1.0.1 (01/22/2021)
+### Second commit (01/22/2021)
+* Created a Dashboard Controller
+* Added a table to the Dashboard View to show every user in the database.
+* code cleanup.
+
 ### First commit (01/21/2021) 
 #### Hotfix for production
 * npm run dev = this puts the app back into development mode.
