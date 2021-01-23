@@ -30,17 +30,7 @@ Route::get('/read', function(Request $request) {
 
 Route::get('/home', 'HomeController@index')->name('home'); 
 
-Route::get('/dashboard', function(Request $request) {
-    // $usr = Auth::user();
-
-    // if(!$request->user()->cannot('admin')){
-        return view('auth.dashboard');
-    // } else {
-    //     return redirect('home');
-    // }
-    
-}) -> name('dashboard') -> middleware('can:admin');
-
+Route::get('/dashboard', 'Admin\DashboardController@index') -> name('dashboard') -> middleware('can:admin');
 
 Auth::routes();
 
@@ -61,6 +51,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // Sanctum test
-Route::middleware('auth:sanctum')->get('/stest', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/stest', function (Request $request) {
+//     return $request->user();
+// });

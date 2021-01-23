@@ -1,7 +1,5 @@
 <template>
-<!-- <div class="row"> -->
     <div class="leaf row">
-        <!-- <div class="row"> -->
             <button class="btn btn-primary col-12 leaf-btn" v-on:click="clickLeaf()">
                 <span v-if="type==-1">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -15,9 +13,7 @@
                     </svg>
                 </span>
             </button>
-        <!-- </div> -->
     </div>
-<!-- </div> -->
 </template>
 
 <script>

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Highlight;
-use App\Models\Verse;
-use Illuminate\Support\Facades\DB;
+// use App\Models\Verse;
+// use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {

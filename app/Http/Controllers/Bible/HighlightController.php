@@ -69,7 +69,6 @@ class HighlightController extends Controller
                 } else {
                     //Remove highlight if highlight is already in the database.
                     $existingHighlight->delete();
-                    // $action = "deleted";
                 }
 
             } else {
