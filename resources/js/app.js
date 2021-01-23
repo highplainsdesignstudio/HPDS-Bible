@@ -98,6 +98,6 @@ const app = new Vue({
         //     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         //   },
     },
-    router
+    // router
 });
 // .$mount('#app');
