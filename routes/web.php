@@ -32,6 +32,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dashboard', 'Admin\DashboardController@index') -> name('dashboard') -> middleware('can:admin');
 
+Route::get('/search', 'Bible\SearchBibleController@index' );
+
 Auth::routes();
 
 Route::get('/email/verify', function () {

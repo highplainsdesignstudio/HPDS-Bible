@@ -1,5 +1,14 @@
 # Bible App
 A KJV Bible application built with Laravel.
+
+## v1.0.2 (wip)
+### First commit (01/24/2021)
+* npm run dev 
+* Created SearchBibleController
+* Created Search Component.
+* Created Search Results view.
+* The search results view currently only dd's the returned results.
+
 ## v1.0.1 (01/22/2021)
 ### Second commit (01/22/2021)
 * Created a Dashboard Controller

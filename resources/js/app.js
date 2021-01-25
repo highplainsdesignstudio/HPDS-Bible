@@ -32,6 +32,7 @@ window.Vue = require('vue');
 import IndexComponent from './components/Bible/IndexComponent.vue';
 import PageComponent from './components/Bible/PageComponent.vue';
 import SavedHighlightsComponent from './components/Bible/SavedHighlightsComponent.vue';
+import SearchComponent from './components/Bible/SearchComponent.vue';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -61,7 +62,8 @@ const app = new Vue({
     components: {
         'index-component': IndexComponent,
         'page-component': PageComponent,
-        'saved-highlights-component': SavedHighlightsComponent
+        'saved-highlights-component': SavedHighlightsComponent,
+        'search-component': SearchComponent
     },
     data: {
         books: null,

@@ -16,6 +16,7 @@
     ?>
     <div class="container-fluid">
         <div class="app">
+            <search-component></search-component>
 
             <index-component :books="books"></index-component>
 
