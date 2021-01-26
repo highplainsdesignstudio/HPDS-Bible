@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-                
-
             <!-- <div class="row"> -->
                 <div class="col-8 form-group">
                     <input type="text" v-model="query" placeholder="Search" class="form-control" style="width: 100%;">
@@ -13,7 +11,6 @@
                     </svg>
                 </button>
             <!-- </div> -->
-
         </div>
     </div>
 </template>
@@ -33,9 +30,10 @@
                     if (i===0) {
                         q = words[i];
                     } else {
-                        q += ('+' + words[i]);
+                        q += (' ' + words[i]);
                     }
                 }
+                q = encodeURI(q);
                 window.location.href = '/search?q=' + q;
             }
         },

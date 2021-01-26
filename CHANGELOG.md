@@ -2,6 +2,12 @@
 A KJV Bible application built with Laravel.
 
 ## v1.0.2 (wip)
+### Second commit (01/26/2021)
+* added relationships to the Testament, Book, Chapter, and Verse models.
+* Added URI encoding to the search redirect href.
+* Changed the SearchBibleController to search for more results. 
+* Changed search-results template to show each verse and the number of results.
+
 ### First commit (01/24/2021)
 * npm run dev 
 * Created SearchBibleController
