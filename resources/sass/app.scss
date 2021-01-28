@@ -98,6 +98,10 @@ button#dropdownMenuButton {
     cursor: pointer;
 }
 
+.verse:target {
+    background-color: yellowgreen;
+}
+
 #chapter-text {
     padding-bottom: 50px;
     padding-top: 1em

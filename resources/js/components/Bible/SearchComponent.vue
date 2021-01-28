@@ -25,6 +25,9 @@
         methods: {
             getSearch: function() {
                 let words = this.query.split(' ');
+
+                let versePattern = /abc/;
+
                 let q = '';
                 for(let i=0; i < words.length; i++) {
                     if (i===0) {

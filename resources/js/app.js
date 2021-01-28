@@ -33,7 +33,7 @@ import IndexComponent from './components/Bible/IndexComponent.vue';
 import PageComponent from './components/Bible/PageComponent.vue';
 import SavedHighlightsComponent from './components/Bible/SavedHighlightsComponent.vue';
 import SearchComponent from './components/Bible/SearchComponent.vue';
-
+import SearchResultsComponent from './components/Bible/SearchResultsComponent.vue';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -63,7 +63,8 @@ const app = new Vue({
         'index-component': IndexComponent,
         'page-component': PageComponent,
         'saved-highlights-component': SavedHighlightsComponent,
-        'search-component': SearchComponent
+        'search-component': SearchComponent,
+        'search-results-component': SearchResultsComponent
     },
     data: {
         books: null,

@@ -25,23 +25,30 @@ class SearchBibleController extends Controller
                     $altQuery .= ('%' . $tokens[$i]);
                 }
     
-                $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                // $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
             }
     
-            $verses = Verse::where('verse', 'LIKE', "%{$query['q']}%")
-                ->orwhere('verse', 'LIKE', "%{$altQuery}%")
+            // $verses = Verse::where('verse', 'LIKE', "%{$query['q']}%")
+            $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%")
+                // ->orwhere('verse', 'LIKE', "%{$altQuery}%")
                 ->get();
-            
-            foreach($tverses as $tverse) {
-                $verses = $verses->concat($tverse);
+
+            if (count($verses) == 0) {
+                for($i=0; $i < count($tokens); $i++) {
+                    $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                }
+                foreach($tverses as $tverse) {
+                    $verses = $verses->concat($tverse);
+                }
+                $verses = $verses->unique();
             }
-            $verses = $verses->unique();
         } elseif (count($tokens) == 1) {
             $verses = Verse::where('verse', 'LIKE', "%{$tokens[0]}%")
                 ->get();
         } else {
             $verses = [];
         }
+
         return view('bible.search-results', ['verses' => $verses]);
     }
 
