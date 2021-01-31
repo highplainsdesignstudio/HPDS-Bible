@@ -24,20 +24,54 @@
         },
         methods: {
             getSearch: function() {
-                let words = this.query.split(' ');
+                let _verse1Pattern = /(?<book>[A-Za-z]*)\s*(?<chapter>\d+)\s*:?\s*(?<start>\d+)(\s*(?<select>,|-)?\s*(?<end>\d*))/g;
+                let _query = this.query;
+                let _results = [..._query.matchAll(_verse1Pattern)];
+                console.log(_results);
 
-                let versePattern = /abc/;
+                // if (_verse1Pattern.test(this.query)) {
+                if (_results.length > 0) {
+                    let _q = '?';
+                    for(let i=0; i < _results.length; i++) {
+                        let _temp = `book${i}=${_results[i].groups.book}&chapter${i}=${_results[i].groups.chapter}&start${i}=${_results[i].groups.start}`; 
+                        if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
+                            _temp += `&select${i}=${_results[i].groups.select}&end${i}=${_results[i].groups.end}`;
+                        }
+                        
+                        
+                        if (i !== _results.length - 1) {
+                            _temp =+ '&'; 
+                        }
 
-                let q = '';
-                for(let i=0; i < words.length; i++) {
-                    if (i===0) {
-                        q = words[i];
+
+                        _q += _temp;
+                    }
+                    _q = encodeURI(_q);
+                    // window.location.href = `/verse${_q}`;
+                    console.log(_q);
+                } else {
+                    let _words = this.query.split(' ');
+
+                    let _q = '';
+                    for(let i=0; i < _words.length; i++) {
+                        if (i===0) {
+                            _q = _words[i];
+                        } else {
+                            _q += (' ' + _words[i]);
+                        }
+                    }
+                    /**
+                     * A _test string is created to check for a search of all blank spaces. If the user searches for all blank spaces,
+                     * the page is reloaded. If this were not the case, the database would return every verse in the Bible.
+                     */
+                    let _test = _q.trim();
+                    if (_test.length !== 0) {
+                        _q = encodeURI(_q);
+                        window.location.href = '/search?q=' + _q;
                     } else {
-                        q += (' ' + words[i]);
+                        window.location.reload();
                     }
                 }
-                q = encodeURI(q);
-                window.location.href = '/search?q=' + q;
             }
         },
         mounted() {
