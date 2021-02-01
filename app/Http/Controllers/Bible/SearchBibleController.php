@@ -28,19 +28,29 @@ class SearchBibleController extends Controller
                 // $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
             }
     
-            // $verses = Verse::where('verse', 'LIKE', "%{$query['q']}%")
-            $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%")
+            $verses = Verse::where('verse', 'LIKE', "%{$query['q']}%")
+            // $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%")
                 // ->orwhere('verse', 'LIKE', "%{$altQuery}%")
                 ->get();
 
             if (count($verses) == 0) {
-                for($i=0; $i < count($tokens); $i++) {
-                    $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%") ->get();
+                if (count($verses) == 0) {
+                    for($i=0; $i < count($tokens); $i++) {
+                        $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                    }
+                    foreach($tverses as $tverse) {
+                        $verses = $verses->concat($tverse);
+                    }
+                    // $verses = $verses->unique();
                 }
-                foreach($tverses as $tverse) {
-                    $verses = $verses->concat($tverse);
-                }
-                $verses = $verses->unique();
+                // for($i=0; $i < count($tokens); $i++) {
+                //     $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                // }
+                // foreach($tverses as $tverse) {
+                //     $verses = $verses->concat($tverse);
+                // }
+                // $verses = $verses->unique();
             }
         } elseif (count($tokens) == 1) {
             $verses = Verse::where('verse', 'LIKE', "%{$tokens[0]}%")

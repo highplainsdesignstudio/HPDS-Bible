@@ -24,28 +24,83 @@
         },
         methods: {
             getSearch: function() {
-                let _verse1Pattern = /(?<book>[A-Za-z]*)\s*(?<chapter>\d+)\s*:?\s*(?<start>\d+)(\s*(?<select>,|-)?\s*(?<end>\d*))/g;
+                let _verse1Pattern = /(?<book>\d?\s*[A-Za-z]+)\s*(?<chapter>\d+)\s*:?\s*(?<start>\d*)\s*(?<select>,|-)?\s*(?<end>\d*)/g;
+                // let _verse1Pattern = /(?<book>\d?\s*[A-Za-z]+)\s*(?<chapter>\d+)\s*:?\s*(?<start>\d*)/g;
+                // let _verse2Pattern = /\s*(?<select>,|-)?\s*(?<end>\d*)/g;
+                let _verse2Pattern = /(\d?\s*[A-Za-z]+\s*\d+\s*:?\d*\s*(,|-)?\s*\d*)/g;
+                let _verse3Pattern = /(,\s*(?<and>\d+))/g;
+                let _verse4Pattern = /(?<from>\d)+\s*-\s*(?<thru>\d+)/g;
                 let _query = this.query;
                 let _results = [..._query.matchAll(_verse1Pattern)];
-                console.log(_results);
+                // console.log(_results);
 
                 // if (_verse1Pattern.test(this.query)) {
                 if (_results.length > 0) {
                     let _q = '?';
+                    let _comparer = this.query.replace(_verse2Pattern, '|');
+                    // console.log(_comparer);
+                    let _compTokens = _comparer.split('|');
+                    // console.log(_compTokens);
                     for(let i=0; i < _results.length; i++) {
-                        let _temp = `book${i}=${_results[i].groups.book}&chapter${i}=${_results[i].groups.chapter}&start${i}=${_results[i].groups.start}`; 
-                        if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
-                            _temp += `&select${i}=${_results[i].groups.select}&end${i}=${_results[i].groups.end}`;
+                        let _temp = `book${i+1}=${_results[i].groups.book}&chapter${i+1}=${_results[i].groups.chapter}`; 
+                        if (_results[i].groups.start !== '') {
+                            _temp += `&start${i+1}=${_results[i].groups.start}`;
+                            if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
+                                _temp += `&select${i+1}=${_results[i].groups.select}&end${i+1}=${_results[i].groups.end}`;
+                            }
+                        }
+
+                        let _andnext = [..._compTokens[i+1].matchAll(_verse3Pattern)];
+                        let _thrunext = [..._compTokens[i+1].matchAll(_verse4Pattern)];
+                        let _and = [];
+                        if (_andnext.length > 0) {
+                            _andnext.forEach(element => {
+                                _and.push(element.groups.and);
+                            });
+                        }
+                        // let _andthru = _and.split('+');
+                        if (_thrunext.length > 0) {
+                            for (let x=0; x < _thrunext.length; x++) {
+                                let _thruTest = false;
+                                for(let y=0; y < _and.length; y++) {
+                                    if(_thrunext[x].groups.from === _and[y]) {
+                                        _and[y] = _thrunext[x].groups.from + '-' + _thrunext[x].groups.thru;
+                                        _thruTest = true;
+                                        break;
+                                    }
+                                }
+                                if (!_thruTest) {
+                                    _and.push(_thrunext[x].groups.from + '-' + _thrunext[x].groups.thru);
+                                }
+                            }
                         }
                         
-                        
+                        console.log(_and);
+                        let _tmpAnd = '';
+                        if (_and.length > 0) {
+                            _tmpAnd = `&and${i+1}=`;
+                            for(let z=0; z < _and.length; z++) {
+                                if(z !== _and.length - 1) {
+                                    _tmpAnd += _and[z] + '+'
+                                } else {
+                                    _tmpAnd += _and[z];
+                                }
+                            }
+                            _temp += _tmpAnd;
+                            console.log(_tmpAnd);
+                        }
+
                         if (i !== _results.length - 1) {
-                            _temp =+ '&'; 
+                            _temp += '&';
                         }
-
-
+                
                         _q += _temp;
                     }
+
+                    if (_results.length > 1) {
+                        _q += `&count=${_results.length}`;
+                    }
+
                     _q = encodeURI(_q);
                     // window.location.href = `/verse${_q}`;
                     console.log(_q);

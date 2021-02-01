@@ -2420,35 +2420,115 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   },
   methods: {
     getSearch: function getSearch() {
-      var _verse1Pattern = /*#__PURE__*/_wrapRegExp(/([A-Za-z]*)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*:?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)([\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*(,|\x2D)?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]*))/g, {
+      var _verse1Pattern = /*#__PURE__*/_wrapRegExp(/([0-9]?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*[A-Za-z]+)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*:?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]*)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*(,|\x2D)?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]*)/g, {
         book: 1,
         chapter: 2,
         start: 3,
-        select: 5,
-        end: 6
+        select: 4,
+        end: 5
+      }); // let _verse1Pattern = /(?<book>\d?\s*[A-Za-z]+)\s*(?<chapter>\d+)\s*:?\s*(?<start>\d*)/g;
+      // let _verse2Pattern = /\s*(?<select>,|-)?\s*(?<end>\d*)/g;
+
+
+      var _verse2Pattern = /(\d?\s*[A-Za-z]+\s*\d+\s*:?\d*\s*(,|-)?\s*\d*)/g;
+
+      var _verse3Pattern = /*#__PURE__*/_wrapRegExp(/(,[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+))/g, {
+        and: 2
+      });
+
+      var _verse4Pattern = /*#__PURE__*/_wrapRegExp(/([0-9])+[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*\x2D[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)/g, {
+        from: 1,
+        thru: 2
       });
 
       var _query = this.query;
 
-      var _results = _toConsumableArray(_query.matchAll(_verse1Pattern));
+      var _results = _toConsumableArray(_query.matchAll(_verse1Pattern)); // console.log(_results);
+      // if (_verse1Pattern.test(this.query)) {
 
-      console.log(_results); // if (_verse1Pattern.test(this.query)) {
 
       if (_results.length > 0) {
         var _q = '?';
 
-        for (var i = 0; i < _results.length; i++) {
-          var _temp = "book".concat(i, "=").concat(_results[i].groups.book, "&chapter").concat(i, "=").concat(_results[i].groups.chapter, "&start").concat(i, "=").concat(_results[i].groups.start);
+        var _comparer = this.query.replace(_verse2Pattern, '|'); // console.log(_comparer);
 
-          if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
-            _temp += "&select".concat(i, "=").concat(_results[i].groups.select, "&end").concat(i, "=").concat(_results[i].groups.end);
+
+        var _compTokens = _comparer.split('|'); // console.log(_compTokens);
+
+
+        var _loop = function _loop(i) {
+          var _temp = "book".concat(i + 1, "=").concat(_results[i].groups.book, "&chapter").concat(i + 1, "=").concat(_results[i].groups.chapter);
+
+          if (_results[i].groups.start !== '') {
+            _temp += "&start".concat(i + 1, "=").concat(_results[i].groups.start);
+
+            if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
+              _temp += "&select".concat(i + 1, "=").concat(_results[i].groups.select, "&end").concat(i + 1, "=").concat(_results[i].groups.end);
+            }
+          }
+
+          var _andnext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse3Pattern));
+
+          var _thrunext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse4Pattern));
+
+          var _and = [];
+
+          if (_andnext.length > 0) {
+            _andnext.forEach(function (element) {
+              _and.push(element.groups.and);
+            });
+          } // let _andthru = _and.split('+');
+
+
+          if (_thrunext.length > 0) {
+            for (var x = 0; x < _thrunext.length; x++) {
+              var _thruTest = false;
+
+              for (var y = 0; y < _and.length; y++) {
+                if (_thrunext[x].groups.from === _and[y]) {
+                  _and[y] = _thrunext[x].groups.from + '-' + _thrunext[x].groups.thru;
+                  _thruTest = true;
+                  break;
+                }
+              }
+
+              if (!_thruTest) {
+                _and.push(_thrunext[x].groups.from + '-' + _thrunext[x].groups.thru);
+              }
+            }
+          }
+
+          console.log(_and);
+          var _tmpAnd = '';
+
+          if (_and.length > 0) {
+            _tmpAnd = "&and".concat(i + 1, "=");
+
+            for (var z = 0; z < _and.length; z++) {
+              if (z !== _and.length - 1) {
+                _tmpAnd += _and[z] + '+';
+              } else {
+                _tmpAnd += _and[z];
+              }
+            }
+
+            _temp += _tmpAnd;
+            console.log(_tmpAnd);
           }
 
           if (i !== _results.length - 1) {
-            _temp = +'&';
+            _temp += '&';
           }
 
           _q += _temp;
+        };
+
+        for (var i = 0; i < _results.length; i++) {
+          _loop(i);
+        }
+
+        if (_results.length > 1) {
+          _q += "&count=".concat(_results.length);
         }
 
         _q = encodeURI(_q); // window.location.href = `/verse${_q}`;
