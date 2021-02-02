@@ -2420,6 +2420,12 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
   },
   methods: {
     getSearch: function getSearch() {
+      /**
+       * This is a VERY long function and should be consolidated in the future. Right now it appears to be working,
+       * but it has not been tested beyond development. This method is triggered on click of the search button. It gets the text
+       * from the search box, determines if it is a verse, generates a URI string, and redirects the user to a new page using a get request with data.
+       */
+      // Create the various Regular Expressions that are required throughout the method.
       var _verse1Pattern = /*#__PURE__*/_wrapRegExp(/([0-9]?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*[A-Za-z]+)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*:?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]*)[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*(,|\x2D)?[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]*)/g, {
         book: 1,
         chapter: 2,
@@ -2439,24 +2445,31 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       var _verse4Pattern = /*#__PURE__*/_wrapRegExp(/([0-9])+[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*\x2D[\t-\r \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*([0-9]+)/g, {
         from: 1,
         thru: 2
-      });
+      }); // Create the results using the text from the input field modeled to this.query against the first regular expression.
+
 
       var _query = this.query;
 
       var _results = _toConsumableArray(_query.matchAll(_verse1Pattern)); // console.log(_results);
+      // Now, check if there are any results that look like a verse.
       // if (_verse1Pattern.test(this.query)) {
 
 
       if (_results.length > 0) {
+        // If there are _results, begin creating the query data (_q) that will be sent to the server with a GET call.
         var _q = '?';
 
-        var _comparer = this.query.replace(_verse2Pattern, '|'); // console.log(_comparer);
+        var _comparer = this.query.replace(_verse2Pattern, '|'); // This replaces any patterns of "1 Kings 1:1-2" with the "|" to determine if there are extra verses.
+        // console.log(_comparer);
 
 
-        var _compTokens = _comparer.split('|'); // console.log(_compTokens);
+        var _compTokens = _comparer.split('|'); // Used to determine if there are any extra verses beyond the original verse. ex: "Genesis 1:1-2, 3, 5"
+        // console.log(_compTokens);
+        // Loop through the _results
 
 
         var _loop = function _loop(i) {
+          // Create the temporary string that will be sent with the GET. This will be created for every result found in search box.
           var _temp = "book".concat(i + 1, "=").concat(_results[i].groups.book, "&chapter").concat(i + 1, "=").concat(_results[i].groups.chapter);
 
           if (_results[i].groups.start !== '') {
@@ -2465,24 +2478,29 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
             if (typeof _results[i].groups.select !== 'undefined' && _results[i].groups.end !== '') {
               _temp += "&select".concat(i + 1, "=").concat(_results[i].groups.select, "&end").concat(i + 1, "=").concat(_results[i].groups.end);
             }
-          }
+          } // Creat the arrays for any extra verses found beyond the original pattern. The arrays contain text as either a ",9" or "1-2"
 
-          var _andnext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse3Pattern));
 
-          var _thrunext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse4Pattern));
+          var _andnext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse3Pattern)); // Contains ",9"s
 
-          var _and = [];
+
+          var _thrunext = _toConsumableArray(_compTokens[i + 1].matchAll(_verse4Pattern)); // Contains "1-2"s
+
+
+          var _and = []; // Holds an array that will be used to concatenate to the _q string.
+          // If there are any ",9"s add them to the _and
 
           if (_andnext.length > 0) {
             _andnext.forEach(function (element) {
               _and.push(element.groups.and);
             });
           } // let _andthru = _and.split('+');
+          // If there are any "1-2"s add them to the _and
 
 
           if (_thrunext.length > 0) {
             for (var x = 0; x < _thrunext.length; x++) {
-              var _thruTest = false;
+              var _thruTest = false; // Check if there are any ",9"s that match the first of any "9-10"s to not return duplicates or partials in the future.
 
               for (var y = 0; y < _and.length; y++) {
                 if (_thrunext[x].groups.from === _and[y]) {
@@ -2499,14 +2517,14 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
           }
 
           console.log(_and);
-          var _tmpAnd = '';
+          var _tmpAnd = ''; // If there are _and after all that, create the string to add to the _q via the _temp.
 
           if (_and.length > 0) {
             _tmpAnd = "&and".concat(i + 1, "=");
 
             for (var z = 0; z < _and.length; z++) {
               if (z !== _and.length - 1) {
-                _tmpAnd += _and[z] + '+';
+                _tmpAnd += _and[z] + ',';
               } else {
                 _tmpAnd += _and[z];
               }
@@ -2525,14 +2543,15 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
         for (var i = 0; i < _results.length; i++) {
           _loop(i);
-        }
+        } // if (_results.length > 1) {
 
-        if (_results.length > 1) {
-          _q += "&count=".concat(_results.length);
-        }
 
-        _q = encodeURI(_q); // window.location.href = `/verse${_q}`;
+        _q += "&count=".concat(_results.length); // Maybe this should be added even if there are not multiple results?
+        // }
+        // encode the _q to a URI to send as a GET request to the server.
 
+        _q = encodeURI(_q);
+        window.location.href = "/verse".concat(_q);
         console.log(_q);
       } else {
         var _words = this.query.split(' ');

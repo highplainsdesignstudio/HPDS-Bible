@@ -1,6 +1,11 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v1.0.2 (wip)
+### Sixth commit (02/01/2021)
+* Added comments to sort through the getSearch method in the SearchComponent. It has  become a large method that needs to be consolidated.
+* The SearchVerseController works better now. The &and= data still needs to be processed though.
+* The &and= data is now processed. The search function appears to be ready for testing and rollout.
+
 ### Fifth commit (01/31/2021)
 * More work on reqular expressions in the Vue Search Component.
 * The frontend Vue Searh Component can now detect multiple verse and create a proper url to search for multiple verses when using , and - in the notations.
