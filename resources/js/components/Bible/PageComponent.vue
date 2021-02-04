@@ -8,7 +8,7 @@
             <leaf-component class="col-12 col-md-2 col-lg-1 sticky-top" type=-1 v-on:leaf-page="leafPage" :link="previous" title="Previous Chapter."></leaf-component>
             <div class="col-12 col-md-8 col-lg-10">
                 <div v-for="(text, index) in chapterText" :key="text.id" class="v-contain">
-                    <p :id=" 'verse-' + index" class="verse"
+                    <p :id=" 'verse-' + (index + 1)" class="verse"
                         v-on:click="toggleUnderline(text.id)">
                         <span class="h5">{{ index + 1 }}: </span>
                         <span v-html="text.verse" 
@@ -131,7 +131,7 @@
                 }
             },
             toggleHighlightComponent: function (_index) {
-                let _verse = document.getElementById('verse-' + _index);
+                let _verse = document.getElementById('verse-' + (_index + 1));
                 let _verseClasses = _verse.classList;
                 _verseClasses.toggle('col-9');
                 _verseClasses.toggle('col-12');

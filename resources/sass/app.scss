@@ -70,6 +70,10 @@ button#dropdownMenuButton {
     height: 100%;
 }
 
+.search-context {
+    color:red;
+}
+
 .sticky {
     position: -webkit-sticky;
     position: sticky;
@@ -96,6 +100,10 @@ button#dropdownMenuButton {
     box-shadow: 5px 5px #6e6f54;
     margin: .5em 0px;
     cursor: pointer;
+}
+
+.verse:target {
+    background-color: yellowgreen;
 }
 
 #chapter-text {

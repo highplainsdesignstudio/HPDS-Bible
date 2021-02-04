@@ -1,5 +1,44 @@
 # Bible App
 A KJV Bible application built with Laravel.
+## v1.0.2 (wip)
+### Seventh commit (02/03/2021)
+* Added check to SearchBibleController to prevent queries of empty space. The user is now returned to the bible.index view.
+* Changed the search-results view to include the SearchResultsComponent. Modified the component to display the search results.
+* Added Pagination to the SearchBibleController and the SearchVersesController.
+* The search query is now the value for the search field in the SearchComponent. This let's the user know what they searched for when search results are displayed.
+* The searched query words are now highlighted in the search results.
+
+### Sixth commit (02/01/2021)
+* Added comments to sort through the getSearch method in the SearchComponent. It has  become a large method that needs to be consolidated.
+* The SearchVerseController works better now. The &and= data still needs to be processed though.
+* The &and= data is now processed. The search function appears to be ready for testing and rollout.
+
+### Fifth commit (01/31/2021)
+* More work on reqular expressions in the Vue Search Component.
+* The frontend Vue Searh Component can now detect multiple verse and create a proper url to search for multiple verses when using , and - in the notations.
+* The frontend is disconnected from the backend when searching for verses in the format of:  1 Book 1:1, 2-3
+
+### Fourth commit (01/30/2021)
+* Added regular expressions in the Vue Search Component to determine if verses were entered.
+* Created /verse route.
+* Created SearchVerseController.
+### Third commit (01/27/2021)
+* Added link targets in the search-results view. 
+* Added style to highlight the targeted verse.
+
+### Second commit (01/26/2021)
+* added relationships to the Testament, Book, Chapter, and Verse models.
+* Added URI encoding to the search redirect href.
+* Changed the SearchBibleController to search for more results. 
+* Changed search-results template to show each verse and the number of results.
+
+### First commit (01/24/2021)
+* npm run dev 
+* Created SearchBibleController
+* Created Search Component.
+* Created Search Results view.
+* The search results view currently only dd's the returned results.
+
 ## v1.0.1 (01/22/2021)
 ### Second commit (01/22/2021)
 * Created a Dashboard Controller
