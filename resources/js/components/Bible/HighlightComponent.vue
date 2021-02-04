@@ -26,7 +26,7 @@
                     .then(response => {
                     })
                     .catch(error => {
-                        console.log(error);
+                        // console.log(error);
                     });
                 }
                 this.$emit('highlight', this.chapterId, this.verses, color);

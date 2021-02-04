@@ -15,12 +15,9 @@ foreach ($verses as $key => $verse) {
 
 @section('content')
     <div class="container-fluid">
-        {{-- <div class="app"> --}}
             <search-component q="{{$q}}"></search-component>
             <index-component :books="books"></index-component>            
 
-
-            {{-- {{method_exists($verses, 'links')? $verses->links() : ""}} --}}
             @if(method_exists($verses, 'links')) 
                 {{ $verses->links() }}
                 <p>Showing {{$verses->firstItem()}} through {{$verses->lastItem()}} of {{$verses->total()}} results.</p>
@@ -29,7 +26,5 @@ foreach ($verses as $key => $verse) {
             @endif
             
             <search-results-component :tokens="{{ $tokens }}" :results="{{ $results }}"></search-results-component>
-
-        {{-- </div> --}}
     </div>
 @endsection

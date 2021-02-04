@@ -68,7 +68,7 @@
                     });
                 })
                 .catch(exception => {
-                    console.log(exception);
+                    // console.log(exception);
                 });
             }
         },
