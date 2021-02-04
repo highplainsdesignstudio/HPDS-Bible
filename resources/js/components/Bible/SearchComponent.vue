@@ -19,7 +19,7 @@
     export default {
         data: function() {
             return {
-                query: ''
+                query: typeof this.q !== 'undefined' ? this.q : ''
             }
         },
         methods: {
@@ -123,6 +123,7 @@
                     // }
 
                     // encode the _q to a URI to send as a GET request to the server.
+                    _q += "&string=" + this.query;
                     _q = encodeURI(_q);
                     window.location.href = `/verse${_q}`;
                     console.log(_q);
@@ -151,8 +152,9 @@
                 }
             }
         },
-        mounted() {
-            console.log('Component mounted.')
-        }
+        // mounted() {
+        //     console.log(this.q);
+        // },
+        props: ['q']
     }
 </script>

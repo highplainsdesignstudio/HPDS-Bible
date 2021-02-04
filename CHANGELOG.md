@@ -1,6 +1,13 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v1.0.2 (wip)
+### Seventh commit (02/03/2021)
+* Added check to SearchBibleController to prevent queries of empty space. The user is now returned to the bible.index view.
+* Changed the search-results view to include the SearchResultsComponent. Modified the component to display the search results.
+* Added Pagination to the SearchBibleController and the SearchVersesController.
+* The search query is now the value for the search field in the SearchComponent. This let's the user know what they searched for when search results are displayed.
+* The searched query words are now highlighted in the search results.
+
 ### Sixth commit (02/01/2021)
 * Added comments to sort through the getSearch method in the SearchComponent. It has  become a large method that needs to be consolidated.
 * The SearchVerseController works better now. The &and= data still needs to be processed though.

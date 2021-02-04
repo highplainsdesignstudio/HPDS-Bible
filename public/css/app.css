@@ -10979,6 +10979,10 @@ button#dropdownMenuButton {
   height: 100%;
 }
 
+.search-context {
+  color: red;
+}
+
 .sticky {
   position: -webkit-sticky;
   position: sticky;

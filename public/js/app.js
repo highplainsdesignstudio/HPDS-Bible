@@ -2415,7 +2415,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      query: ''
+      query: typeof this.q !== 'undefined' ? this.q : ''
     };
   },
   methods: {
@@ -2550,6 +2550,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
         // }
         // encode the _q to a URI to send as a GET request to the server.
 
+        _q += "&string=" + this.query;
         _q = encodeURI(_q);
         window.location.href = "/verse".concat(_q);
         console.log(_q);
@@ -2582,9 +2583,10 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
       }
     }
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+  // mounted() {
+  //     console.log(this.q);
+  // },
+  props: ['q']
 });
 
 /***/ }),
@@ -2619,10 +2621,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log(this.results);
+  computed: {
+    searchResults: function searchResults() {
+      var tmpResults = [];
+
+      for (var i = 0; i < this.tokens.length; i++) {
+        var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig');
+
+        for (var j = 0; j < this.results.length; j++) {
+          tmpResults[j] = this.results[j];
+          this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+        }
+      }
+
+      return tmpResults;
+    }
   },
-  props: ['results']
+  created: function created() {
+    //     this.tokens.forEach(function(element) {
+    //         let searchContextRegEx = new RegExp(`/${element}/`);
+    //         this.results.forEach(function(verse) {
+    //             verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
+    //         });
+    //     });
+    // },
+    // mounted() {
+    console.log(this.tokens); // this.tokens.forEach(function(element) {
+    //     let searchContextRegEx = new RegExp(`/${element}/`);
+    //     results.forEach(function(verse) {
+    //         verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
+    //     });
+    // });
+
+    for (var i = 0; i < this.tokens.length; i++) {
+      var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig'); // this.results.forEach(element => {
+      //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+      // });
+
+      for (var j = 0; j < this.results.length; j++) {
+        this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+      }
+    }
+  },
+  props: ['tokens', 'results']
 });
 
 /***/ }),
@@ -38889,26 +38930,50 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Search Results")]),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "card-body" },
-            [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.results) +
-                  " search results found.\n                    "
-              ),
-              _vm._l(_vm.results, function(result) {
-                return _c("article", { key: result.id })
-              })
-            ],
-            2
+            _vm._l(_vm.searchResults, function(result) {
+              return _c("article", { key: result.id }, [
+                _c("p", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/" +
+                          result.book.toString() +
+                          "/" +
+                          result.book_chapter.toString() +
+                          "#" +
+                          "verse-" +
+                          result.chapter_verse.toString()
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(result.book) +
+                          " " +
+                          _vm._s(result.book_chapter) +
+                          ":" +
+                          _vm._s(result.chapter_verse) +
+                          "\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(": - "),
+                  _c("span", { domProps: { innerHTML: _vm._s(result.verse) } })
+                ])
+              ])
+            }),
+            0
           )
         ])
       ])

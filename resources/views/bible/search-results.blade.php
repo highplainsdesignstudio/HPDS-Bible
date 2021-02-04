@@ -1,33 +1,35 @@
 @extends('layouts.app')
 
+<?php
+$results = collect();
+$tokens = isset($tokens) ? collect($tokens) : '';
+foreach ($verses as $key => $verse) {
+    $tmpCollect = collect([
+        'book' => $verse->chapter->book->book,
+        'book_chapter' => $verse->chapter->book_chapter, 
+        'chapter_verse' => $verse->chapter_verse,
+        'verse' => $verse->verse]);
+    $results->push($tmpCollect);
+}
+?>
+
 @section('content')
     <div class="container-fluid">
-        <div class="app">
-            <search-component></search-component>
+        {{-- <div class="app"> --}}
+            <search-component q="{{$q}}"></search-component>
             <index-component :books="books"></index-component>            
-            <?php
-                // dd($verses);
-                // var_dump($verses);
-            ?>
-            <section class="container">
-                @if (count($verses) > 0)
-                    <h2>{{ count($verses) }} search results.</h2>
-                    @foreach ($verses as $verse)
-                        <p>
-                            <a href="/{{$verse->chapter->book->book}}/{{$verse->chapter->book_chapter}}#verse-{{$verse->chapter_verse}}">
-                                {{ $verse->chapter->book->book }} {{ $verse->chapter->book_chapter }}:{{ $verse->chapter_verse }}
-                            </a>
-                        - {!! $verse->verse !!}</p>
-                    @endforeach
-
-                    @else
-                        <h2>No results.</h2>
-                @endif
-            </section>
 
 
-            {{-- <search-results-component  :results="{{ $verses->all()->toJson() }}"></search-results-component> --}}
+            {{-- {{method_exists($verses, 'links')? $verses->links() : ""}} --}}
+            @if(method_exists($verses, 'links')) 
+                {{ $verses->links() }}
+                <p>Showing {{$verses->firstItem()}} through {{$verses->lastItem()}} of {{$verses->total()}} results.</p>
+            @else 
+                <p>Showing {{count($verses)}} results.</p>
+            @endif
+            
+            <search-results-component :tokens="{{ $tokens }}" :results="{{ $results }}"></search-results-component>
 
-        </div>
+        {{-- </div> --}}
     </div>
 @endsection

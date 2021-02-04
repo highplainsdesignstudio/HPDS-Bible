@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Verse;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchBibleController extends Controller
 {
@@ -13,7 +14,13 @@ class SearchBibleController extends Controller
     public function index(Request $request) {
         
         $query = $request->query();
+        if (!isset($query['q'])) {
+            return view('bible.index');
+        }
+
         $tokens = Str::of($query['q'])->explode(' ');
+
+
         $altQuery = '';
         $tokens = $this->removeStopWords($tokens);
 
@@ -31,18 +38,29 @@ class SearchBibleController extends Controller
             $verses = Verse::where('verse', 'LIKE', "%{$query['q']}%")
             // $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%")
                 // ->orwhere('verse', 'LIKE', "%{$altQuery}%")
-                ->get();
+                // ->get();
+                ->paginate(25);
 
             if (count($verses) == 0) {
-                $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%") ->get();
-                if (count($verses) == 0) {
+                // $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%") ->get();
+                $verses = Verse::where('verse', 'LIKE', "%{$altQuery}%") ->paginate(25);
+                if (count($verses->items()) == 0) {
+                    $tmpVerses = new Verse;
                     for($i=0; $i < count($tokens); $i++) {
                         $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                        // $tverse = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
+                        // array_push($tmpVerses, $tverse);
                     }
-                    foreach($tverses as $tverse) {
-                        $verses = $verses->concat($tverse);
+                    
+                    foreach($tverses as $key => $tverse) {
+                        // $verses->items() = $verses->concat($tverse);
+                        // $tmpVerses->push($tverse);
+                        $key == 0 ? $tmpVerses = $tverse : $tmpVerses = $tmpVerses->concat($tverse);
                     }
-                    // $verses = $verses->unique();
+                    $tmpVerses->unique();
+                    $tmpCount = count($tmpVerses);
+                    $verses = new LengthAwarePaginator($tmpVerses->forPage(1, 25), $tmpCount, 25, 1);
+                    // TODO: Maybe needs to sort the $tmpVerses before making the Paginator? 
                 }
                 // for($i=0; $i < count($tokens); $i++) {
                 //     $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
@@ -52,14 +70,19 @@ class SearchBibleController extends Controller
                 // }
                 // $verses = $verses->unique();
             }
+            
+            $verses->withPath("search?q={$query['q']}");
+
         } elseif (count($tokens) == 1) {
             $verses = Verse::where('verse', 'LIKE', "%{$tokens[0]}%")
-                ->get();
+                // ->get();
+                ->paginate(25);
+            $verses->withPath("search?q={$query['q']}");
         } else {
             $verses = [];
         }
 
-        return view('bible.search-results', ['verses' => $verses]);
+        return view('bible.search-results', ['q' => $query['q'],'tokens' => $tokens, 'verses' => $verses]);
     }
 
     private function removeStopWords ($tokens) {
