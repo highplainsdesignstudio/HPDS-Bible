@@ -1,6 +1,10 @@
 # Bible App
 A KJV Bible application built with Laravel.
 ## v1.0.2 (wip)
+## Eighth commit (02/04/2021)
+* Removed stopwords from SearchBibleController.
+* Minor code cleanup.
+* npm run prod
 ### Seventh commit (02/03/2021)
 * Added check to SearchBibleController to prevent queries of empty space. The user is now returned to the bible.index view.
 * Changed the search-results view to include the SearchResultsComponent. Modified the component to display the search results.

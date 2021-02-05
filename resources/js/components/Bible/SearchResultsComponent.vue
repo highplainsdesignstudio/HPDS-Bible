@@ -35,26 +35,12 @@
             }
         },
         created: function() {
-        //     this.tokens.forEach(function(element) {
-        //         let searchContextRegEx = new RegExp(`/${element}/`);
-        //         this.results.forEach(function(verse) {
-        //             verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
-        //         });
-        //     });
         // },
         // mounted() {
-            console.log(this.tokens);
-            // this.tokens.forEach(function(element) {
-            //     let searchContextRegEx = new RegExp(`/${element}/`);
-            //     results.forEach(function(verse) {
-            //         verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
-            //     });
-            // });
+
             for(let i = 0; i < this.tokens.length; i++) {
                 let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
-                // this.results.forEach(element => {
-                //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
-                // });
+
                 for(let j = 0; j < this.results.length; j++) {
                     this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
                 }

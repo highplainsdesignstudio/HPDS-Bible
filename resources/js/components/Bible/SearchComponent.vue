@@ -95,7 +95,7 @@
                             }
                         }
                         
-                        console.log(_and);
+                        // console.log(_and);
                         let _tmpAnd = '';
                         // If there are _and after all that, create the string to add to the _q via the _temp.
                         if (_and.length > 0) {
@@ -108,7 +108,7 @@
                                 }
                             }
                             _temp += _tmpAnd;
-                            console.log(_tmpAnd);
+                            // console.log(_tmpAnd);
                         }
 
                         if (i !== _results.length - 1) {
@@ -126,7 +126,7 @@
                     _q += "&string=" + this.query;
                     _q = encodeURI(_q);
                     window.location.href = `/verse${_q}`;
-                    console.log(_q);
+                    // console.log(_q);
                 } else {
                     let _words = this.query.split(' ');
 
