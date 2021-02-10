@@ -2625,13 +2625,17 @@ __webpack_require__.r(__webpack_exports__);
     searchResults: function searchResults() {
       var tmpResults = [];
 
-      for (var i = 0; i < this.tokens.length; i++) {
-        var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig');
+      if (this.tokens !== 'negative') {
+        for (var i = 0; i < this.tokens.length; i++) {
+          var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig');
 
-        for (var j = 0; j < this.results.length; j++) {
-          tmpResults[j] = this.results[j];
-          this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+          for (var j = 0; j < this.results.length; j++) {
+            tmpResults[j] = this.results[j];
+            this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+          }
         }
+      } else {
+        tmpResults = this.results;
       }
 
       return tmpResults;
@@ -2653,13 +2657,15 @@ __webpack_require__.r(__webpack_exports__);
     //     });
     // });
 
-    for (var i = 0; i < this.tokens.length; i++) {
-      var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig'); // this.results.forEach(element => {
-      //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
-      // });
+    if (this.tokens !== "negative") {
+      for (var i = 0; i < this.tokens.length; i++) {
+        var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig'); // this.results.forEach(element => {
+        //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+        // });
 
-      for (var j = 0; j < this.results.length; j++) {
-        this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+        for (var j = 0; j < this.results.length; j++) {
+          this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, "<span class='search-context'>".concat(this.tokens[i], "</span>"));
+        }
       }
     }
   },

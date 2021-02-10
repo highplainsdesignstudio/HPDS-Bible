@@ -30,7 +30,7 @@ Route::get('/read', function(Request $request) {
 
 Route::get('/home', 'HomeController@index')->name('home'); 
 
-Route::get('/dashboard', 'Admin\DashboardController@index') -> name('dashboard') -> middleware('can:admin');
+Route::get('/dashboard', 'Admin\DashboardController@index') -> name('dashboard') ; //-> middleware('can:admin');
 
 Route::get('/search', 'Bible\SearchBibleController@index' );
 Route::get('/verse', 'Bible\SearchVerseController@index');

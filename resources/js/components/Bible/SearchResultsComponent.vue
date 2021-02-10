@@ -23,14 +23,19 @@
         computed: {
             searchResults: function() {
                 let tmpResults = [];
-                for(let i = 0; i < this.tokens.length; i++) {
-                    let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
-    
-                    for(let j = 0; j < this.results.length; j++) {
-                        tmpResults[j] = this.results[j];
-                        this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+                if(this.tokens !== 'negative') {
+                    for(let i = 0; i < this.tokens.length; i++) {
+                        let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
+        
+                        for(let j = 0; j < this.results.length; j++) {
+                            tmpResults[j] = this.results[j];
+                            this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+                        }
                     }
+                } else {
+                    tmpResults = this.results;
                 }
+ 
                 return tmpResults;
             }
         },
@@ -50,13 +55,15 @@
             //         verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
             //     });
             // });
-            for(let i = 0; i < this.tokens.length; i++) {
-                let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
-                // this.results.forEach(element => {
-                //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
-                // });
-                for(let j = 0; j < this.results.length; j++) {
-                    this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+            if(this.tokens !== "negative") {
+                for(let i = 0; i < this.tokens.length; i++) {
+                    let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
+                    // this.results.forEach(element => {
+                    //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+                    // });
+                    for(let j = 0; j < this.results.length; j++) {
+                        this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
+                    }
                 }
             }
         },

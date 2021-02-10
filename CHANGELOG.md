@@ -1,6 +1,13 @@
 # Bible App
 A KJV Bible application built with Laravel.
-## v1.0.2 (wip)
+
+## v1.0.3 (wip)
+### First commit (02/09/2021)
+* npm run dev
+* fixed a bug that kept the verse searches from properly displaying.
+* updated DashboardController to abort with a 404 error if the user is not logged in or an admin.
+
+## v1.0.2 (02/03/2021)
 ### Seventh commit (02/03/2021)
 * Added check to SearchBibleController to prevent queries of empty space. The user is now returned to the bible.index view.
 * Changed the search-results view to include the SearchResultsComponent. Modified the component to display the search results.
