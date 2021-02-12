@@ -2629,9 +2629,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     searchResults: function searchResults() {
-      var tmpResults = [];
+      var tmpResults = []; // if(this.tokens !== 'negative') {
 
-      if (this.tokens !== 'negative') {
+      if (typeof this.tokens !== "undefined") {
         for (var i = 0; i < this.tokens.length; i++) {
           var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig');
 
@@ -2662,8 +2662,9 @@ __webpack_require__.r(__webpack_exports__);
     //         verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
     //     });
     // });
+    // if(this.tokens !== "negative") {
 
-    if (this.tokens !== "negative") {
+    if (typeof this.tokens !== "undefined") {
       for (var i = 0; i < this.tokens.length; i++) {
         var searchContextRegEx = new RegExp("".concat(this.tokens[i]), 'ig'); // this.results.forEach(element => {
         //     element.verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);

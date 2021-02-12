@@ -28,7 +28,7 @@ foreach ($verses as $key => $verse) {
                 <p>Showing {{count($verses)}} results.</p>
             @endif
             
-            <search-results-component tokens="{{ $tokens }}" :results="{{ $results }}"></search-results-component>
+            <search-results-component :tokens="{{ $tokens }}" :results="{{ $results }}"></search-results-component>
 
         {{-- </div> --}}
     </div>

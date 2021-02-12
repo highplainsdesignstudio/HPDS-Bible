@@ -23,7 +23,8 @@
         computed: {
             searchResults: function() {
                 let tmpResults = [];
-                if(this.tokens !== 'negative') {
+                // if(this.tokens !== 'negative') {
+                if(typeof this.tokens !== "undefined") {  
                     for(let i = 0; i < this.tokens.length; i++) {
                         let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
         
@@ -55,7 +56,8 @@
             //         verse.replaceAll(searchContextRegEx, `<span class='search-context'>${element}</span>`);
             //     });
             // });
-            if(this.tokens !== "negative") {
+            // if(this.tokens !== "negative") {
+            if(typeof this.tokens !== "undefined") {
                 for(let i = 0; i < this.tokens.length; i++) {
                     let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
                     // this.results.forEach(element => {

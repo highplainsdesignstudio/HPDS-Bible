@@ -2,6 +2,9 @@
 A KJV Bible application built with Laravel.
 
 ## v1.0.3 (wip)
+### Third commit (02/11/2021)
+* Fixed issue #33. The search results were not showing up properly for some reason. They seem to be working now.
+
 ### Second commit (02/11/2021)
 * Added links to the saved highlights in the home.blade view.
 * Removed the SavedHighlightsComponent from the home.blade view.
