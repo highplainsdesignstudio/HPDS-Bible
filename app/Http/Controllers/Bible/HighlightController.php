@@ -128,5 +128,8 @@ class HighlightController extends Controller
     public function destroy($id)
     {
         //
+        $deletedHighlight = Highlight::where('id', '=', $id)->first();
+        $deletedHighlight->delete();
+        return 'Highlight ID: ' . $id . ' destroyed.';
     }
 }

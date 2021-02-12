@@ -2333,21 +2333,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['highlights']
+  methods: {
+    deleteHighlight: function deleteHighlight() {
+      var _this = this;
+
+      axios.defaults.headers.common['Authorization'] = "Bearer ".concat(this.apiToken);
+      axios["delete"]('/api/highlights/' + this.id).then(function (response) {
+        console.log("User ".concat(_this.user, " HIghlight ").concat(_this.highlight, ", ID: ").concat(_this.id, " deleted"));
+        console.log('DB Response: ' + response);
+        var elem = document.getElementById('highlight-' + _this.highlight);
+        elem.style.display = 'none';
+      })["catch"](function (exception) {
+        console.log(exception);
+        alert('There was a problem with the database. Please try again later.');
+      });
+    }
+  },
+  mounted: function mounted() {
+    console.log(this.apiToken);
+  },
+  props: ['apiToken', 'highlight', 'user', 'id']
 });
 
 /***/ }),
@@ -38802,38 +38808,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Saved Highlights")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            _vm._l(_vm.highlights, function(verse, index) {
-              return _c("div", { key: index }, [
-                _c("p", [
-                  _vm._v(
-                    _vm._s(verse.book) +
-                      " Chapter " +
-                      _vm._s(verse.book_chapter) +
-                      " : " +
-                      _vm._s(verse.chapter_verse) +
-                      " - "
-                  ),
-                  _c("span", { domProps: { innerHTML: _vm._s(verse.verse) } })
-                ])
-              ])
-            }),
-            0
-          )
-        ])
-      ])
-    ])
-  ])
+  return _c(
+    "button",
+    { staticClass: "btn btn-danger col-1", on: { click: _vm.deleteHighlight } },
+    [_vm._v(" X ")]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

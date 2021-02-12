@@ -2,6 +2,12 @@
 A KJV Bible application built with Laravel.
 
 ## v1.0.3 (wip)
+### Second commit (02/11/2021)
+* Added links to the saved highlights in the home.blade view.
+* Removed the SavedHighlightsComponent from the home.blade view.
+* Added back a SavedHighlightsComponent to add a button before each verse that deletes the verse when clicked.
+* Paginated the saved highlights on the home.blade view.
+
 ### First commit (02/09/2021)
 * npm run dev
 * fixed a bug that kept the verse searches from properly displaying.
