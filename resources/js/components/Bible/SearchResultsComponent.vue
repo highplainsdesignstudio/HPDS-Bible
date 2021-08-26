@@ -43,14 +43,14 @@
         created: function() {
         // },
         // mounted() {
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
             for(let i = 0; i < this.tokens.length; i++) {
                 let searchContextRegEx = new RegExp(`${this.tokens[i]}`, 'ig');
 
                 for(let j = 0; j < this.results.length; j++) {
                     this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
-=======
+// =======
             console.log(this.tokens);
             // this.tokens.forEach(function(element) {
             //     let searchContextRegEx = new RegExp(`/${element}/`);
@@ -68,7 +68,7 @@
                     for(let j = 0; j < this.results.length; j++) {
                         this.results[j].verse = this.results[j].verse.replaceAll(searchContextRegEx, `<span class='search-context'>${this.tokens[i]}</span>`);
                     }
->>>>>>> v1.0.3
+// >>>>>>> v1.0.3
                 }
             }
         },
