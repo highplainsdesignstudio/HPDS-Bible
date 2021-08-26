@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    {{ $users->links() }}
     <h2>Admin Dashboard</h2>
     <table class="table">
         <thead>

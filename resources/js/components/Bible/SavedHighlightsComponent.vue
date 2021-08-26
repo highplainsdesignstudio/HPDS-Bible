@@ -1,22 +1,29 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">Saved Highlights</div>
-                    <div class="card-body">
-                        <div v-for="(verse, index) in highlights" :key="index">
-                            <p>{{ verse.book }} Chapter {{ verse.book_chapter }} : {{ verse.chapter_verse }} - <span v-html="verse.verse"></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button class="btn btn-danger col-1" v-on:click="deleteHighlight"> X </button>
 </template>
 
 <script>
     export default {
-        props: ['highlights']
+        methods: {
+            deleteHighlight: function() {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${this.apiToken}`;
+
+                axios.delete('/api/highlights/' + this.id)
+                .then(response => {
+                    console.log(`User ${this.user} HIghlight ${this.highlight}, ID: ${this.id} deleted`);
+                    console.log('DB Response: ' + response)
+                    let elem = document.getElementById('highlight-' + this.highlight);
+                    elem.style.display = 'none';                    
+                })
+                .catch(exception => {
+                    console.log(exception);
+                    alert('There was a problem with the database. Please try again later.');
+                });
+            }
+        },
+        mounted: function() {
+            console.log(this.apiToken);
+        },
+        props: ['apiToken', 'highlight', 'user', 'id']
     }
 </script>

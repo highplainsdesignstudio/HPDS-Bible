@@ -1,10 +1,30 @@
 # Bible App
 A KJV Bible application built with Laravel.
+<<<<<<< HEAD
 ## v1.0.2 (wip)
 ## Eighth commit (02/04/2021)
 * Removed stopwords from SearchBibleController.
 * Minor code cleanup.
 * npm run prod
+=======
+
+## v1.0.3 (wip)
+### Third commit (02/11/2021)
+* Fixed issue #33. The search results were not showing up properly for some reason. They seem to be working now.
+
+### Second commit (02/11/2021)
+* Added links to the saved highlights in the home.blade view.
+* Removed the SavedHighlightsComponent from the home.blade view.
+* Added back a SavedHighlightsComponent to add a button before each verse that deletes the verse when clicked.
+* Paginated the saved highlights on the home.blade view.
+
+### First commit (02/09/2021)
+* npm run dev
+* fixed a bug that kept the verse searches from properly displaying.
+* updated DashboardController to abort with a 404 error if the user is not logged in or an admin.
+
+## v1.0.2 (02/03/2021)
+>>>>>>> v1.0.3
 ### Seventh commit (02/03/2021)
 * Added check to SearchBibleController to prevent queries of empty space. The user is now returned to the bible.index view.
 * Changed the search-results view to include the SearchResultsComponent. Modified the component to display the search results.

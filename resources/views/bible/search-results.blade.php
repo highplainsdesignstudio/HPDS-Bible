@@ -2,7 +2,7 @@
 
 <?php
 $results = collect();
-$tokens = isset($tokens) ? collect($tokens) : '';
+$tokens = isset($tokens) ? collect($tokens) : 'negative';
 foreach ($verses as $key => $verse) {
     $tmpCollect = collect([
         'book' => $verse->chapter->book->book,

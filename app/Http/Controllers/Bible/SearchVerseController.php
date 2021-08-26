@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Bible;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Verse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchVerseController extends Controller
@@ -92,11 +93,14 @@ class SearchVerseController extends Controller
                     }
                 }
             }
+            $results = new Collection();
             $results = ($i == 1) ? $verses : $results->concat($verses);
             // $results = ($i == 1) ? $verses : $results->push($verses);
             // $results = $results->concat($verses);
         }
         // }
+        // This paginator may not really work. Take a look at how it was done in the HomeController for the saved highlights. 
+        // You need to get the pgae number from the request and then use the forPage() method in order to change the $results.
         $verses = new LengthAwarePaginator($results->forPage(1, 25), count($results), 25, 1);
         $q = isset($query['string']) ? $query['string'] : null;
         return view('bible.search-results', ['verses'=>$verses, 'q'=>$q]);
