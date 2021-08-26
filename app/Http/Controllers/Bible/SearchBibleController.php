@@ -18,6 +18,7 @@ class SearchBibleController extends Controller
             return view('bible.index');
         }
 
+        $searchTerms = Str::of($query['q'])->explode("\"");
         $tokens = Str::of($query['q'])->explode(' ');
 
 
@@ -48,13 +49,10 @@ class SearchBibleController extends Controller
                     $tmpVerses = new Verse;
                     for($i=0; $i < count($tokens); $i++) {
                         $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
-                        // $tverse = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
-                        // array_push($tmpVerses, $tverse);
+    
                     }
                     
                     foreach($tverses as $key => $tverse) {
-                        // $verses->items() = $verses->concat($tverse);
-                        // $tmpVerses->push($tverse);
                         $key == 0 ? $tmpVerses = $tverse : $tmpVerses = $tmpVerses->concat($tverse);
                     }
                     $tmpVerses->unique();
@@ -62,13 +60,6 @@ class SearchBibleController extends Controller
                     $verses = new LengthAwarePaginator($tmpVerses->forPage(1, 25), $tmpCount, 25, 1);
                     // TODO: Maybe needs to sort the $tmpVerses before making the Paginator? 
                 }
-                // for($i=0; $i < count($tokens); $i++) {
-                //     $tverses[$i] = Verse::where('verse', 'LIKE', "%{$tokens[$i]}%")->get();
-                // }
-                // foreach($tverses as $tverse) {
-                //     $verses = $verses->concat($tverse);
-                // }
-                // $verses = $verses->unique();
             }
             
             $verses->withPath("search?q={$query['q']}");
