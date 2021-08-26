@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
 
         // Added for the sake of old MariaDB version. Link to issue found below.
         // https://stackoverflow.com/questions/42244541/laravel-migration-error-syntax-error-or-access-violation-1071-specified-key-wa 
-        Schema::defaultStringLength(191);
+        // Schema::defaultStringLength(191);
     }
 }
